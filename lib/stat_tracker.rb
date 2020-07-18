@@ -4,13 +4,15 @@
 
 class StatTracker
 
-  def self.from_csv(locations)
-    StatTracker.new(locations)
+  def self.from_csv(filepath)
+    StatTracker.new(filepath)
   end
 
 
-  def initialize(locations)
-    @locations = locations
+  def initialize(filepath)
+    @games = filepath[:games]
+    @teams = filepath[:teams]
+    @game_teams = filepath[:game_teams]
 
   end
 
