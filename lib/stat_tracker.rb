@@ -14,6 +14,14 @@ class StatTracker
 
   end
 
+
+
+
+
+
+
+#LEAGUE STATS
+
 # 	Total number of teams in the data.  STRING INTEGER
   def count_of_teams
 
