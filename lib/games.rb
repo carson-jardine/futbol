@@ -17,5 +17,4 @@ class Games
     @venue_link = games_info[:venue_link]
   end
 
-
 end

@@ -41,5 +41,4 @@ class GamesTest < Minitest::Test
     assert_equal "/api/v1/venues/null", game1.venue_link
   end
 
-
 end
