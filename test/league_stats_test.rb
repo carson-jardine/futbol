@@ -59,7 +59,7 @@ class LeagueStatsTest < Minitest::Test
     assert_equal 2012030221, end_result.game_id
   end
 
-  def test_returns_nil_when_no_find_match
+  def test_returns_nil_when_no_find_match_game_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
     end_result = league_stats.game_teams_find_by_game_id(2123432423412341)
@@ -77,7 +77,7 @@ class LeagueStatsTest < Minitest::Test
     assert_equal 1, end_result.team_id
   end
 
-  def test_returns_nil_when_no_find_match
+  def test_returns_nil_when_no_find_match_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(2123432423412341)
@@ -93,6 +93,14 @@ class LeagueStatsTest < Minitest::Test
     assert_instance_of Games, end_result
     assert_equal "5/16/13", end_result.date_time
     assert_equal 2012030221, end_result.game_id
+  end
+
+  def test_returns_nil_when_no_find_match_games
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+
+    end_result = league_stats.games_find_by_game_id(2123432423412341)
+
+    assert_nil end_result
   end
 
 # 	Total number of teams in the data. INTEGER
