@@ -22,16 +22,15 @@ class LeagueStatsTest < Minitest::Test
     assert_equal "LOSS", league_stats.all.first.result
   end
 
-  # def test_it_can_find_game_teams_id
-  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
-  #
-  #   result = league_stats.find_by_game_id(1)
-  #   require 'pry'; binding.pry
-  #
-  #   assert_instance_of GameTeams, result
-  #   assert_equal "away", result.hoA
-  #   assert_equal 2012030221, result.game_id
-  # end
+  def test_it_can_find_game_teams_id
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+
+    end_result = league_stats.find_by_game_id(1)
+
+    asserxt_instance_of GameTeams, end_result
+    assert_equal "away", end_result.hoA
+    assert_equal 2012030221, end_result.game_id
+  end
 
 # 	Total number of teams in the data. INTEGER
   # def test_count_of_teams

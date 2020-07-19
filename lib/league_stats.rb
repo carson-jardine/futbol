@@ -8,6 +8,7 @@ class LeagueStats
 
 
   def initialize(filepath)
+    #yeah, rename the below
     @game_teams_stuff = []
     load_game_teams(filepath)
   end
@@ -22,7 +23,12 @@ class LeagueStats
     end
   end
 
-
+  def find_by_game_id(id)
+    @game_teams_stuff.find do |season_stat|
+      # require 'pry'; binding.pry
+      season_stat.game_id == id
+    end
+  end
   # #LEAGUE STATS
   #
   # # 	Total number of teams in the data.  INTEGER
