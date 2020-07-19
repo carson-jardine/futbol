@@ -77,6 +77,14 @@ class LeagueStatsTest < Minitest::Test
     assert_equal 1, end_result.team_id
   end
 
+  def test_returns_nil_when_no_find_match
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+
+    end_result = league_stats.teams_find_by_team_id(2123432423412341)
+
+    assert_nil end_result
+  end
+
 # 	Total number of teams in the data. INTEGER
   # def test_count_of_teams
   #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
