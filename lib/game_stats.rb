@@ -26,5 +26,10 @@ class GameStats
     end.max
   end
 
+  def lowest_total_score
+    @games.map do |game|
+      (game.home_goals) + (game.away_goals)
+    end.min
+  end
 
 end
