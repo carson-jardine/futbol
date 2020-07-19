@@ -59,9 +59,9 @@ class LeagueStats
   # #LEAGUE STATS
   #
   # # 	Total number of teams in the data.  INTEGER
-  #   def count_of_teams
-  #
-  #   end
+    def count_of_teams
+      @teams.count
+    end
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
   #   def best_offense
