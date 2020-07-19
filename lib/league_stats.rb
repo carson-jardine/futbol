@@ -50,6 +50,11 @@ class LeagueStats
     end
   end
 
+  def games_find_by_game_id(game_id)
+    @games.find do |season_stat|
+      season_stat.game_id == game_id
+    end
+  end
 
   # #LEAGUE STATS
   #
