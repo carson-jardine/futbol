@@ -1,17 +1,25 @@
-require './lib/league'
+require 'CSV'
+
+require_relative './games'
+require_relative './teams'
+require_relative './game_teams'
 
 class LeagueStats
 
 
   def initialize(filepath)
-    @games = filepath[:games]
-    @teams = filepath[:teams]
-    @game_teams = filepath[:game_teams]
-
+    @game_teams_stuff = []
+    load_game_teams(filepath)
   end
+
+  def all
+    @game_teams_stuff
+  end
+
+  
   # #LEAGUE STATS
   #
-  # # 	Total number of teams in the data.  STRING INTEGER
+  # # 	Total number of teams in the data.  INTEGER
   #   def count_of_teams
   #
   #   end

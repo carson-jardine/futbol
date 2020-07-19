@@ -3,26 +3,44 @@ require 'minitest/pride'
 # require_relative './games.csv'
 # require_relative './teams.csv'
 # require_relative './game_teams.csv'
-require './lib/league'
 require './lib/league_stats'
 
 class LeagueStatsTest < Minitest::Test
 
   def test_it_exists
-    league_stats = LeagueStatsTest.new("filepath")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    assert_instance_of LeagueStatsTest, league_stats
+
+    assert_instance_of LeagueStats, league_stats
   end
 
+  def test_league_stats_has_league_stats
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-# # 	Total number of teams in the data. INTEGER
-#   def test_count_of_teams
-#     league_stats = LeagueStatsTest.new
+    assert_equal 5, league_stats.all.count
+    assert_instance_of Array, league_stats.all
+    assert_equal "LOSS", league_stats.all.first.result
+  end
+
+  # def test_it_can_find_game_teams_id
+  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+  #
+  #   result = league_stats.find_by_game_id(1)
+  #   require 'pry'; binding.pry
+  #
+  #   assert_instance_of GameTeams, result
+  #   assert_equal "away", result.hoA
+  #   assert_equal 2012030221, result.game_id
+  # end
+
+# 	Total number of teams in the data. INTEGER
+  # def test_count_of_teams
+  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+  #   # require 'pry'; binding.pry
+  #   assert_equal LeagueStats, league_stats
+  # end
 #
-#     assert_equals LeagueStatsTest, league_stats
-#   end
-# #
-# #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
+#  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
 #   def test_best_offense
 #
 #   end
