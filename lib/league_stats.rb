@@ -1,7 +1,7 @@
 require 'CSV'
 require_relative './game_teams'
-require_relative './games'
-require_relative './teams'
+require_relative './game'
+require_relative './team'
 
 class LeagueStats
 
@@ -27,13 +27,13 @@ class LeagueStats
 
   def load_games(filepath2)
     CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-      @games << Games.new(data)
+      @games << Game.new(data)
     end
   end
 
   def load_teams(filepath3)
     CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-      @teams << Teams.new(data)
+      @teams << Team.new(data)
     end
   end
 
@@ -57,7 +57,6 @@ class LeagueStats
   end
 
 
-
   # #LEAGUE STATS METHODS
   #
   # # 	Total number of teams in the data.  INTEGER
@@ -66,19 +65,22 @@ class LeagueStats
     end
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-    def best_offense
-      # require 'pry'; binding.pry
-
-      #1) go into game_teams.csv and find who has the highest average .goals.
+    # def best_offense
+    #   # require 'pry'; binding.pry
+    #   game_teams.
+    #   #1) write a way for all the team_ids to be separated into their, like, room, add those goals together, and see who among them has the hightest goals
       #2) that should output the team_id number
       #3) use that number to search teams.csv and output the teamName
+
+
+
 # if this array has this, then print this from the array
 # .find_all(with hightest average goals)
 
 # a.selectReturn a new array containing all elements of a for which given block returns true array.select        Return a new array containing all elements of a for which given block returns true
 
       # .team_id.teamName ???
-    end
+    # end
   #
   #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
   #   def worst_offense

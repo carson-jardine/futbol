@@ -1,6 +1,6 @@
 
 
-class Games
+class Game
 
   attr_reader :game_id,
               :season,

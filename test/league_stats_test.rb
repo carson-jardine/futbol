@@ -1,8 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-# require_relative './games.csv'
-# require_relative './teams.csv'
-# require_relative './game_teams.csv'
 require './lib/league_stats'
 
 class LeagueStatsTest < Minitest::Test
@@ -57,7 +54,7 @@ class LeagueStatsTest < Minitest::Test
     assert_instance_of GameTeams, end_result
     assert_equal 2012030221, end_result.game_id
     assert_equal 3, end_result.team_id
-    assert_equal "away", end_result.hoA
+    assert_equal "away", end_result.hoa
     assert_equal "LOSS", end_result.result
     assert_equal "OT", end_result.settled_in
     assert_equal "John Tortorella", end_result.head_coach
@@ -65,9 +62,9 @@ class LeagueStatsTest < Minitest::Test
     assert_equal 8, end_result.shots
     assert_equal 44, end_result.tackles
     assert_equal 8, end_result.pim
-    assert_equal 3, end_result.powerPlayOpportunities
-    assert_equal 0, end_result.powerPlayGoals
-    assert_equal 44.8, end_result.faceOffWinPercentage
+    assert_equal 3, end_result.powerplayopportunities
+    assert_equal 0, end_result.powerplaygoals
+    assert_equal 44.8, end_result.faceoffwinpercentage
     assert_equal 17, end_result.giveaways
     assert_equal 7, end_result.takeaways
 
@@ -86,7 +83,7 @@ class LeagueStatsTest < Minitest::Test
 
     end_result = league_stats.games_find_by_game_id(2012030221)
 
-    assert_instance_of Games, end_result
+    assert_instance_of Game, end_result
     assert_equal 2012030221, end_result.game_id
     assert_equal 20122013, end_result.season
     assert_equal "Postseason", end_result.type
@@ -111,11 +108,11 @@ class LeagueStatsTest < Minitest::Test
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(1)
-
-    assert_instance_of Teams, end_result
+    # require 'pry'; binding.pry
+    assert_instance_of Team , end_result
     assert_equal 1, end_result.team_id
-    assert_equal 23, end_result.franchiseId
-    assert_equal "Atlanta United", end_result.teamName
+    assert_equal 23, end_result.franchiseid
+    assert_equal "Atlanta United", end_result.teamname
     assert_equal "ATL", end_result.abbreviation
     assert_equal "Mercedes-Benz Stadium", end_result.stadium
     assert_equal "/api/v1/teams/1", end_result.link
@@ -135,17 +132,17 @@ class LeagueStatsTest < Minitest::Test
   def test_count_of_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
 
     assert_equal 6, league_stats.count_of_teams
   end
 #
 #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-  def test_best_offense
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
-
-    assert_equal "FC Dallas", league_stats.best_offense
-  end
+  # def test_best_offense
+  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+  #
+  #   assert_equal "FC Dallas", league_stats.best_offense
+  # end
 #
 #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
 #   def test_worst_offense
