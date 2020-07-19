@@ -41,6 +41,14 @@ class LeagueStatsTest < Minitest::Test
     assert_equal "Mercedes-Benz Stadium", league_stats.all_teams.first.stadium
   end
 
+  def test_league_stats_has_league_stats_teams
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+
+    assert_equal 7, league_stats.all_games.count
+    assert_instance_of Array, league_stats.all_games
+    assert_equal "/api/v1/venues/null", league_stats.all_games.first.venue_link
+  end
+
   def test_it_can_find_game_teams_id
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
