@@ -14,5 +14,10 @@ class GameStats
     end
   end
 
+  def find_by_id(game_id)
+    @games.find do |game|
+      game.game_id == game_id
+    end
+  end
 
 end

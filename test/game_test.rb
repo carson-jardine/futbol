@@ -2,7 +2,7 @@ require './test/test_helper'
 require './lib/game.rb'
 
 
-class GamesTest < Minitest::Test
+class GameTest < Minitest::Test
 
 
   def test_it_exists
