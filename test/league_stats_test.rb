@@ -104,11 +104,11 @@ class LeagueStatsTest < Minitest::Test
   end
 
 # 	Total number of teams in the data. INTEGER
-  # def test_count_of_teams
-  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
-  #   # require 'pry'; binding.pry
-  #   assert_equal LeagueStats, league_stats
-  # end
+  def test_count_of_teams
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+    # require 'pry'; binding.pry
+    assert_equal 6, league_stats.count_of_teams
+  end
 #
 #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
 #   def test_best_offense
