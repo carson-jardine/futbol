@@ -23,10 +23,10 @@ class LeagueStats
     end
   end
 
-  def find_by_game_id(id)
+  def find_by_game_id(game_id)
     @game_teams_stuff.find do |season_stat|
       # require 'pry'; binding.pry
-      season_stat.game_id == id
+      season_stat.game_id == game_id
     end
   end
   # #LEAGUE STATS

@@ -25,10 +25,10 @@ class LeagueStatsTest < Minitest::Test
   def test_it_can_find_game_teams_id
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    end_result = league_stats.find_by_game_id(1)
+    end_result = league_stats.find_by_game_id(2012030221)
 
-    asserxt_instance_of GameTeams, end_result
-    assert_equal "away", end_result.hoA
+    assert_instance_of GameTeams, end_result
+    assert_equal "John Tortorella", end_result.head_coach
     assert_equal 2012030221, end_result.game_id
   end
 
