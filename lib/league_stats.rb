@@ -16,7 +16,13 @@ class LeagueStats
     @game_teams_stuff
   end
 
-  
+  def load_game_teams(filepath)
+    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
+      @game_teams_stuff << GameTeams.new(data)
+    end
+  end
+
+
   # #LEAGUE STATS
   #
   # # 	Total number of teams in the data.  INTEGER
