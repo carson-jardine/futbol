@@ -35,4 +35,23 @@ class GamesTest < Minitest::Test
     assert_equal "null", game.venue_link
   end
 
+  def test_it_can_have_different_attributes
+    game2 = Game.new({:game_id => "18", :season => "7",
+       :type => "PostSeason", :date_time => "7/20/2020",
+        :away_team_id => "6", :home_team_id => "3", :away_goals => "4",
+         :home_goals => "5", :venue => "Sean's House",
+          :venue_link => "null" })
+
+    assert_equal 18, game2.game_id
+    assert_equal 7, game2.season
+    assert_equal "PostSeason", game2.type
+    assert_equal "7/20/2020", game2.date_time
+    assert_equal 6, game2.away_team_id
+    assert_equal 3, game2.home_team_id
+    assert_equal 4, game2.away_goals
+    assert_equal 5, game2.home_goals
+    assert_equal "Sean's House", game2.venue
+    assert_equal "null", game2.venue_link
+  end
+
 end
