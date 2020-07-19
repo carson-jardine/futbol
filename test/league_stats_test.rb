@@ -28,7 +28,7 @@ class LeagueStatsTest < Minitest::Test
   def test_league_stats_has_league_stats_game_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    assert_equal 5, league_stats.game_teams.count
+    assert_equal 6, league_stats.game_teams.count
     assert_instance_of Array, league_stats.game_teams
     assert_equal "LOSS", league_stats.game_teams.first.result
   end
@@ -106,14 +106,16 @@ class LeagueStatsTest < Minitest::Test
 # 	Total number of teams in the data. INTEGER
   def test_count_of_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
-    # require 'pry'; binding.pry
+
     assert_equal 6, league_stats.count_of_teams
   end
 #
 #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-#   def test_best_offense
-#
-#   end
+  def test_best_offense
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+
+    assert_equal "FC Dallas", league_stats.best_offense
+  end
 #
 #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
 #   def test_worst_offense
