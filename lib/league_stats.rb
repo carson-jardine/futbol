@@ -11,8 +11,8 @@ class LeagueStats
 
   def initialize(filepath1, filepath2, filepath3)
     @game_teams = []
-    @games = []
-    @teams = []
+    @games      = []
+    @teams      = []
     load_game_teams(filepath1)
     load_games(filepath2)
     load_teams(filepath3)

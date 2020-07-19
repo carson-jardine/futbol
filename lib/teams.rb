@@ -9,12 +9,12 @@ class Teams
               :link
 
   def initialize(data)
-    @team_id = data[:team_id].to_i
-    @franchiseId = data[:franchiseId].to_i
-    @teamName = data[:teamName]
+    @team_id      = data[:team_id].to_i
+    @franchiseId  = data[:franchiseId].to_i
+    @teamName     = data[:teamName]
     @abbreviation = data[:abbreviation]
-    @stadium = data[:stadium]
-    @link = data[:link]
+    @stadium      = data[:stadium]
+    @link         = data[:link]
   end
 
 end
