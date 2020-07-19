@@ -67,7 +67,7 @@ class LeagueStatsTest < Minitest::Test
     assert_nil end_result
   end
 
-  def test_it_can_find_games_game_id
+  def test_it_can_find_teams_game_id
     league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(1)
