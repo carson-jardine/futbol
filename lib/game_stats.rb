@@ -21,10 +21,10 @@ class GameStats
   end
 
   def highest_total_score
-    scores = []
-    @games.each do |game|
-      scores << (game.home_goals) + (game.away_goals)
-    end
-    scores.max
+    @games.map do |game|
+      (game.home_goals) + (game.away_goals)
+    end.max
   end
+
+
 end
