@@ -19,20 +19,20 @@ class LeagueStats
   end
 
 
-  def load_game_teams(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
+  def load_game_teams(filepath1)
+    CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
       @game_teams << GameTeams.new(data)
     end
   end
 
-  def load_games(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
+  def load_games(filepath2)
+    CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
       @games << Games.new(data)
     end
   end
 
-  def load_teams(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
+  def load_teams(filepath3)
+    CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
       @teams << Teams.new(data)
     end
   end
@@ -67,7 +67,7 @@ class LeagueStats
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
     def best_offense
-      require 'pry'; binding.pry
+      # require 'pry'; binding.pry
 
       #1) go into game_teams.csv and find who has the highest average .goals.
       #2) that should output the team_id number

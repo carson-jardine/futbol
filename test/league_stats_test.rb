@@ -8,25 +8,25 @@ require './lib/league_stats'
 class LeagueStatsTest < Minitest::Test
 
   def test_it_exists
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_instance_of LeagueStats, league_stats
   end
 
   def test_it_exists #if csv is different
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_instance_of LeagueStats, league_stats
   end
 
   def test_it_exists #if csv is different
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_instance_of LeagueStats, league_stats
   end
 
   def test_league_stats_has_league_stats_game_teams
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal 6, league_stats.game_teams.count
     assert_instance_of Array, league_stats.game_teams
@@ -34,7 +34,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_league_stats_has_league_stats_games
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal 7, league_stats.games.count
     assert_instance_of Array, league_stats.games
@@ -42,7 +42,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_league_stats_has_league_stats_teams
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal 6, league_stats.teams.count
     assert_instance_of Array, league_stats.teams
@@ -50,7 +50,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_game_teams_has_attributes_via_game_id
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.game_teams_find_by_game_id(2012030221)
 
@@ -74,7 +74,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_returns_nil_when_no_find_match_game_teams
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.game_teams_find_by_game_id(2123432423412341)
 
@@ -82,7 +82,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_games_has_attributes_via_game_id
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.games_find_by_game_id(2012030221)
 
@@ -100,7 +100,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_returns_nil_when_no_find_match_games
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.games_find_by_game_id(2123432423412341)
 
@@ -108,9 +108,10 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_teams_has_attributes_via_team_id
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(1)
+
     assert_instance_of Teams, end_result
     assert_equal 1, end_result.team_id
     assert_equal 23, end_result.franchiseId
@@ -121,7 +122,7 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_returns_nil_when_no_find_match_teams
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(2123432423412341)
 
@@ -132,7 +133,9 @@ class LeagueStatsTest < Minitest::Test
 
 # 	Total number of teams in the data. INTEGER
   def test_count_of_teams
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+
+    require 'pry'; binding.pry
 
     assert_equal 6, league_stats.count_of_teams
   end
@@ -143,7 +146,7 @@ class LeagueStatsTest < Minitest::Test
     # teams_info = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
     # games_info = LeagueStats.new("./test/fixtures/fixtures_games.csv")
 
-    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_teams.csv", "./test/fixtures/fixtures_games.csv")
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal "FC Dallas", league_stats.best_offense
   end
