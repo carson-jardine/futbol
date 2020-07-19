@@ -14,18 +14,25 @@ class LeagueStatsTest < Minitest::Test
     assert_instance_of LeagueStats, league_stats
   end
 
+  def test_it_exists #if csv is different
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+
+
+    assert_instance_of LeagueStats, league_stats
+  end
+
   def test_league_stats_has_league_stats
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    assert_equal 5, league_stats.all.count
-    assert_instance_of Array, league_stats.all
-    assert_equal "LOSS", league_stats.all.first.result
+    assert_equal 5, league_stats.all_game_team.count
+    assert_instance_of Array, league_stats.all_game_team
+    assert_equal "LOSS", league_stats.all_game_team.first.result
   end
 
   def test_it_can_find_game_teams_id
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    end_result = league_stats.find_by_game_id(2012030221)
+    end_result = league_stats.game_teams_find_by_game_id(2012030221)
 
     assert_instance_of GameTeams, end_result
     assert_equal "John Tortorella", end_result.head_coach
@@ -35,10 +42,12 @@ class LeagueStatsTest < Minitest::Test
   def test_returns_nil_when_no_find_match
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    end_result = league_stats.find_by_game_id(2123432423412341)
+    end_result = league_stats.game_teams_find_by_game_id(2123432423412341)
 
     assert_nil end_result
   end
+
+
 
 # 	Total number of teams in the data. INTEGER
   # def test_count_of_teams
