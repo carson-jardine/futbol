@@ -6,50 +6,47 @@ require_relative './game_teams'
 
 class LeagueStats
 
+  attr_reader :game_teams,
+              :teams,
+              :games
 
   def initialize(filepath)
-    #yeah, rename the below
-    @game_teams_stuff = []
-    @teams_stuff = []
-    @games_stuff = []
+    @game_teams = []
+    @teams = []
+    @games = []
     load_game_teams(filepath)
     load_teams(filepath)
     load_games(filepath)
   end
 
-  def all_game_team
-    @game_teams_stuff
-  end
-
-  def all_teams
-    @teams_stuff
-  end
-
-  def all_games
-    @games_stuff
-  end
 
   def load_game_teams(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
-      @game_teams_stuff << GameTeams.new(data)
+      @game_teams << GameTeams.new(data)
     end
   end
 
   def load_teams(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
-      @teams_stuff << Teams.new(data)
+      @teams << Teams.new(data)
     end
   end
 
   def load_games(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
-      @games_stuff << Games.new(data)
+      @games << Games.new(data)
     end
   end
 
   def game_teams_find_by_game_id(game_id)
-    @game_teams_stuff.find do |season_stat|
+    @game_teams.find do |season_stat|
       season_stat.game_id == game_id
+    end
+  end
+
+  def teams_find_by_team_id(team_id)
+    @teams.find do |season_stat|
+      season_stat.team_id == team_id
     end
   end
 

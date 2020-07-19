@@ -28,28 +28,28 @@ class LeagueStatsTest < Minitest::Test
   def test_league_stats_has_league_stats_game_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-    assert_equal 5, league_stats.all_game_team.count
-    assert_instance_of Array, league_stats.all_game_team
-    assert_equal "LOSS", league_stats.all_game_team.first.result
+    assert_equal 5, league_stats.game_teams.count
+    assert_instance_of Array, league_stats.game_teams
+    assert_equal "LOSS", league_stats.game_teams.first.result
   end
 
   def test_league_stats_has_league_stats_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, league_stats.all_teams.count
-    assert_instance_of Array, league_stats.all_teams
-    assert_equal "Mercedes-Benz Stadium", league_stats.all_teams.first.stadium
+    assert_equal 6, league_stats.teams.count
+    assert_instance_of Array, league_stats.teams
+    assert_equal "Mercedes-Benz Stadium", league_stats.teams.first.stadium
   end
 
-  def test_league_stats_has_league_stats_teams
+  def test_league_stats_has_league_stats_games
     league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
 
-    assert_equal 7, league_stats.all_games.count
-    assert_instance_of Array, league_stats.all_games
-    assert_equal "/api/v1/venues/null", league_stats.all_games.first.venue_link
+    assert_equal 7, league_stats.games.count
+    assert_instance_of Array, league_stats.games
+    assert_equal "/api/v1/venues/null", league_stats.games.first.venue_link
   end
 
-  def test_it_can_find_game_teams_id
+  def test_it_can_find_game_teams_game_id
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
     end_result = league_stats.game_teams_find_by_game_id(2012030221)
@@ -67,7 +67,15 @@ class LeagueStatsTest < Minitest::Test
     assert_nil end_result
   end
 
+  def test_it_can_find_games_game_id
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
 
+    end_result = league_stats.teams_find_by_team_id(1)
+
+    assert_instance_of Teams, end_result
+    assert_equal "ATL", end_result.abbreviation
+    assert_equal 1, end_result.team_id
+  end
 
 # 	Total number of teams in the data. INTEGER
   # def test_count_of_teams
