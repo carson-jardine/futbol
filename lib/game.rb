@@ -21,6 +21,5 @@ class Game
     @home_goals = data[:home_goals].to_i
     @venue = data[:venue]
     @venue_link = data[:venue_link]
-
-    end
+  end
 end
