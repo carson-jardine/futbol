@@ -10,7 +10,9 @@ class LeagueStats
   def initialize(filepath)
     #yeah, rename the below
     @game_teams_stuff = []
+    @teams_stuff = []
     load_game_teams(filepath)
+    load_teams(filepath)
   end
 
   def all_game_team
@@ -24,6 +26,12 @@ class LeagueStats
   def load_game_teams(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
       @game_teams_stuff << GameTeams.new(data)
+    end
+  end
+
+  def load_teams(filepath)
+    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |data|
+      @teams_stuff << Teams.new(data)
     end
   end
 

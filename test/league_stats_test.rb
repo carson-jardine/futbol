@@ -10,23 +10,35 @@ class LeagueStatsTest < Minitest::Test
   def test_it_exists
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
-
     assert_instance_of LeagueStats, league_stats
   end
 
   def test_it_exists #if csv is different
     league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
 
+    assert_instance_of LeagueStats, league_stats
+  end
+
+  def test_it_exists #if csv is different
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_games.csv")
 
     assert_instance_of LeagueStats, league_stats
   end
 
-  def test_league_stats_has_league_stats
+  def test_league_stats_has_league_stats_game_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv")
 
     assert_equal 5, league_stats.all_game_team.count
     assert_instance_of Array, league_stats.all_game_team
     assert_equal "LOSS", league_stats.all_game_team.first.result
+  end
+
+  def test_league_stats_has_league_stats_teams
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_teams.csv")
+
+    assert_equal 6, league_stats.all_teams.count
+    assert_instance_of Array, league_stats.all_teams
+    assert_equal "Mercedes-Benz Stadium", league_stats.all_teams.first.stadium
   end
 
   def test_it_can_find_game_teams_id
