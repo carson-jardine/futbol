@@ -6,9 +6,6 @@ require_relative './teams.csv'
 require_relative './game_teams.csv'
 
 
-
-
-
 class StatTrackerTest < Minitest::Test
 
   def test_it_exists

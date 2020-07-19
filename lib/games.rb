@@ -2,8 +2,6 @@
 
 class Games
 
-
-
   def initialize(name)
     @name = name
 
