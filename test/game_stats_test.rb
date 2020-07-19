@@ -42,4 +42,9 @@ class GameStatsTest < Minitest::Test
     assert_nil game
   end
 
+  def test_it_can_give_highest_total_score
+    game_stats = GameStats.new("./test/fixtures/games.csv")
+
+    assert_equal 6, game_stats.highest_total_score
+  end
 end
