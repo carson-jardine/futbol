@@ -56,7 +56,7 @@ class LeagueStats
     end
   end
 
-  # #LEAGUE STATS
+  # #LEAGUE STATS METHODS
   #
   # # 	Total number of teams in the data.  INTEGER
     def count_of_teams
@@ -64,9 +64,15 @@ class LeagueStats
     end
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-  #   def best_offense
-  #
-  #   end
+    def best_offense
+      require 'pry'; binding.pry
+
+      #1) go into game_teams.csv and find who has the highest average .goals.
+      #2) that should output the team_id number
+      #3) use that number to search teams.csv and output the teamName
+
+
+    end
   #
   #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
   #   def worst_offense
