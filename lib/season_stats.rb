@@ -176,9 +176,28 @@ class SeasonStats
   #
   #
   # #Name of the Team with the most tackles in the season	String
-  # def most_tackles
-  #
-  # end
+  def most_tackles
+    teams_by_id = []
+    team_and_total_tackles = {}
+    top_tacklers = []
+    highest_tacklers = []
+    teams_by_id = game_teams.group_by do |game_team|
+      game_team.team_id
+    end
+    teams_by_id.each do |team|
+      goals_by_team = team[1].sum do |the_tackles|
+        the_tackles.tackles
+      end
+      team_and_total_tackles[team[0]] = goals_by_team
+    end
+    top_tacklers = largest_hash_key(team_and_total_tackles)[0]
+    teams.each do |team|
+      if team.team_id == top_tacklers
+        highest_tacklers << team.teamname
+      end
+    end
+    highest_tacklers[0]
+  end
   #
   #
   # #Name of the Team with the fewest tackles in the season	String
