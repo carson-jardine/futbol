@@ -138,11 +138,11 @@ class LeagueStatsTest < Minitest::Test
   end
 #
 #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-  # def test_best_offense
-  #   league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "FC Dallas", league_stats.best_offense
-  # end
+  def test_best_offense
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    
+    assert_equal "FC Dallas", league_stats.best_offense
+  end
 #
 #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
 #   def test_worst_offense

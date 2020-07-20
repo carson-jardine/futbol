@@ -56,6 +56,9 @@ class LeagueStats
     end
   end
 
+  def largest_hash_key(hash)
+    hash.max_by{|k,v| v}
+  end
 
   # #LEAGUE STATS METHODS
   #
@@ -65,19 +68,37 @@ class LeagueStats
     end
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-    # def best_offense
-    #   # require 'pry'; binding.pry
-    #   game_teams.
+    def best_offense
+      @teams_by_id = []
+      @team_and_total_score = {}
+      @top_scorer = []
+      @best_team = []
+      @teams_by_id = @game_teams.group_by do |game_team|
+        game_team.team_id
+      end
+      @teams_by_id.each do |team|
+        @goals_by_team = team[1].sum do |the_goals|
+          the_goals.goals
+        end
+        @team_and_total_score[team[0]] = @goals_by_team
+      end
+      @top_scorer = largest_hash_key(@team_and_total_score)[0]
+
+      teams.each do |team|
+        if team.team_id == @top_scorer
+          @best_team << team.teamname
+        end
+      end
+      # require 'pry'; binding.pry
+
+      @best_team[0]
+    end
     #   #1) write a way for all the team_ids to be separated into their, like, room, add those goals together, and see who among them has the hightest goals
       #2) that should output the team_id number
       #3) use that number to search teams.csv and output the teamName
 
 
-
-# if this array has this, then print this from the array
-# .find_all(with hightest average goals)
-
-# a.selectReturn a new array containing all elements of a for which given block returns true array.select        Return a new array containing all elements of a for which given block returns true
+# a.select Return a new array containing all elements of a for which given block returns true array.select        Return a new array containing all elements of a for which given block returns true
 
       # .team_id.teamName ???
     # end
