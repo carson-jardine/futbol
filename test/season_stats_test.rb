@@ -138,31 +138,33 @@ class SeasonStatsTest < Minitest::Test
 #
 #
 #   #Name of the Coach with the worst win percentage for the season	String
-#   def worst_coach_test
-#
-#   end
+  def test_worst_coach
+    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+
+    assert_equal "John Tortorella", season_stats.worst_coach
+  end
 #
 #
 #   #Name of the Team with the best ratio of shots to goals for the season	String
-#   def most_accurate_team_test
+#   def test_most_accurate_team
 #
 #   end
 #
 #
 #   #Name of the Team with the worst ratio of shots to goals for the season	String
-#   def least_accurate_team_test
+#   def test_least_accurate_team
 #
 #   end
 #
 #
 #   #Name of the Team with the most tackles in the season	String
-#   def most_tackles_test
+#   def test_most_tackles
 #
 #   end
 #
 #
 #   #Name of the Team with the fewest tackles in the season	String
-#   def fewest_tackles_test
+#   def test_fewest_tackles
 #
 #   end
 
