@@ -14,7 +14,7 @@ class GameStatsTest < Minitest::Test
   def test_game_stats_has_games
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
-    assert_equal 6, game_stats.games.count
+    assert_equal 5, game_stats.games.count
   end
 
   def test_it_can_find_game_by_id
@@ -59,6 +59,12 @@ class GameStatsTest < Minitest::Test
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 66.67, game_stats.percentage_home_wins(6)
+  end
+
+  def test_it_can_give_percentage_away_wins
+    game_stats = GameStats.new("./test/fixtures/games.csv")
+
+    assert_equal 33.33, game_stats.percentage_away_wins(3)
   end
 
 end

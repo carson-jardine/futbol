@@ -43,4 +43,15 @@ class GameStats
     ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
   end
 
+
+  def percentage_away_wins(id)
+    away_games = @games.find_all do |game|
+      game.away_team_id == id
+    end
+    away_games_wins = away_games.find_all do |game|
+      game.away_goals > game.home_goals
+    end
+    ((away_games_wins.count.to_f / away_games.count.to_f) * 100).round(2)
+  end
+
 end
