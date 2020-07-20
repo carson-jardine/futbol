@@ -60,6 +60,9 @@ class LeagueStats
     hash.max_by{|k,v| v}
   end
 
+  def smallest_hash_key(hash)
+    hash.min_by{|k,v| v}
+  end
 
 
   # #LEAGUE STATS METHODS
@@ -101,7 +104,26 @@ class LeagueStats
   #
   #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
     def worst_offense
-
+      @teams_by_id = []
+      @team_and_total_score = {}
+      @bottom_scorer = []
+      @worst_team = []
+      @teams_by_id = @game_teams.group_by do |game_team|
+        game_team.team_id
+      end
+      @teams_by_id.each do |team|
+        @goals_by_team = team[1].sum do |the_goals|
+          the_goals.goals
+        end
+        @team_and_total_score[team[0]] = @goals_by_team
+      end
+      @bottom_scorer = smallest_hash_key(@team_and_total_score)[0]
+      teams.each do |team|
+        if team.team_id == @bottom_scorer
+          @worst_team << team.teamname
+        end
+      end
+      @worst_team[0]
     end
   #
   # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
