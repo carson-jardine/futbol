@@ -25,7 +25,7 @@ class LeagueStatsTest < Minitest::Test
   def test_league_stats_has_league_stats_game_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, league_stats.game_teams.count
+    assert_equal 8, league_stats.game_teams.count
     assert_instance_of Array, league_stats.game_teams
     assert_equal "LOSS", league_stats.game_teams.first.result
   end
