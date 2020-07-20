@@ -18,7 +18,6 @@ class LeagueStats
     load_teams(filepath3)
   end
 
-
   def load_game_teams(filepath1)
     CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
       @game_teams << GameTeams.new(data)
@@ -36,7 +35,6 @@ class LeagueStats
       @teams << Team.new(data)
     end
   end
-
 
   def game_teams_find_by_game_id(game_id)
     @game_teams.find do |season_stat|
