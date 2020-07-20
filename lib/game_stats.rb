@@ -1,5 +1,6 @@
 require 'CSV'
 require './lib/game'
+require 'pry'
 
 class GameStats
   attr_reader :games
@@ -30,6 +31,16 @@ class GameStats
     @games.map do |game|
       (game.home_goals) + (game.away_goals)
     end.min
+  end
+
+  def percentage_home_wins(id)
+    home_games = @games.find_all do |game|
+      game.home_team_id == id
+    end
+    home_games_wins = home_games.find_all do |game|
+      game.home_goals > game.away_goals
+    end
+    ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
   end
 
 end
