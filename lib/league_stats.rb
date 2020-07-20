@@ -73,24 +73,26 @@ class LeagueStats
       @team_and_total_score = {}
       @top_scorer = []
       @best_team = []
+      #first, group/arrange the games according to their team_id in a hash. Key = team_id, value = stats for the games that team was in
       @teams_by_id = @game_teams.group_by do |game_team|
         game_team.team_id
       end
+      #next, make a new hash of key = team_id, value = total # of goals across all games.
       @teams_by_id.each do |team|
         @goals_by_team = team[1].sum do |the_goals|
           the_goals.goals
         end
         @team_and_total_score[team[0]] = @goals_by_team
       end
+      #next find the key that has the highest value, and assign that key to @top_scorer
       @top_scorer = largest_hash_key(@team_and_total_score)[0]
-
+      #next, find the team name that correlates to the @top_scorer
       teams.each do |team|
         if team.team_id == @top_scorer
           @best_team << team.teamname
         end
       end
-      # require 'pry'; binding.pry
-
+      #finally, print the teamname.
       @best_team[0]
     end
     #   #1) write a way for all the team_ids to be separated into their, like, room, add those goals together, and see who among them has the hightest goals
