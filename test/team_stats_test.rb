@@ -20,6 +20,15 @@ class TeamStatsTest < Minitest::Test
 
   end
 
+  def test_it_can_find_team_by_id
+    team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
+    result = team_stats.find_team_by_id(4)
+
+    assert_instance_of Team, result
+    assert_equal "Chicago Fire", result.teamname
+    assert_equal 4, result.team_id
+  end
+
 
 
   # def test_it_returns_nil_when_no_match
