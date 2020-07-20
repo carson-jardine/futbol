@@ -156,9 +156,33 @@ class LeagueStats
     end
   #
   # # Name of the team with the highest average score per game across all seasons when they are home.  STRING
-  #   def highest_scoring_home_team
-  #
-  #   end
+    def highest_scoring_home_team
+      @teams_by_id = []
+      @team_and_total_score = {}
+      @top_scorer = []
+      @best_team = []
+      @home_games = @game_teams.find_all do |game_team|
+        # require 'pry'; binding.pry
+        game_team.hoa == "home"
+
+      end
+      @teams_by_id = @home_games.group_by do |home_games|
+        home_games.team_id
+      end
+      @teams_by_id.each do |team|
+        @goals_by_team = team[1].sum do |the_goals|
+          the_goals.goals
+        end
+        @team_and_total_score[team[0]] = @goals_by_team
+      end
+      @top_scorer = largest_hash_key(@team_and_total_score)[0]
+      teams.each do |team|
+        if team.team_id == @top_scorer
+          @best_team << team.teamname
+        end
+      end
+      @best_team[0]
+    end
   #
   #  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
   #   def lowest_scoring_visitor
