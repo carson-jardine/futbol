@@ -17,6 +17,10 @@ class TeamStats
     end
   end
 
+  def find_team_by_id(team_id)
+    @teams.find { |team| team.team_id == team_id }
+  end
+
 
 
 
