@@ -76,12 +76,14 @@ class LeagueStats
       team_and_total_score = {}
       top_scorer = []
       best_team = []
-      #first, group/arrange the games according to their team_id in a hash. Key = team_id, value = stats for the games that team was in
+      #first, group/arrange the games according to their team_id in a hash.
+      # Key = team_id, value = stats for the games that team was in
       teams_by_id = game_teams.group_by do |game_team|
         game_team.team_id
       end
       #next, make a new hash of key = team_id, value = total # of goals across all games.
       teams_by_id.each do |team|
+        require 'pry'; binding.pry
         goals_by_team = team[1].sum do |the_goals|
           the_goals.goals
         end

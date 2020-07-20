@@ -62,6 +62,7 @@ class SeasonStats
     hash.min_by{|k,v| v}
   end
 
+# Name of the Coach with the best win percentage for the season  Wins/totalgame
   def winningest_coach
     teams_by_id = []
     team_and_wins = {}
