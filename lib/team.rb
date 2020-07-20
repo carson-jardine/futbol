@@ -9,7 +9,6 @@ class Team
               :link
 
   def initialize(teams_info)
-    # require 'pry'; binding.pry
     @team_id      = teams_info[:team_id].to_i
     @franchiseid  = teams_info[:franchiseid].to_i
     @teamname     = teams_info[:teamname].to_s
