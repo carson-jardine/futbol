@@ -25,7 +25,7 @@ class SeasonStatsTest < Minitest::Test
   def test_season_stats_has_season_stats_game_teams
     season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, season_stats.game_teams.count
+    assert_equal 8, season_stats.game_teams.count
     assert_instance_of Array, season_stats.game_teams
     assert_equal "LOSS", season_stats.game_teams.first.result
   end
@@ -41,7 +41,7 @@ class SeasonStatsTest < Minitest::Test
   def test_season_stats_has_season_stats_teams
     season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, season_stats.teams.count
+    assert_equal 8, season_stats.teams.count
     assert_instance_of Array, season_stats.teams
     assert_equal "Mercedes-Benz Stadium", season_stats.teams.first.stadium
   end
@@ -130,8 +130,8 @@ class SeasonStatsTest < Minitest::Test
 #
 #   #Name of the Coach with the best win percentage for the season	String
 #
-  def winningest_coach_test
-    season_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+  def test_winningest_coach
+    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal "Claude Julien", season_stats.winningest_coach
   end
