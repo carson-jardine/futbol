@@ -157,7 +157,7 @@ class SeasonStatsTest < Minitest::Test
   def test_least_accurate_team
     season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal "FC Dallas", season_stats.least_accurate_team
+    assert_equal "Orlando City SC", season_stats.least_accurate_team
   end
 #
 #

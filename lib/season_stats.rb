@@ -146,9 +146,33 @@ class SeasonStats
   #
   #
   # #Name of the Team with the worst ratio of shots to goals for the season	String
-  # def least_accurate_team
-  #
-  # end
+  def least_accurate_team
+    teams_by_id = []
+    team_and_accuracy = {}
+    best_team = []
+    team_name = []
+    team_accuracy = []
+    teams_by_id = game_teams.group_by do |game_team|
+      game_team.team_id
+    end
+    teams_by_id.each do |team|
+      goals_by_team = team[1].sum do |the_goals|
+        the_goals.goals.to_f
+      end
+      shots_by_team = team[1].sum do |the_shots|
+        the_shots.shots.to_f
+      end
+      team_accuracy = goals_by_team / shots_by_team
+      team_and_accuracy[team[0]] = team_accuracy
+    end
+    best_team = smallest_hash_key(team_and_accuracy)[0]
+    teams.each do |team|
+      if team.team_id == best_team
+        team_name << team.teamname
+      end
+    end
+    team_name[0]
+  end
   #
   #
   # #Name of the Team with the most tackles in the season	String
