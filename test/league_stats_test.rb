@@ -126,18 +126,13 @@ class LeagueStatsTest < Minitest::Test
     assert_nil end_result
   end
 
-
-
-# 	Total number of teams in the data. INTEGER
+  # #LEAGUE STATS METHODS
   def test_count_of_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    # require 'pry'; binding.pry
-
     assert_equal 6, league_stats.count_of_teams
   end
-#
-#  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
+
   def test_best_offense
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
@@ -156,25 +151,18 @@ class LeagueStatsTest < Minitest::Test
     assert_equal "Houston Dynamo", league_stats.highest_scoring_visitor
   end
 
-#
-# # Name of the team with the highest average score per game across all seasons when they are home.  STRING
-#   def
   def test_highest_scoring_home_team
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
     assert_equal "FC Dallas", league_stats.highest_scoring_home_team
   end
 
-#   end
-#
-#  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
-def test_lowest_scoring_visitor
-  league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+  def test_lowest_scoring_visitor
+    league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-  assert_equal "FC Dallas", league_stats.lowest_scoring_visitor
-end
-#
-#  # 	Name of the team with the lowest average score per game across all seasons when they are at home.  STRING
+    assert_equal "FC Dallas", league_stats.lowest_scoring_visitor
+  end
+
   def test_lowest_scoring_home_team
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
