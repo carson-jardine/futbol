@@ -20,14 +20,26 @@ class TeamStatsTest < Minitest::Test
 
   end
 
-  def test_it_can_find_team_by_id
+  def test_it_can_find_team_info_by_id
     team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
-    result = team_stats.find_team_by_id(4)
+    result = team_stats.team_info(4)
 
     assert_instance_of Team, result
     assert_equal "Chicago Fire", result.teamname
     assert_equal 4, result.team_id
+    assert_equal 16, result.franchiseid
+    assert_equal "CHI", result.abbreviation
+    assert_equal "/api/v1/teams/4", result.link
+    # binding.pry
   end
+
+  # def test_it_can_get_team_info
+  #   team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
+  #   result = team_stats.team_info(1)
+  #   assert_equal {:team_id => 1, :franchiseid => 23, :teamname => "Atlanta United", :abbreviation => "ATL", :link => "/api/v1/teams/1"}, teamstats.team_info(result)
+  #
+  #
+  # end
 
 
 
