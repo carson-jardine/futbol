@@ -64,9 +64,32 @@ class SeasonStats
 
   # #Name of the Coach with the best win percentage for the season	String
   #
-  # def winningest_coach
-  #
-  # end
+  def winningest_coach
+    teams_by_id = []
+    team_and_total_score = {}
+    top_scorer = []
+    best_coach = []
+    win_games = game_teams.find_all do |game_team|
+      game_team.result == "WIN"
+    end
+    teams_by_id = win_games.group_by do |win_game|
+      win_game.team_id
+    end
+    
+    # teams_by_id.each do |team|
+    #   goals_by_team = team[1].sum do |the_goals|
+    #     the_goals.goals
+    #   end
+    #   team_and_total_score[team[0]] = goals_by_team
+    # end
+    # top_scorer = largest_hash_key(team_and_total_score)[0]
+    # teams.each do |team|
+    #   if team.team_id == top_scorer
+    #     best_team << team.teamname
+    #   end
+    # end
+    # best_team[0]
+  end
   #
   #
   # #Name of the Coach with the worst win percentage for the season	String
