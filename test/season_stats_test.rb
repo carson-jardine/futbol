@@ -170,8 +170,10 @@ class SeasonStatsTest < Minitest::Test
 #
 #
 #   #Name of the Team with the fewest tackles in the season	String
-#   def test_fewest_tackles
-#
-#   end
+  def test_fewest_tackles
+    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+
+    assert_equal "Orlando City SC", season_stats.fewest_tackles
+  end
 
 end
