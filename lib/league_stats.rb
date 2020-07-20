@@ -60,6 +60,8 @@ class LeagueStats
     hash.max_by{|k,v| v}
   end
 
+
+
   # #LEAGUE STATS METHODS
   #
   # # 	Total number of teams in the data.  INTEGER
@@ -95,20 +97,12 @@ class LeagueStats
       #finally, print the teamname.
       @best_team[0]
     end
-    #   #1) write a way for all the team_ids to be separated into their, like, room, add those goals together, and see who among them has the hightest goals
-      #2) that should output the team_id number
-      #3) use that number to search teams.csv and output the teamName
 
-
-# a.select Return a new array containing all elements of a for which given block returns true array.select        Return a new array containing all elements of a for which given block returns true
-
-      # .team_id.teamName ???
-    # end
   #
   #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
-  #   def worst_offense
-  #
-  #   end
+    def worst_offense
+
+    end
   #
   # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
   #   def highest_scoring_visitor
