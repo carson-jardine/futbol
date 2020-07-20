@@ -90,9 +90,30 @@ class SeasonStats
   #
   #
   # #Name of the Coach with the worst win percentage for the season	String
-  # def worst_coach
-  #
-  # end
+  def worst_coach
+    teams_by_id = []
+    team_and_loses = {}
+    worst_coach = []
+    coach_name = []
+    lose_games = game_teams.find_all do |game_team|
+      game_team.result == "LOSS"
+    end
+    teams_by_id = lose_games.group_by do |lose_game|
+      lose_game.team_id
+    end
+    teams_by_id.each do |team|
+      loses_by_team = team[1].count
+      team_and_loses[team[0]] = loses_by_team
+    end
+    worst_coach = largest_hash_key(team_and_loses)[0]
+
+    game_teams.each do |team|
+      if team.team_id == worst_coach
+        coach_name << team.head_coach
+      end
+    end
+    coach_name[0]
+  end
   #
   #
   # #Name of the Team with the best ratio of shots to goals for the season	String
