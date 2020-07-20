@@ -41,7 +41,7 @@ class LeagueStatsTest < Minitest::Test
   def test_league_stats_has_league_stats_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, league_stats.teams.count
+    assert_equal 8, league_stats.teams.count
     assert_instance_of Array, league_stats.teams
     assert_equal "Mercedes-Benz Stadium", league_stats.teams.first.stadium
   end
@@ -130,7 +130,7 @@ class LeagueStatsTest < Minitest::Test
   def test_count_of_teams
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal 6, league_stats.count_of_teams
+    assert_equal 8, league_stats.count_of_teams
   end
 
   def test_best_offense
@@ -142,7 +142,7 @@ class LeagueStatsTest < Minitest::Test
   def test_worst_offense
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal "Houston Dynamo", league_stats.worst_offense
+    assert_equal "Orlando City SC", league_stats.worst_offense
   end
 
   def test_highest_scoring_visitor
@@ -160,7 +160,7 @@ class LeagueStatsTest < Minitest::Test
   def test_lowest_scoring_visitor
     league_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-    assert_equal "FC Dallas", league_stats.lowest_scoring_visitor
+    assert_equal "Orlando City SC", league_stats.lowest_scoring_visitor
   end
 
   def test_lowest_scoring_home_team
