@@ -62,8 +62,6 @@ class SeasonStats
     hash.min_by{|k,v| v}
   end
 
-  # #Name of the Coach with the best win percentage for the season	String
-  #
   def winningest_coach
     teams_by_id = []
     team_and_wins = {}
@@ -87,9 +85,7 @@ class SeasonStats
     end
     coach_name[0]
   end
-  #
-  #
-  # #Name of the Coach with the worst win percentage for the season	String
+
   def worst_coach
     teams_by_id = []
     team_and_loses = {}
@@ -113,9 +109,7 @@ class SeasonStats
     end
     coach_name[0]
   end
-  #
-  #
-  # #Name of the Team with the best ratio of shots to goals for the season	String
+
   def most_accurate_team
     teams_by_id = []
     team_and_accuracy = {}
@@ -143,9 +137,7 @@ class SeasonStats
     end
     team_name[0]
   end
-  #
-  #
-  # #Name of the Team with the worst ratio of shots to goals for the season	String
+
   def least_accurate_team
     teams_by_id = []
     team_and_accuracy = {}
@@ -173,9 +165,7 @@ class SeasonStats
     end
     team_name[0]
   end
-  #
-  #
-  # #Name of the Team with the most tackles in the season	String
+
   def most_tackles
     teams_by_id = []
     team_and_total_tackles = {}
@@ -198,9 +188,7 @@ class SeasonStats
     end
     lowest_tacklers[0]
   end
-  #
-  #
-  # #Name of the Team with the fewest tackles in the season	String
+
   def fewest_tackles
     teams_by_id = []
     team_and_total_tackles = {}
