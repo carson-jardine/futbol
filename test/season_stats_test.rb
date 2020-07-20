@@ -146,9 +146,11 @@ class SeasonStatsTest < Minitest::Test
 #
 #
 #   #Name of the Team with the best ratio of shots to goals for the season	String
-#   def test_most_accurate_team
-#
-#   end
+  def test_most_accurate_team
+    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+
+    assert_equal "FC Dallas", season_stats.most_accurate_team
+  end
 #
 #
 #   #Name of the Team with the worst ratio of shots to goals for the season	String
