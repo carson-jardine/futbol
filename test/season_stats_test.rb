@@ -130,9 +130,11 @@ class SeasonStatsTest < Minitest::Test
 #
 #   #Name of the Coach with the best win percentage for the season	String
 #
-#   def winningest_coach_test
-#
-#   end
+  def winningest_coach_test
+    season_stats = LeagueStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+
+    assert_equal "Claude Julien", season_stats.winningest_coach
+  end
 #
 #
 #   #Name of the Coach with the worst win percentage for the season	String
