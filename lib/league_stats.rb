@@ -3,6 +3,8 @@ require_relative './game_teams'
 require_relative './game'
 require_relative './team'
 
+require 'pry'
+
 class LeagueStats
 
   attr_reader :game_teams,
@@ -84,6 +86,7 @@ class LeagueStats
         goals_by_team = team[1].sum do |the_goals|
           the_goals.goals
         end
+
         team_and_total_score[team[0]] = goals_by_team
       end
       #next find the key that has the highest value, and assign that key to @top_scorer
