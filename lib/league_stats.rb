@@ -72,7 +72,7 @@ class LeagueStats
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
     def best_offense
-      teams_by_id = []
+      # teams_by_id = []
       team_and_total_score = {}
       top_scorer = []
       best_team = []
@@ -83,7 +83,6 @@ class LeagueStats
       end
       #next, make a new hash of key = team_id, value = total # of goals across all games.
       teams_by_id.each do |team|
-        require 'pry'; binding.pry
         goals_by_team = team[1].sum do |the_goals|
           the_goals.goals
         end
