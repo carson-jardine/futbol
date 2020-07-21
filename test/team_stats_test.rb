@@ -6,12 +6,12 @@ require 'pry'
 class TeamStatsTest < Minitest::Test
 
   def test_it_exists
-  team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
+  team_stats = TeamStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
   end
 
   def test_team_stats_have_stats
-    team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
-    assert_equal 5, team_stats.teams.count
+    team_stats = TeamStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    assert_equal 8, team_stats.teams.count
     assert_instance_of Array, team_stats.teams
 
     assert_equal "Atlanta United", team_stats.teams.first.teamname
@@ -21,7 +21,7 @@ class TeamStatsTest < Minitest::Test
   end
 
   def test_it_can_find_team_info_by_id
-    team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv")
+    team_stats = TeamStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
     result = team_stats.team_info(4)
 
     assert_instance_of Team, result
@@ -30,20 +30,13 @@ class TeamStatsTest < Minitest::Test
     assert_equal 16, result.franchiseid
     assert_equal "CHI", result.abbreviation
     assert_equal "/api/v1/teams/4", result.link
-    binding.pry
+
   end
 
   def test_it_can_find_season_with_highest_win_percentage
-    skip
-    team_stats = TeamStats.new("./test/fixtures/fixtures_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_game_teams.csv")
+    team_stats = TeamStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
 
-
-    assert_equal "Season", result.best_season
-
-
-
-
-
+    assert_equal "Season", team_stats.best_season(6)
   end
 
 
