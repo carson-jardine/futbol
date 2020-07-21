@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/teams'
+require './lib/team'
 
-class TeamsTest < Minitest::Test
+class TeamTest < Minitest::Test
 
   def test_it_exists
     team1 = Teams.new({:team_id => "1", :franchiseId => "23", :teamName => "Atlanta United", :abbreviation => "ATL", :stadium => "Mercedes-Benz Stadium", :link => "/api/v1/teams/1"})
