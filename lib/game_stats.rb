@@ -61,6 +61,14 @@ class GameStats
     ((tied_games.count.to_f / @games.count.to_f) * 100).round(2)
   end
 
-
-
+    def games_by_season
+     games_by_season = {} #
+     season_by_id = games.group_by do |game|
+       game.season
+     end
+     season_by_id.each do |season|
+      games_by_season[season[0]] = season[1].count
+     end
+     games_by_season
+    end
 end

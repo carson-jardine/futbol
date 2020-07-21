@@ -73,4 +73,12 @@ class GameStatsTest < Minitest::Test
     assert_equal 16.67, game_stats.percentage_ties
   end
 
+  def test_it_can_count_games_by_season
+    game_stats = GameStats.new("./test/fixtures/games.csv")
+
+    result = game_stats.games_by_season
+
+    assert_equal result, {20122013=>3, 20132014=>1, 20142015=>2} 
+  end
+
 end
