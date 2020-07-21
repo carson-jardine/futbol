@@ -71,4 +71,17 @@ class GameStats
      end
      games_by_season
     end
+
+    def goal_totals_for_all_games
+      games.map do |game|
+        game.away_goals + game.home_goals
+      end
+    end
+
+    def average_goals_per_game
+      (goal_totals_for_all_games.sum.to_f / goal_totals_for_all_games.count.to_f).round(2)
+    end
+
+
+    
 end
