@@ -54,4 +54,15 @@ class GameTest < Minitest::Test
     assert_equal "null", game2.venue_link
   end
 
+  def test_it_can_give_total_goals
+    game1 = Game.new({away_goals: "4", home_goals: "5"})
+    game2 = Game.new({away_goals: 2, home_goals: 3})
+    game3 = Game.new({away_goals: 1, home_goals: 2})
+
+
+    assert_equal 9, game1.total_goals_for_game
+    assert_equal 5, game2.total_goals_for_game
+    assert_equal 3, game3.total_goals_for_game
+  end
+
 end
