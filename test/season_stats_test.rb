@@ -182,17 +182,17 @@ class SeasonStatsTest < Minitest::Test
     assert_equal "FC Dallas", season_stats.most_tackles(20122012)
   end
 
-  # def test_fewest_tackles_with_fixtures
-    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122013)
-  # end
+  def test_fewest_tackles_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
-  # def test_fewest_tackles_diff_season_with_fixtures
-    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122012)
-  # end
+    assert_equal "FC Dallas", season_stats.fewest_tackles(20122013)
+  end
+
+  def test_fewest_tackles_diff_season_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", season_stats.fewest_tackles(20122012)
+  end
 
 # SEASON STATS with real numbers
 
