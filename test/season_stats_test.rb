@@ -149,19 +149,31 @@ class SeasonStatsTest < Minitest::Test
   def test_worst_coach_diff_season
     season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
-    assert_equal "Gerard Gallant", season_stats.worst_coach(20122013)
+    assert_equal "Ron Rolston", season_stats.worst_coach(20142015)
   end
-  #
-  # def test_most_accurate_team
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_equal "FC Dallas", season_stats.most_accurate_team(20122013)
-  # end
-  #
+
+  def test_most_accurate_team
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "DC United", season_stats.most_accurate_team(20122013)
+  end
+
+  def test_most_accurate_team_diff_season
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "Toronto FC", season_stats.most_accurate_team(20142015)
+  end
+
   # def test_least_accurate_team
   #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
   #
   #   assert_equal "Orlando City SC", season_stats.least_accurate_team(20122013)
+  # end
+
+  # def test_least_accurate_team_diff_season
+  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+  #
+  #   assert_equal "Orlando City SC", season_stats.least_accurate_team(20142015)
   # end
   #
   # def test_most_tackles
@@ -170,7 +182,19 @@ class SeasonStatsTest < Minitest::Test
   #   assert_equal "FC Dallas", season_stats.most_tackles(20122013)
   # end
   #
+  # def test_most_tackles_diff_season
+  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+  #
+  #   assert_equal "FC Dallas", season_stats.most_tackles(20122013)
+  # end
+
   # def test_fewest_tackles
+  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+  #
+  #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122013)
+  # end
+
+  # def test_fewest_tackles_diff_season
   #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
   #
   #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122013)
