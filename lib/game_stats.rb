@@ -2,7 +2,7 @@ require 'CSV'
 require './lib/game'
 require 'pry'
 
-class GameStats
+class GameStats < Game
   attr_reader :games
   def initialize(filepath)
     @games = []
@@ -72,16 +72,30 @@ class GameStats
      games_by_season
     end
 
-    def goal_totals_for_all_games
-      games.map do |game|
-        game.away_goals + game.home_goals
-      end
-    end
-
     def average_goals_per_game
-      (goal_totals_for_all_games.sum.to_f / goal_totals_for_all_games.count.to_f).round(2)
+      result = games.map do |game|
+        game.total_goals_for_game
+      end
+      (result.sum.to_f / result.count.to_f).round(2)
     end
 
+    def average_goals_for_season(season_games)
+      goal_totals = []
+      season_games.each do |game|
+        goal_totals << game.total_goals_for_game
+      end
+      (goal_totals.sum.to_f / goal_totals.count.to_f).round(2)
+    end
 
-    
+    def average_goals_by_season
+     avg_goals_per_season = {}
+     season_by_id = games.group_by do |game|
+       game.season
+     end
+     season_by_id.each do |season, season_games|
+       avg_goals_per_season[season] = average_goals_for_season(season_games)
+     end
+     avg_goals_per_season
+    end
+
 end

@@ -12,11 +12,13 @@ class GameStatsTest < Minitest::Test
     assert_instance_of GameStats, game_stats
   end
 
+
   def test_game_stats_has_games
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 7, game_stats.games.count
   end
+
 
   def test_it_can_find_game_by_id
     game_stats = GameStats.new("./test/fixtures/games.csv")
@@ -36,6 +38,7 @@ class GameStatsTest < Minitest::Test
     assert_equal "/api/v1/venues/null", game.venue_link
   end
 
+
   def test_it_returns_nil_when_no_id_match
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
@@ -44,11 +47,13 @@ class GameStatsTest < Minitest::Test
     assert_nil game
   end
 
+
   def test_it_can_give_highest_total_score
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 6, game_stats.highest_total_score
   end
+
 
   def test_it_can_give_lowest_total_score
     game_stats = GameStats.new("./test/fixtures/games.csv")
@@ -56,11 +61,13 @@ class GameStatsTest < Minitest::Test
     assert_equal 2, game_stats.lowest_total_score
   end
 
+
   def test_it_can_give_percentage_home_wins
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 66.67, game_stats.percentage_home_wins(6)
   end
+
 
   def test_it_can_give_percentage_away_wins
     game_stats = GameStats.new("./test/fixtures/games.csv")
@@ -68,11 +75,13 @@ class GameStatsTest < Minitest::Test
     assert_equal 33.33, game_stats.percentage_away_wins(3)
   end
 
+
   def test_it_can_give_percentage_tie_games
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 28.57, game_stats.percentage_ties
   end
+
 
   def test_it_can_count_games_by_season
     game_stats = GameStats.new("./test/fixtures/games.csv")
@@ -83,26 +92,29 @@ class GameStatsTest < Minitest::Test
   end
 
 
-  def test_total_goals_of_all_games
-    game_stats = GameStats.new("./test/fixtures/games.csv")
-
-    assert_equal [5, 6, 3, 4, 5, 4, 2], game_stats.goal_totals_for_all_games
-  end
-
   def test_average_goals_per_game
     game_stats = GameStats.new("./test/fixtures/games.csv")
 
     assert_equal 4.14, game_stats.average_goals_per_game
   end
 
-  # def test_average_goals_per_game
-  #     game_stats = GameStats.new("./test/fixtures/empty.csv")
-  #
-  #     scores = mock
-  #     scores.stub(:goal_totals_for_all_games).returns([5,3,3])
-  #
-  #     assert_equal 3.66, game_stats.average_goals_per_game
-  #   end
+
+  def test_average_goals_for_a_season
+    game_stats = GameStats.new("./test/fixtures/games.csv")
+
+    game1 = Game.new({away_goals: 1, home_goals: 2})
+    game2 = Game.new({away_goals: 2, home_goals: 3})
+    game3 = Game.new({away_goals: 3, home_goals: 5})
+
+    season = [game1, game2, game3]
+
+    assert_equal 5.33, game_stats.average_goals_for_season(season)
+  end
 
 
+  def test_it_can_give_average_goals_per_season
+    game_stats = GameStats.new("./test/fixtures/games.csv")
+
+    assert_equal ({20122013=>5.0, 20132014=>2.5, 20142015=>4.5}), game_stats.average_goals_by_season
+  end
 end
