@@ -170,17 +170,17 @@ class SeasonStatsTest < Minitest::Test
     assert_equal "Houston Dynamo", season_stats.least_accurate_team(20122012)
   end
   #
-  # def test_most_tackles_with_fixtures
-    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "FC Dallas", season_stats.most_tackles(20122013)
-  # end
-  #
-  # def test_most_tackles_diff_season_with_fixtures
-    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "FC Dallas", season_stats.most_tackles(20122012)
-  # end
+  def test_most_tackles_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", season_stats.most_tackles(20122013)
+  end
+
+  def test_most_tackles_diff_season_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+
+    assert_equal "FC Dallas", season_stats.most_tackles(20122012)
+  end
 
   # def test_fewest_tackles_with_fixtures
     # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
