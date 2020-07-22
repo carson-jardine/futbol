@@ -5,17 +5,16 @@ require './lib/season_stats'
 class SeasonStatsTest < Minitest::Test
 
   def test_it_exists
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
-
-    assert_instance_of SeasonStats, season_stats
-  end
-
-  def test_it_exists #if csv is different
     season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
     assert_instance_of SeasonStats, season_stats
   end
 
+  def test_it_exists_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+
+    assert_instance_of SeasonStats, season_stats
+  end
 
   def test_season_stats_has_season_stats_game_teams
     season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
@@ -124,73 +123,73 @@ class SeasonStatsTest < Minitest::Test
 # #SEASON STATS
 
   def test_winningest_coach_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "Claude Julien", season_stats.winningest_coach(20122013)
   end
 
   def test_winningest_coach_diff_season_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "Claude Julien", season_stats.winningest_coach(20122012)
   end
 
   def test_worst_coach_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "John Tortorella", season_stats.worst_coach(20122013)
   end
 
   def test_worst_coach_diff_season_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "John Tortorella", season_stats.worst_coach(20122012)
   end
 
   def test_most_accurate_team_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "FC Dallas", season_stats.most_accurate_team(20122013)
   end
 
   def test_most_accurate_team_diff_season_with_fixtures
-    season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     assert_equal "FC Dallas", season_stats.most_accurate_team(20122012)
   end
 
-  # def test_least_accurate_team_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "Orlando City SC", season_stats.least_accurate_team(20122013)
-  # end
+  def test_least_accurate_team_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
-  # def test_least_accurate_team_diff_season_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
-  #
-  #   assert_equal "Orlando City SC", season_stats.least_accurate_team(20122012)
-  # end
+    assert_equal "Houston Dynamo", season_stats.least_accurate_team(20122013)
+  end
+
+  def test_least_accurate_team_diff_season_with_fixtures
+    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", season_stats.least_accurate_team(20122012)
+  end
   #
   # def test_most_tackles_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
   #
   #   assert_equal "FC Dallas", season_stats.most_tackles(20122013)
   # end
   #
   # def test_most_tackles_diff_season_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
   #
   #   assert_equal "FC Dallas", season_stats.most_tackles(20122012)
   # end
 
   # def test_fewest_tackles_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
   #
   #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122013)
   # end
 
   # def test_fewest_tackles_diff_season_with_fixtures
-    # season_stats = SeasonStats.new("./test/fixtures/fixtures_game_teams.csv", "./test/fixtures/fixtures_games.csv", "./test/fixtures/fixtures_teams.csv")
+    # season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
   #
   #   assert_equal "Orlando City SC", season_stats.fewest_tackles(20122012)
   # end
@@ -233,40 +232,40 @@ class SeasonStatsTest < Minitest::Test
     assert_instance_of String, season_stats.most_accurate_team(20142015)
   end
 
-  # def test_least_accurate_team
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.least_accurate_team(20122013)
-  # end
+  def test_least_accurate_team
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
-  # def test_least_accurate_team_diff_season
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.least_accurate_team(20142015)
-  # end
-  #
-  # def test_most_tackles
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.most_tackles(20122013)
-  # end
-  #
-  # def test_most_tackles_diff_season
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.most_tackles(20122013)
-  # end
+    assert_instance_of String, season_stats.least_accurate_team(20122013)
+  end
 
-  # def test_fewest_tackles
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.fewest_tackles(20122013)
-  # end
+  def test_least_accurate_team_diff_season
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
-  # def test_fewest_tackles_diff_season
-  #   season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
-  #
-  #   assert_instance_of String, season_stats.fewest_tackles(20122013)
-  # end
+    assert_instance_of String, season_stats.least_accurate_team(20142015)
+  end
+
+  def test_most_tackles
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_instance_of String, season_stats.most_tackles(20122013)
+  end
+
+  def test_most_tackles_diff_season
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_instance_of String, season_stats.most_tackles(20122013)
+  end
+
+  def test_fewest_tackles
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_instance_of String, season_stats.fewest_tackles(20122013)
+  end
+
+  def test_fewest_tackles_diff_season
+    season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_instance_of String, season_stats.fewest_tackles(20122013)
+  end
 
 end
