@@ -181,20 +181,16 @@ class SeasonStats
         this_season << game_in_season
       end
     end
-
     game_teams_by_id = game_teams.group_by do |game_team|
       game_team.game_id
     end
-
     this_season.group_by do |this_one_season|
       this_season_game_ids << this_one_season.game_id
     end
-
     game_teams_by_id.find_all do |game_team_by_id|
       if this_season_game_ids.any?(game_team_by_id[0]) == true
         game_list << game_team_by_id[1]
       end
-
     end
     flattened_game_list = game_list.flatten
     teams_by_id = flattened_game_list.group_by do |game_team|
