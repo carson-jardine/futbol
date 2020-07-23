@@ -122,16 +122,18 @@ class SeasonStatsTest < Minitest::Test
 
 # HELPER METHODS
 
-  def test_largest_hash_key
+  def test_largest_hash_value
     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+    hash = {9 => 999, 5 => 3}
 
-    assert_equal nil, season_stats.largest_hash_key(hash)
+    assert_equal [9, 999], season_stats.largest_hash_value(hash)
   end
 
-  def test_smallest_hash_key
+  def test_smallest_hash_value
     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+    hash = {9 => 999, 5 => 3}
 
-    assert_equal nil, season_stats.smallest_hash_key(hash)
+    assert_equal [5, 3], season_stats.smallest_hash_value(hash)
   end
 
   def test_find_win_games

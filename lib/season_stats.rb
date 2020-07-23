@@ -56,11 +56,11 @@ class SeasonStats
     end
   end
 
-  def largest_hash_key(hash)
+  def largest_hash_value(hash)
     hash.max_by{|k,v| v}
   end
 
-  def smallest_hash_key(hash)
+  def smallest_hash_value(hash)
     hash.min_by{|k,v| v}
   end
 
@@ -207,7 +207,7 @@ class SeasonStats
     # This one is creating a hash called team_and_wins where the key is the team_id and the value is the percentage of wins per games in that season.
     team_and_wins = find_team_and_results(teams_by_id, this_season)
     #this finds the team_id that has the highest percentage
-    best_coach = largest_hash_key(team_and_wins)[0]
+    best_coach = largest_hash_value(team_and_wins)[0]
     #and this takes that team_id and finds the corresponding coach_name
     coach_name = find_coach_name(best_coach)
     coach_name[0]
@@ -222,7 +222,7 @@ class SeasonStats
     lose_game_list = find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
     teams_by_id = get_teams_by_team_id(lose_game_list)
     team_and_losses = find_team_and_results(teams_by_id, this_season)
-    worst_coach = largest_hash_key(team_and_losses)[0]
+    worst_coach = largest_hash_value(team_and_losses)[0]
     coach_name = find_coach_name(worst_coach)
     coach_name[0]
   end
@@ -235,7 +235,7 @@ class SeasonStats
     flattened_game_list = game_list.flatten
     teams_by_id = get_teams_by_team_id(flattened_game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
-    best_team = largest_hash_key(team_and_accuracy)[0]
+    best_team = largest_hash_value(team_and_accuracy)[0]
     team_name = find_team_name(best_team)
     team_name[0]
   end
@@ -248,7 +248,7 @@ class SeasonStats
     flattened_game_list = game_list.flatten
     teams_by_id = get_teams_by_team_id(flattened_game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
-    worst_team = smallest_hash_key(team_and_accuracy)[0]
+    worst_team = smallest_hash_value(team_and_accuracy)[0]
     team_name = find_team_name(worst_team)
     team_name[0]
   end
@@ -285,7 +285,7 @@ class SeasonStats
       end
       team_and_total_tackles[team[0]] = goals_by_team
     end
-    top_tacklers = largest_hash_key(team_and_total_tackles)[0]
+    top_tacklers = largest_hash_value(team_and_total_tackles)[0]
     teams.each do |team|
       if team.team_id == top_tacklers
         highest_tacklers << team.teamname
@@ -326,7 +326,7 @@ class SeasonStats
       end
       team_and_total_tackles[team[0]] = goals_by_team
     end
-    bottom_tacklers = smallest_hash_key(team_and_total_tackles)[0]
+    bottom_tacklers = smallest_hash_value(team_and_total_tackles)[0]
     teams.each do |team|
       if team.team_id == bottom_tacklers
         lowest_tacklers << team.teamname

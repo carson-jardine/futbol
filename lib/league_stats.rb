@@ -56,11 +56,11 @@ class LeagueStats
     end
   end
 
-  def largest_hash_key(hash)
+  def largest_hash_value(hash)
     hash.max_by{|k,v| v}
   end
 
-  def smallest_hash_key(hash)
+  def smallest_hash_value(hash)
     hash.min_by{|k,v| v}
   end
 
@@ -118,7 +118,7 @@ class LeagueStats
       #next, make a new hash of key = team_id, value = total # of goals across all games.
       team_and_total_score = all_the_goals(teams_by_id)
       #next find the key that has the highest value, and assign that key to @top_scorer
-      top_scorer = largest_hash_key(team_and_total_score)[0]
+      top_scorer = largest_hash_value(team_and_total_score)[0]
       #next, find the team name that correlates to the @top_scorer
       best_team = find_the_teamname(top_scorer)
       #finally, print the teamname.
@@ -130,7 +130,7 @@ class LeagueStats
     def worst_offense
       teams_by_id = get_teams_by_id(game_teams)
       team_and_total_score = all_the_goals(teams_by_id)
-      bottom_scorer = smallest_hash_key(team_and_total_score)[0]
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
@@ -140,7 +140,7 @@ class LeagueStats
       away_games = find_away_games(game_teams)
       teams_by_id = get_teams_by_id(away_games)
       team_and_total_score = all_the_goals(teams_by_id)
-      top_scorer = largest_hash_key(team_and_total_score)[0]
+      top_scorer = largest_hash_value(team_and_total_score)[0]
       best_team = find_the_teamname(top_scorer)
       best_team[0]
     end
@@ -150,7 +150,7 @@ class LeagueStats
       home_games = find_home_games(game_teams)
       teams_by_id = get_teams_by_id(home_games)
       team_and_total_score = all_the_goals(teams_by_id)
-      top_scorer = largest_hash_key(team_and_total_score)[0]
+      top_scorer = largest_hash_value(team_and_total_score)[0]
       best_team = find_the_teamname(top_scorer)
       best_team[0]
     end
@@ -160,7 +160,7 @@ class LeagueStats
       away_games = find_away_games(game_teams)
       teams_by_id = get_teams_by_id(away_games)
       team_and_total_score = all_the_goals(teams_by_id)
-      bottom_scorer = smallest_hash_key(team_and_total_score)[0]
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
@@ -170,7 +170,7 @@ class LeagueStats
       home_games = find_home_games(game_teams)
       teams_by_id = get_teams_by_id(home_games)
       team_and_total_score = all_the_goals(teams_by_id)
-      bottom_scorer = smallest_hash_key(team_and_total_score)[0]
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
