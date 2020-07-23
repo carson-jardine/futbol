@@ -46,33 +46,53 @@ class TeamStats
   end
 
   def best_season(id)
-
+    games_id_by_season_id = []
     games_id_by_team_id = []
     games_by_team_id = []
      game_teams.group_by do |game_team|
       if game_team.team_id == (id)
+
         games_by_team_id << game_team
       end
     end
       games_by_game_id = games_by_team_id.group_by do |game|
         game.game_id
       end
-      games_by_game_id.each do |game|
-        games_id_by_team_id << game[0]
-
-        #I now have all the game ids of one team id.
-        #Now I need to get all of those games matched with the corresponding season and count them.
-        #Then out of those total up the games that where wins and divide by total x 100
-        # return the season with the best percentage.
-
+        games_by_game_id.each do |game|
+          games_id_by_team_id << game[0]
       end
-  end
+      games.find_all do |game|
+        if games_id_by_team_id.any?(game.game_id) == true
+            games_id_by_season_id << game
+        end
+      end
+      team_games_by_season = games_id_by_season_id.group_by do |games|
+        games.season
+      end
+      team_games_by_season.map do |team_season|
+        team_season.each do |game|
+
+          binding.pry
+        end
+      end
+    end
+
+    end
+
+
+
+      #I now have all the game ids of one team id.
+
+      #Now I need to get all of those games matched with the corresponding season and count them.
+      #Then out of those total up the games that where wins and divide by total x 100
+      # return the season with the best percentage.
 
 
 
 
 
-end
+
+
 
 
 
