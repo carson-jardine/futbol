@@ -110,14 +110,14 @@ class SeasonStats
     result_games_by_game_id
   end
 
-  def find_win_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
-    win_game_list = []
-    win_games_with_key_as_game_id.find_all do |game_won|
-      if win_games_by_game_id.any?(game_won[0]) == true
-        win_game_list << game_won[1].reduce
+  def find_result_game_list(result_games_with_key_as_game_id, result_games_by_game_id)
+    result_game_list = []
+    result_games_with_key_as_game_id.find_all do |game_result|
+      if result_games_by_game_id.any?(game_result[0]) == true
+        result_game_list << game_result[1].reduce
       end
     end
-    win_game_list
+    result_game_list
   end
 
   def get_teams_by_id(game_teams)
@@ -126,18 +126,18 @@ class SeasonStats
     end
   end
 
-  def find_team_and_wins(teams_by_id, this_season)
-    team_and_wins = {}
+  def find_team_and_results(teams_by_id, this_season)
+    find_team_and_results = {}
     teams_by_id.each do |team|
-      team_and_wins[team[0]] = team[1].count.to_f / this_season.count.to_f
+      find_team_and_results[team[0]] = team[1].count.to_f / this_season.count.to_f
     end
-    team_and_wins
+    find_team_and_results
   end
 
-  def find_coach_name(best_coach)
+  def find_coach_name(best_or_worst_coach)
     coach_name = []
     game_teams.each do |team|
-      if team.team_id == best_coach
+      if team.team_id == best_or_worst_coach
         coach_name << team.head_coach
       end
     end
@@ -161,11 +161,11 @@ class SeasonStats
     # now make a hash of key = game_id value = game info of games where there was a win
     win_games_by_game_id = find_result_games_by_game_id(win_games_this_season)
     # this is where it translates the game_id's of the games that were in our season and winners into an array of game_teams information so that we can then look at the win percentage.
-    win_game_list =   find_win_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
+    win_game_list = find_result_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
     # This breaks down the games into a hash with key = team_id and value = games that team played this season.
     teams_by_id = get_teams_by_id(win_game_list)
     # This one is creating a hash called team_and_wins where the key is the team_id and the value is the percentage of wins per games in that season.
-    team_and_wins = find_team_and_wins(teams_by_id, this_season)
+    team_and_wins = find_team_and_results(teams_by_id, this_season)
     #this finds the team_id that has the highest percentage
     best_coach = largest_hash_key(team_and_wins)[0]
     #and this takes that team_id and finds the corresponding coach_name
