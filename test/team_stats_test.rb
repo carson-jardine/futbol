@@ -36,7 +36,7 @@ class TeamStatsTest < Minitest::Test
   end
 
   def test_it_can_find_season_with_highest_win_percentage
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+    team_stats = TeamStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
     assert_equal "Season", team_stats.best_season(3)
   end
