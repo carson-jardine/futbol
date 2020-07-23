@@ -7,6 +7,8 @@ class TeamStatsTest < Minitest::Test
 
   def test_it_exists
   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+  assert_instance_of TeamStats, team_stats
   end
 
   def test_team_stats_have_stats
