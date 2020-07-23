@@ -3,6 +3,8 @@ require_relative './game_teams'
 require_relative './game'
 require_relative './team'
 
+require 'pry'
+
 class LeagueStats
 
   attr_reader :game_teams,
@@ -72,11 +74,10 @@ class LeagueStats
   #
   # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
     def best_offense
-      teams_by_id = []
       team_and_total_score = {}
-      top_scorer = []
       best_team = []
-      #first, group/arrange the games according to their team_id in a hash. Key = team_id, value = stats for the games that team was in
+      #first, group/arrange the games according to their team_id in a hash.
+      # Key = team_id, value = stats for the games that team was in
       teams_by_id = game_teams.group_by do |game_team|
         game_team.team_id
       end
@@ -85,6 +86,7 @@ class LeagueStats
         goals_by_team = team[1].sum do |the_goals|
           the_goals.goals
         end
+
         team_and_total_score[team[0]] = goals_by_team
       end
       #next find the key that has the highest value, and assign that key to @top_scorer
@@ -102,9 +104,7 @@ class LeagueStats
   #
   #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
     def worst_offense
-      teams_by_id = []
       team_and_total_score = {}
-      bottom_scorer = []
       worst_team = []
       teams_by_id = game_teams.group_by do |game_team|
         game_team.team_id
@@ -126,9 +126,7 @@ class LeagueStats
   #
   # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
     def highest_scoring_visitor
-      teams_by_id = []
       team_and_total_score = {}
-      top_scorer = []
       best_team = []
       away_games = game_teams.find_all do |game_team|
         game_team.hoa == "away"
@@ -153,9 +151,7 @@ class LeagueStats
   #
   # # Name of the team with the highest average score per game across all seasons when they are home.  STRING
     def highest_scoring_home_team
-      teams_by_id = []
       team_and_total_score = {}
-      top_scorer = []
       best_team = []
       home_games = game_teams.find_all do |game_team|
         game_team.hoa == "home"
@@ -180,9 +176,7 @@ class LeagueStats
   #
   #  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
     def lowest_scoring_visitor
-      teams_by_id = []
       team_and_total_score = {}
-      bottom_scorer = []
       worst_team = []
       away_games = game_teams.find_all do |game_team|
         game_team.hoa == "away"
@@ -207,9 +201,7 @@ class LeagueStats
   #
   #  # 	Name of the team with the lowest average score per game across all seasons when they are at home.  STRING
     def lowest_scoring_home_team
-      teams_by_id = []
       team_and_total_score = {}
-      bottom_scorer = []
       worst_team = []
       away_games = game_teams.find_all do |game_team|
         game_team.hoa == "home"
