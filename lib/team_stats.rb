@@ -36,8 +36,16 @@ class TeamStats
   end
 
   def team_info(team_id)
-    teams.find { |team| team.team_id == team_id }
+    hash = {}
+    information = teams.find { |team| team.team_id == team_id }
+    hash[:team_id]= information.team_id
+    hash[:franchiseid]= information.franchiseid
+    hash[:teamname]= information.teamname
+    hash[:abbreviation]= information.abbreviation
+    hash[:link]= information.link
+    hash
   end
+
 
   def games_by_season
     seasons = games.group_by do |game|
@@ -45,61 +53,22 @@ class TeamStats
     end
   end
 
-  def best_season(id)
-    games_id_by_season_id = []
-    games_id_by_team_id = []
-    games_by_team_id = []
-     game_teams.group_by do |game_team|
-      if game_team.team_id == (id)
-
-        games_by_team_id << game_team
+  def games_by_team_id(team_id)
+    games_by_team_id_array = []
+    game_teams.each do |game_team|
+      if game_team.team_id == (team_id)
+        games_by_team_id_array << game_team
       end
     end
-      games_by_game_id = games_by_team_id.group_by do |game|
-        game.game_id
-      end
-        games_by_game_id.each do |game|
-          games_id_by_team_id << game[0]
-      end
-      games.find_all do |game|
-        if games_id_by_team_id.any?(game.game_id) == true
-            games_id_by_season_id << game
-        end
-      end
-      team_games_by_season = games_id_by_season_id.group_by do |games|
-        games.season
-      end
-      team_games_by_season.map do |team_season|
-        team_season.each do |game|
+    games_by_team_id_array
+  end
 
-          binding.pry
-        end
-      end
+  def get_games_id(games_by_team_id_array)
+    game_id_by_team_id_array = []
+    games_by_team_id_array.find_all do |game|
+      game_id_by_team_id_array << game.game_id
     end
+    game_id_by_team_id_array
+  end
 
-    end
-
-
-
-      #I now have all the game ids of one team id.
-
-      #Now I need to get all of those games matched with the corresponding season and count them.
-      #Then out of those total up the games that where wins and divide by total x 100
-      # return the season with the best percentage.
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #get allgames played in a season by team id
-  #get the resiult of each game
-  #get win percentage for each season by dividing wins by total number ofgames.
-  #return highest wi
+end
