@@ -241,49 +241,18 @@ class SeasonStats
   end
   #
   def least_accurate_team(the_season)
-    this_season = []
-    this_season_game_ids = []
-    game_list = []
-    team_and_accuracy = {}
-    team_name = []
-    games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    game_teams_by_id = game_teams.group_by do |game_team|
-      game_team.game_id
-    end
-    this_season.group_by do |this_one_season|
-      this_season_game_ids << this_one_season.game_id
-    end
-    game_teams_by_id.find_all do |game_team_by_id|
-      if this_season_game_ids.any?(game_team_by_id[0]) == true
-        game_list << game_team_by_id[1]
-      end
-    end
+    game_teams_by_id = get_teams_by_game_id(game_teams)
+    this_season = find_this_season(the_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
+    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    teams_by_id = flattened_game_list.group_by do |game_team|
-      game_team.team_id
-    end
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_goals|
-        the_goals.goals.to_f
-      end
-      shots_by_team = team[1].sum do |the_shots|
-        the_shots.shots.to_f
-      end
-      team_and_accuracy[team[0]] = goals_by_team / shots_by_team
-    end
+    teams_by_id = get_teams_by_team_id(flattened_game_list)
+    team_and_accuracy = find_team_and_accuracy(teams_by_id)
     worst_team = smallest_hash_key(team_and_accuracy)[0]
-    teams.each do |team|
-      if team.team_id == worst_team
-        team_name << team.teamname
-      end
-    end
+    team_name = find_team_name(worst_team)
     team_name[0]
   end
-  #
+
   def most_tackles(the_season)
     team_and_total_tackles = {}
     highest_tacklers = []
