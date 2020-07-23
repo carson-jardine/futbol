@@ -85,7 +85,7 @@ class LeagueStatsTest < Minitest::Test
 
     assert_instance_of Game, end_result
     assert_equal 2012030221, end_result.game_id
-    assert_equal 20122012 , end_result.season
+    assert_equal 20122012, end_result.season
     assert_equal "Postseason", end_result.type
     assert_equal "5/16/13", end_result.date_time
     assert_equal 3, end_result.away_team_id
