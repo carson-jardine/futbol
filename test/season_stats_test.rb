@@ -151,7 +151,9 @@ class SeasonStatsTest < Minitest::Test
   def test_find_result_games_with_key_as_game_id
     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
-    assert_equal nil, season_stats.find_result_games_with_key_as_game_id(result_games)
+    result_games = season_stats.find_lose_games(season_stats.game_teams)
+
+    assert_equal 4, season_stats.find_result_games_with_key_as_game_id(result_games).count
   end
 
   def test_find_this_season
