@@ -102,12 +102,12 @@ class SeasonStats
     result_games_this_season
   end
 
-  def find_win_games_by_game_id(win_games_this_season)
-    win_games_by_game_id = []
-    win_games_this_season.group_by do |win_game_this_season|
-      win_games_by_game_id << win_game_this_season.game_id
+  def find_result_games_by_game_id(result_games_this_season)
+    result_games_by_game_id = []
+    result_games_this_season.group_by do |result_game_this_season|
+      result_games_by_game_id << result_game_this_season.game_id
     end
-    win_games_by_game_id
+    result_games_by_game_id
   end
 
   def find_win_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
@@ -159,7 +159,7 @@ class SeasonStats
     win_games_this_season = find_result_games_this_season(this_season, win_games_with_key_as_game_id)
 
     # now make a hash of key = game_id value = game info of games where there was a win
-    win_games_by_game_id = find_win_games_by_game_id(win_games_this_season)
+    win_games_by_game_id = find_result_games_by_game_id(win_games_this_season)
     # this is where it translates the game_id's of the games that were in our season and winners into an array of game_teams information so that we can then look at the win percentage.
     win_game_list =   find_win_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
     # This breaks down the games into a hash with key = team_id and value = games that team played this season.
