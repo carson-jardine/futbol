@@ -102,27 +102,43 @@ class SeasonStats
     result_games_this_season
   end
 
-  def find_result_games_by_game_id(result_games_this_season)
+  def find_games_by_game_id(games_this_season)
     result_games_by_game_id = []
-    result_games_this_season.group_by do |result_game_this_season|
-      result_games_by_game_id << result_game_this_season.game_id
+    games_this_season.group_by do |game_this_season|
+      result_games_by_game_id << game_this_season.game_id
     end
     result_games_by_game_id
   end
 
-  def find_result_game_list(result_games_with_key_as_game_id, result_games_by_game_id)
-    result_game_list = []
-    result_games_with_key_as_game_id.find_all do |game_result|
-      if result_games_by_game_id.any?(game_result[0]) == true
-        result_game_list << game_result[1].reduce
+  def find_game_list(games_with_key_as_game_id, games_by_game_id)
+    game_list = []
+    games_with_key_as_game_id.find_all do |game_result|
+      if games_by_game_id.any?(game_result[0]) == true
+        game_list << game_result[1]
       end
     end
-    result_game_list
+    game_list
   end
 
-  def get_teams_by_id(game_teams)
+  def find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
+    game_list = []
+    games_with_key_as_game_id.find_all do |game_result|
+      if games_by_game_id.any?(game_result[0]) == true
+        game_list << game_result[1].reduce
+      end
+    end
+    game_list
+  end
+
+  def get_teams_by_team_id(game_teams)
     game_teams.group_by do |game_team|
       game_team.team_id
+    end
+  end
+
+  def get_teams_by_game_id(game_teams)
+    game_teams.group_by do |game_team|
+      game_team.game_id
     end
   end
 
@@ -134,6 +150,20 @@ class SeasonStats
     find_team_and_results
   end
 
+  def find_team_and_accuracy(teams_by_id)
+    team_and_accuracy = {}
+    teams_by_id.each do |team|
+      goals_by_team = team[1].sum do |the_goals|
+        the_goals.goals.to_f
+      end
+      shots_by_team = team[1].sum do |the_shots|
+        the_shots.shots.to_f
+      end
+      team_and_accuracy[team[0]] = goals_by_team / shots_by_team
+    end
+    team_and_accuracy
+  end
+
   def find_coach_name(best_or_worst_coach)
     coach_name = []
     game_teams.each do |team|
@@ -142,6 +172,16 @@ class SeasonStats
       end
     end
     coach_name
+  end
+
+  def find_team_name(best_or_worst_team)
+    team_name = []
+    teams.each do |team|
+      if team.team_id == best_or_worst_team
+        team_name << team.teamname
+      end
+    end
+    team_name
   end
 
 
@@ -159,11 +199,11 @@ class SeasonStats
     win_games_this_season = find_result_games_this_season(this_season, win_games_with_key_as_game_id)
 
     # now make a hash of key = game_id value = game info of games where there was a win
-    win_games_by_game_id = find_result_games_by_game_id(win_games_this_season)
+    win_games_by_game_id = find_games_by_game_id(win_games_this_season)
     # this is where it translates the game_id's of the games that were in our season and winners into an array of game_teams information so that we can then look at the win percentage.
-    win_game_list = find_result_game_list(win_games_with_key_as_game_id, win_games_by_game_id)
+    win_game_list = find_game_list_with_reduce(win_games_with_key_as_game_id, win_games_by_game_id)
     # This breaks down the games into a hash with key = team_id and value = games that team played this season.
-    teams_by_id = get_teams_by_id(win_game_list)
+    teams_by_id = get_teams_by_team_id(win_game_list)
     # This one is creating a hash called team_and_wins where the key is the team_id and the value is the percentage of wins per games in that season.
     team_and_wins = find_team_and_results(teams_by_id, this_season)
     #this finds the team_id that has the highest percentage
@@ -174,96 +214,29 @@ class SeasonStats
   end
 
   def worst_coach(the_season)
-    team_and_loses = {}
-    coach_name = []
-    this_season = []
-    lose_games_this_season = []
-    lose_games_by_game_id = []
-    lose_game_list = []
-    lose_games = game_teams.find_all do |game_team|
-      game_team.result == "LOSS"
-    end
-    lose_games_with_key_as_game_id = lose_games.group_by do |game_lost|
-      game_lost.game_id
-    end
-    games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    this_season.each do |the_game|
-      if lose_games_with_key_as_game_id.keys.any?(the_game.game_id) == true
-        lose_games_this_season << the_game
-      end
-    end
-    lose_games_this_season.group_by do |lose_game_this_season|
-      lose_games_by_game_id << lose_game_this_season.game_id
-    end
-    lose_games_with_key_as_game_id.find_all do |game_lose|
-      if lose_games_by_game_id.any?(game_lose[0]) == true
-        lose_game_list << game_lose[1].reduce
-      end
-    end
-    teams_by_id = lose_game_list.group_by do |lose_game|
-      lose_game.team_id
-    end
-    teams_by_id.each do |team|
-      team_and_loses[team[0]] = team[1].count.to_f / games.count.to_f
-    end
-    worst_coach = largest_hash_key(team_and_loses)[0]
-    game_teams.each do |team|
-      if team.team_id == worst_coach
-        coach_name << team.head_coach
-      end
-    end
+    lose_games = find_lose_games(game_teams)
+    lose_games_with_key_as_game_id = find_result_games_with_key_as_game_id(lose_games)
+    this_season = find_this_season(the_season)
+    lose_games_this_season = find_result_games_this_season(this_season, lose_games_with_key_as_game_id)
+    lose_games_by_game_id = find_games_by_game_id(lose_games_this_season)
+    lose_game_list = find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
+    teams_by_id = get_teams_by_team_id(lose_game_list)
+    team_and_losses = find_team_and_results(teams_by_id, this_season)
+    worst_coach = largest_hash_key(team_and_losses)[0]
+    coach_name = find_coach_name(worst_coach)
     coach_name[0]
   end
 
-
   def most_accurate_team(the_season)
-    team_and_accuracy = {}
-    team_name = []
-    #basically everything between these two bars is how to find the list of every game in the season.  You take the list you get from here and where before we were using game_teams.group_by, now it's using flattened_game_list.group_by
-    #----------------------------------
-    this_season = []
-    this_season_game_ids = []
-    game_list = []
-    games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    game_teams_by_id = game_teams.group_by do |game_team|
-      game_team.game_id
-    end
-    this_season.group_by do |this_one_season|
-      this_season_game_ids << this_one_season.game_id
-    end
-    game_teams_by_id.find_all do |game_team_by_id|
-      if this_season_game_ids.any?(game_team_by_id[0]) == true
-        game_list << game_team_by_id[1]
-      end
-    end
+    game_teams_by_id = get_teams_by_game_id(game_teams)
+    this_season = find_this_season(the_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
+    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    #------------------------------------
-    teams_by_id = flattened_game_list.group_by do |game_team|
-      game_team.team_id
-    end
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_goals|
-        the_goals.goals.to_f
-      end
-      shots_by_team = team[1].sum do |the_shots|
-        the_shots.shots.to_f
-      end
-      team_and_accuracy[team[0]] = goals_by_team / shots_by_team
-    end
+    teams_by_id = get_teams_by_team_id(flattened_game_list)
+    team_and_accuracy = find_team_and_accuracy(teams_by_id)
     best_team = largest_hash_key(team_and_accuracy)[0]
-    teams.each do |team|
-      if team.team_id == best_team
-        team_name << team.teamname
-      end
-    end
+    team_name = find_team_name(best_team)
     team_name[0]
   end
   #
