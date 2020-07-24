@@ -1,6 +1,3 @@
-require 'CSV'
-require_relative './game_teams'
-require_relative './game'
 require_relative './helper_methods'
 
 class LeagueStats < HelperMethods
