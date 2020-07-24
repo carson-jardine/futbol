@@ -74,6 +74,18 @@ class HelperMethods
     end
   end
 
+  def find_away_games(game_teams)
+    game_teams.find_all do |game_team|
+      game_team.hoa == "away"
+    end
+  end
+
+  def find_home_games(game_teams)
+    game_teams.find_all do |game_team|
+      game_team.hoa == "home"
+    end
+  end
+
   def find_result_games_with_key_as_game_id(result_games)
     result_games.group_by do |game_won|
       game_won.game_id
@@ -171,6 +183,17 @@ class HelperMethods
       team_and_total_tackles[team[0]] = goals_by_team
     end
     team_and_total_tackles
+  end
+
+  def all_the_goals(teams_by_id)
+    team_and_total_score = {}
+    teams_by_id.each do |team|
+      goals_by_team = team[1].sum do |the_goals|
+        the_goals.goals
+      end
+      team_and_total_score[team[0]] = goals_by_team
+    end
+    team_and_total_score
   end
 
   def find_coach_name(best_or_worst_coach)
