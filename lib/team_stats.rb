@@ -36,6 +36,14 @@ class TeamStats
     end
   end
 
+  def largest_hash_value(hash)
+    hash.max_by{|k,v| v}
+  end
+
+  def smallest_hash_value(hash)
+    hash.min_by{|k,v| v}
+  end
+
   def team_info(team_id)
     hash = {}
     information = teams.find { |team| team.team_id == team_id }
@@ -84,6 +92,19 @@ class TeamStats
     @season_wins_count
   end
 
+  def wins_across_all_seasons(team_id)
+    @wins = []
+    @seasons_hash.each do |season|
+      season[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
+        @wins << game
+      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+        @wins << game
+      end
+    end
+  end
+  @wins.count
+  end
 
   def best_season(team_id)
     season_by_win_percentage = {}
@@ -125,19 +146,32 @@ class TeamStats
     the_worst_season[0].to_s
   end
 
-
-  def wins_across_all_seasons(team_id)
+  def average_win_percentage(team_id)
+    games_by_team_id(team_id)
+    games_by_season
     @wins = []
+    @games = []
     @seasons_hash.each do |season|
       season[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-        @wins << game
-      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-        @wins << game
+        if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
+          @wins << game
+        elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+          @wins << game
+        end
       end
     end
-  end
-  @wins.count
+    @seasons_hash.each do |season1|
+      season1[1].each do |game|
+        if (team_id == game.away_team_id) == true
+          @games << game
+        elsif (team_id == game.home_team_id) == true
+          @games << game
+        end
+      end
+    end
+  total_wins = ((@wins.count.to_f / @games.count.to_f) * 100).round(2)
+  binding.pry
+  total_wins
   end
 
 end
