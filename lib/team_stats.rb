@@ -72,21 +72,6 @@ class TeamStats
     @games_by_season_count
   end
 
-
-  def wins_across_all_seasons(team_id)
-    @wins = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-        @wins << game
-      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-        @wins << game
-      end
-    end
-  end
-  @wins.count
-  end
-
   def wins_by_season
     @season_wins = @wins.group_by {|game| game.season}
   end
@@ -154,5 +139,5 @@ class TeamStats
   end
   @wins.count
   end
-  
+
 end
