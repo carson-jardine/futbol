@@ -84,4 +84,10 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal 87.5, team_stats.average_win_percentage(6)
   end
+
+  def test_favorite_opponent
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", team_stats.favorite_opponent(6)
+  end
 end
