@@ -13,7 +13,7 @@ class TeamStatsTest < Minitest::Test
 
   def test_team_stats_have_stats
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    assert_equal 8, team_stats.teams.count
+    assert_equal 9, team_stats.teams.count
     assert_instance_of Array, team_stats.teams
 
     assert_equal "Atlanta United", team_stats.teams.first.teamname
@@ -129,6 +129,12 @@ class TeamStatsTest < Minitest::Test
   def test_favorite_opponent
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
-    assert_equal "Houston Dynamo", team_stats.favorite_opponent(6)
+    assert_equal "Sporting Kansas City", team_stats.favorite_opponent(6)
+  end
+
+  def test_rival
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", team_stats.rival(6)
   end
 end
