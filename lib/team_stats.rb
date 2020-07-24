@@ -106,6 +106,16 @@ class TeamStats
   @wins.count
   end
 
+  def find_the_teamname(top_or_bottom_scorer)
+    best_or_worst_team = []
+    teams.each do |team|
+      if team.team_id == top_or_bottom_scorer
+        best_or_worst_team << team.teamname
+      end
+    end
+    best_or_worst_team
+  end
+
   def best_season(team_id)
     season_by_win_percentage = {}
     games_by_team_id(team_id)
@@ -160,6 +170,7 @@ class TeamStats
         end
       end
     end
+    # binding.pry
     @seasons_hash.each do |season1|
       season1[1].each do |game|
         if (team_id == game.away_team_id) == true
@@ -226,6 +237,4 @@ class TeamStats
     favorite_opponent = find_the_teamname(favorite_opponent_team_id[0])
     favorite_opponent[0]
   end
-
-
 end
