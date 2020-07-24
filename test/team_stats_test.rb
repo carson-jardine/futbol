@@ -119,4 +119,10 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal "20122013", team_stats.worst_season(6)
   end
+
+  def test_average_win_percentage
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 87.5, team_stats.average_win_percentage(6)
+  end
 end
