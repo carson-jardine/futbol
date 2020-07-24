@@ -164,6 +164,17 @@ class SeasonStats
     team_and_accuracy
   end
 
+  def find_team_and_tackles(teams_by_id)
+    team_and_total_tackles = {}
+    teams_by_id.each do |team|
+      goals_by_team = team[1].sum do |the_tackles|
+        the_tackles.tackles
+      end
+      team_and_total_tackles[team[0]] = goals_by_team
+    end
+    team_and_total_tackles
+  end
+
   def find_coach_name(best_or_worst_coach)
     coach_name = []
     game_teams.each do |team|
@@ -254,84 +265,28 @@ class SeasonStats
   end
 
   def most_tackles(the_season)
-    team_and_total_tackles = {}
-    highest_tacklers = []
-    this_season = []
-    this_season_game_ids = []
-    game_list = []
-    games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    game_teams_by_id = game_teams.group_by do |game_team|
-      game_team.game_id
-    end
-    this_season.group_by do |this_one_season|
-      this_season_game_ids << this_one_season.game_id
-    end
-    game_teams_by_id.find_all do |game_team_by_id|
-      if this_season_game_ids.any?(game_team_by_id[0]) == true
-        game_list << game_team_by_id[1]
-      end
-    end
+    this_season = find_this_season(the_season)
+    game_teams_by_id = find_teams_by_game_id(game_teams)
+    this_season_game_ids = find_games_by_game_id(this_season)
+    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    teams_by_id = flattened_game_list.group_by do |game_team|
-      game_team.team_id
-    end
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_tackles|
-        the_tackles.tackles
-      end
-      team_and_total_tackles[team[0]] = goals_by_team
-    end
+    teams_by_id = find_teams_by_team_id(flattened_game_list)
+    team_and_total_tackles = find_team_and_tackles(teams_by_id)
     top_tacklers = largest_hash_value(team_and_total_tackles)[0]
-    teams.each do |team|
-      if team.team_id == top_tacklers
-        highest_tacklers << team.teamname
-      end
-    end
+    highest_tacklers = find_team_name(top_tacklers)
     highest_tacklers[0]
   end
   #
   def fewest_tackles(the_season)
-    team_and_total_tackles = {}
-    lowest_tacklers = []
-    this_season = []
-    this_season_game_ids = []
-    game_list = []
-    games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    game_teams_by_id = game_teams.group_by do |game_team|
-      game_team.game_id
-    end
-    this_season.group_by do |this_one_season|
-      this_season_game_ids << this_one_season.game_id
-    end
-    game_teams_by_id.find_all do |game_team_by_id|
-      if this_season_game_ids.any?(game_team_by_id[0]) == true
-        game_list << game_team_by_id[1]
-      end
-    end
+    this_season = find_this_season(the_season)
+    game_teams_by_id = find_teams_by_game_id(game_teams)
+    this_season_game_ids = find_games_by_game_id(this_season)
+    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    teams_by_id = flattened_game_list.group_by do |game_team|
-      game_team.team_id
-    end
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_tackles|
-        the_tackles.tackles
-      end
-      team_and_total_tackles[team[0]] = goals_by_team
-    end
+    teams_by_id = find_teams_by_team_id(flattened_game_list)
+    team_and_total_tackles = find_team_and_tackles(teams_by_id)
     bottom_tacklers = smallest_hash_value(team_and_total_tackles)[0]
-    teams.each do |team|
-      if team.team_id == bottom_tacklers
-        lowest_tacklers << team.teamname
-      end
-    end
+    lowest_tacklers = find_team_name(bottom_tacklers)
     lowest_tacklers[0]
   end
 
