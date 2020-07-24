@@ -108,7 +108,7 @@ class LeagueStatsTest < Minitest::Test
     league_stats = LeagueStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
     end_result = league_stats.teams_find_by_team_id(1)
-    # require 'pry'; binding.pry
+
     assert_instance_of Team , end_result
     assert_equal 1, end_result.team_id
     assert_equal 23, end_result.franchiseid

@@ -130,13 +130,13 @@ class SeasonStats
     game_list
   end
 
-  def get_teams_by_team_id(game_teams)
+  def find_teams_by_team_id(game_teams)
     game_teams.group_by do |game_team|
       game_team.team_id
     end
   end
 
-  def get_teams_by_game_id(game_teams)
+  def find_teams_by_game_id(game_teams)
     game_teams.group_by do |game_team|
       game_team.game_id
     end
@@ -203,7 +203,7 @@ class SeasonStats
     # this is where it translates the game_id's of the games that were in our season and winners into an array of game_teams information so that we can then look at the win percentage.
     win_game_list = find_game_list_with_reduce(win_games_with_key_as_game_id, win_games_by_game_id)
     # This breaks down the games into a hash with key = team_id and value = games that team played this season.
-    teams_by_id = get_teams_by_team_id(win_game_list)
+    teams_by_id = find_teams_by_team_id(win_game_list)
     # This one is creating a hash called team_and_wins where the key is the team_id and the value is the percentage of wins per games in that season.
     team_and_wins = find_team_and_results(teams_by_id, this_season)
     #this finds the team_id that has the highest percentage
@@ -220,7 +220,7 @@ class SeasonStats
     lose_games_this_season = find_result_games_this_season(this_season, lose_games_with_key_as_game_id)
     lose_games_by_game_id = find_games_by_game_id(lose_games_this_season)
     lose_game_list = find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
-    teams_by_id = get_teams_by_team_id(lose_game_list)
+    teams_by_id = find_teams_by_team_id(lose_game_list)
     team_and_losses = find_team_and_results(teams_by_id, this_season)
     worst_coach = largest_hash_value(team_and_losses)[0]
     coach_name = find_coach_name(worst_coach)
@@ -228,12 +228,12 @@ class SeasonStats
   end
 
   def most_accurate_team(the_season)
-    game_teams_by_id = get_teams_by_game_id(game_teams)
+    game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season = find_this_season(the_season)
     this_season_game_ids = find_games_by_game_id(this_season)
     game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    teams_by_id = get_teams_by_team_id(flattened_game_list)
+    teams_by_id = find_teams_by_team_id(flattened_game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
     best_team = largest_hash_value(team_and_accuracy)[0]
     team_name = find_team_name(best_team)
@@ -241,12 +241,12 @@ class SeasonStats
   end
   #
   def least_accurate_team(the_season)
-    game_teams_by_id = get_teams_by_game_id(game_teams)
+    game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season = find_this_season(the_season)
     this_season_game_ids = find_games_by_game_id(this_season)
     game_list = find_game_list(game_teams_by_id, this_season_game_ids)
     flattened_game_list = game_list.flatten
-    teams_by_id = get_teams_by_team_id(flattened_game_list)
+    teams_by_id = find_teams_by_team_id(flattened_game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
     worst_team = smallest_hash_value(team_and_accuracy)[0]
     team_name = find_team_name(worst_team)

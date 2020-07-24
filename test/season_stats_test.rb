@@ -172,65 +172,85 @@ class SeasonStatsTest < Minitest::Test
     assert_equal 1, season_stats.find_result_games_this_season(this_season, result_games_with_key_as_game_id).count
   end
 
-  def test_result_games_by_game_id
+  def test_find_teams_by_team_id
     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
-
-    result_games = season_stats.find_lose_games(season_stats.game_teams)
-    result_games_with_key_as_game_id = season_stats.find_result_games_with_key_as_game_id(result_games)
-    this_season = season_stats.find_this_season(20122013)
-    games_this_season = season_stats.find_result_games_this_season(this_season, result_games_with_key_as_game_id)
-
-    assert_equal 1, season_stats.result_games_by_game_id(games_this_season).count
+    # binding.pry
+    assert_equal 4, find_teams_by_team_id(season_stats.game_teams.count)
   end
 
-  def test_find_game_list
+  def test_find_teams_by_game_id
     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
 
-    assert_equal nil, season_stats.find_game_list(games_with_key_as_game_id, games_by_game_id)
+    assert_equal 5, find_teams_by_game_id(season_stats.game_teams.count)
   end
 
-  def test_find_game_list_with_reduce
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+#   def test_find_game_list
+#     season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+# # binding.pry
+#     games_by_game_id = get_teams_by_game_id(season_stats.game_teams)
+#     this_season = find_this_season(20122013)
+#     games_with_key_as_game_id = find_games_by_game_id(this_season)
+#
+#     assert_equal 1, season_stats.find_game_list(games_with_key_as_game_id, games_by_game_id).count
+#   end
+  #
+  # def test_find_game_list_with_reduce
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   assert_equal nil, season_stats.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
+  # end
 
-    assert_equal nil, season_stats.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
-  end
+  # def test_get_teams_by_team_id
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   assert_equal 4, season_stats.get_teams_by_team_id(season_stats.game_teams).count
+  # end
+  #
+  # def test_get_teams_by_game_id
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   assert_equal 5, season_stats.get_teams_by_game_id(season_stats.game_teams).count
+  # end
 
-  def test_get_teams_by_team_id
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  # def test_find_team_and_results
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   this_season = find_this_season(20122013)
+  #   teams_by_id = get_teams_by_team_id(season_stats.game_teams)
+  #
+  #   assert_equal nil, season_stats.find_team_and_results(teams_by_id, this_season)
+  # end
 
-    assert_equal 4, season_stats.get_teams_by_team_id(season_stats.game_teams).count
-  end
+  # def test_find_team_and_accuracy
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   teams_by_id = get_teams_by_team_id(season_stats.game_teams)
+  #
+  #   assert_equal nil, season_stats.find_team_and_accuracy(teams_by_id)
+  # end
 
-  def test_get_teams_by_game_id
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  # def test_find_coach_name
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   teams_by_id = get_teams_by_team_id(season_stats.game_teams)
+  #   team_and_losses = find_team_and_results(teams_by_id, this_season)
+  #   worst_coach = largest_hash_value(team_and_losses)[0]
+  #   coach_name = find_coach_name(worst_coach)
+  #
+  #   assert_equal nil, season_stats.find_coach_name(coach_name)
+  # end
 
-    assert_equal 5, season_stats.get_teams_by_game_id(season_stats.game_teams).count
-  end
-
-  def test_find_team_and_results
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-
-    assert_equal nil, season_stats.find_team_and_results(teams_by_id, this_season)
-  end
-
-  def test_find_team_and_accuracy
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-
-    assert_equal nil, season_stats.find_team_and_accuracy(teams_by_id)
-  end
-
-  def test_find_coach_name
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-
-    assert_equal nil, season_stats.find_coach_name(best_or_worst_coach)
-  end
-
-  def test_find_team_name
-    season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-
-    assert_equal nil, season_stats.find_team_name(best_or_worst_team)
-  end
+  # def test_find_team_name
+  #   season_stats = SeasonStats.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
+  #
+  #   teams_by_id = get_teams_by_team_id(season_stats.game_teams)
+  #   team_and_accuracy = find_team_and_accuracy(teams_by_id)
+  #   best_team = largest_hash_value(team_and_accuracy)[0]
+  #   team_name = find_team_name(best_team)
+  #
+  #   assert_equal nil, season_stats.find_team_name(team_name)
+  # end
 
 
 

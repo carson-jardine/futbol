@@ -4,12 +4,10 @@ game_path = './data/games.csv'
 team_path = './data/teams.csv'
 game_teams_path = './data/game_teams.csv'
 
-filepath = {
-  games: game_path,
-  teams: team_path,
-  game_teams: game_teams_path
+locations = {
+  game_stats: game_path,
+  # game_teams: game_teams_path,
+  # teams: team_path
 }
 
-stat_tracker = StatTracker.from_csv(filepath)
-
-# require 'pry'; binding.pry
+stat_tracker = StatTracker.from_csv(game_path)
