@@ -170,8 +170,10 @@ class TeamStats
       end
     end
   total_wins = ((@wins.count.to_f / @games.count.to_f) * 100).round(2)
-  binding.pry
   total_wins
   end
+
+
+
 
 end
