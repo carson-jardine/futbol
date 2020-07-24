@@ -4,6 +4,7 @@ require_relative './team'
 require_relative './game_teams'
 
 class TeamStats
+
   attr_reader :game_teams,
               :teams,
               :games
@@ -46,29 +47,51 @@ class TeamStats
     hash
   end
 
-
-  def games_by_season
-    seasons = games.group_by do |game|
-      game.season
-    end
-  end
-
   def games_by_team_id(team_id)
-    games_by_team_id_array = []
-    game_teams.each do |game_team|
-      if game_team.team_id == (team_id)
-        games_by_team_id_array << game_team
+    @games_by_team_id_array = []
+    @games.each do |game|
+      if game.away_team_id == (team_id) || game.home_team_id == (team_id)
+        @games_by_team_id_array << game
       end
     end
-    games_by_team_id_array
+    @games_by_team_id_array
   end
 
-  def get_games_id(games_by_team_id_array)
-    game_id_by_team_id_array = []
-    games_by_team_id_array.find_all do |game|
-      game_id_by_team_id_array << game.game_id
+  def games_by_season
+    @seasons_hash = @games_by_team_id_array.group_by do |game|
+      game.season
     end
-    game_id_by_team_id_array
+    @seasons_hash
   end
 
-end
+  def wins_across_all_seasons(team_id)
+    @wins = []
+    @seasons_hash.each do |season|
+      season[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
+        @wins << game
+      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+        @wins << game
+      end
+    end
+  end
+  @wins.count
+  end
+
+  def wins_by_season
+    @wins.group_by {|game| game.season}
+  end
+
+  # def wins_by_season_count
+  #   # wins_by_season.map do |season|
+  #     wins_by_season.keys.count
+  #     binding.pry
+  # end
+
+  def best_season(team_id)
+    games_by_team_id(team_id)
+    games_by_season
+    wins_across_all_seasons(team_id)
+    wins_by_season
+    end
+  end
