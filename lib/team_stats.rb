@@ -113,6 +113,12 @@ class TeamStats
   end
 
   def compare
-
+    season_percentages = {}
+    @season_wins_count.find_all do |season, wins_count|
+      season == @games_by_season_count.keys
+        end
     end
   end
+
+
+end
