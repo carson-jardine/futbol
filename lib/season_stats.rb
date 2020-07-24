@@ -3,8 +3,6 @@ require_relative './game_teams'
 require_relative './game'
 require_relative './team'
 
-require 'pry'
-
 class SeasonStats
 
   attr_reader :game_teams,
@@ -195,7 +193,6 @@ class SeasonStats
     team_name
   end
 
-
 # Name of the Coach with the best win percentage for the season
   def winningest_coach(the_season)
     # first you get all the games in the game_teams that were Wins
@@ -250,7 +247,7 @@ class SeasonStats
     team_name = find_team_name(best_team)
     team_name[0]
   end
-  #
+
   def least_accurate_team(the_season)
     game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season = find_this_season(the_season)
@@ -276,7 +273,7 @@ class SeasonStats
     highest_tacklers = find_team_name(top_tacklers)
     highest_tacklers[0]
   end
-  #
+
   def fewest_tackles(the_season)
     this_season = find_this_season(the_season)
     game_teams_by_id = find_teams_by_game_id(game_teams)

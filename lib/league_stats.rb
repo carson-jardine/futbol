@@ -3,8 +3,6 @@ require_relative './game_teams'
 require_relative './game'
 require_relative './team'
 
-require 'pry'
-
 class LeagueStats
 
   attr_reader :game_teams,
@@ -104,13 +102,10 @@ class LeagueStats
   end
 
   # #LEAGUE STATS METHODS
-  #
-  # # 	Total number of teams in the data.  INTEGER
     def count_of_teams
       teams.count
     end
-  #
-  # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
+
     def best_offense
       #first, group/arrange the games according to their team_id in a hash.
       # Key = team_id, value = stats for the games that team was in
@@ -125,8 +120,6 @@ class LeagueStats
       best_team[0]
     end
 
-  #
-  #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
     def worst_offense
       teams_by_id = find_teams_by_team_id(game_teams)
       team_and_total_score = all_the_goals(teams_by_id)
@@ -134,8 +127,7 @@ class LeagueStats
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
+
     def highest_scoring_visitor
       away_games = find_away_games(game_teams)
       teams_by_id = find_teams_by_team_id(away_games)
@@ -144,8 +136,7 @@ class LeagueStats
       best_team = find_the_teamname(top_scorer)
       best_team[0]
     end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are home.  STRING
+
     def highest_scoring_home_team
       home_games = find_home_games(game_teams)
       teams_by_id = find_teams_by_team_id(home_games)
@@ -154,8 +145,7 @@ class LeagueStats
       best_team = find_the_teamname(top_scorer)
       best_team[0]
     end
-  #
-  #  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
+
     def lowest_scoring_visitor
       away_games = find_away_games(game_teams)
       teams_by_id = find_teams_by_team_id(away_games)
@@ -164,8 +154,7 @@ class LeagueStats
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
-  #
-  #  # 	Name of the team with the lowest average score per game across all seasons when they are at home.  STRING
+
     def lowest_scoring_home_team
       home_games = find_home_games(game_teams)
       teams_by_id = find_teams_by_team_id(home_games)
@@ -174,6 +163,4 @@ class LeagueStats
       worst_team = find_the_teamname(bottom_scorer)
       worst_team[0]
     end
-
-
 end
