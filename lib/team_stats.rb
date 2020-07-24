@@ -4,6 +4,7 @@ require_relative './team'
 require_relative './game_teams'
 
 class TeamStats
+
   attr_reader :game_teams,
               :teams,
               :games
@@ -36,70 +37,82 @@ class TeamStats
   end
 
   def team_info(team_id)
-    teams.find { |team| team.team_id == team_id }
+    hash = {}
+    information = teams.find { |team| team.team_id == team_id }
+    hash[:team_id]= information.team_id
+    hash[:franchiseid]= information.franchiseid
+    hash[:teamname]= information.teamname
+    hash[:abbreviation]= information.abbreviation
+    hash[:link]= information.link
+    hash
+  end
+
+  def games_by_team_id(team_id)
+    @games_by_team_id_array = []
+    @games.each do |game|
+      if game.away_team_id == (team_id) || game.home_team_id == (team_id)
+        @games_by_team_id_array << game
+      end
+    end
+    @games_by_team_id_array
   end
 
   def games_by_season
-    seasons = games.group_by do |game|
+    @seasons_hash = @games_by_team_id_array.group_by do |game|
       game.season
     end
+    @seasons_hash
   end
 
-  def best_season(id)
-    games_id_by_season_id = []
-    games_id_by_team_id = []
-    games_by_team_id = []
-     game_teams.group_by do |game_team|
-      if game_team.team_id == (id)
+  def games_by_season_count
+    @games_by_season_count = {}
+    @seasons_hash.each do |season, season_games|
+      @games_by_season_count[season] = (season_games.count)
+    end
+    @games_by_season_count
+  end
 
-        games_by_team_id << game_team
+
+  def wins_across_all_seasons(team_id)
+    @wins = []
+    @seasons_hash.each do |season|
+      season[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
+        @wins << game
+      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+        @wins << game
       end
     end
-      games_by_game_id = games_by_team_id.group_by do |game|
-        game.game_id
-      end
-        games_by_game_id.each do |game|
-          games_id_by_team_id << game[0]
-      end
-      games.find_all do |game|
-        if games_id_by_team_id.any?(game.game_id) == true
-            games_id_by_season_id << game
-        end
-      end
-      team_games_by_season = games_id_by_season_id.group_by do |games|
-        games.season
-      end
-      team_games_by_season.map do |team_season|
-        team_season.each do |game|
+  end
+  @wins.count
+  end
 
-          binding.pry
-        end
-      end
+  def wins_by_season
+    @season_wins = @wins.group_by {|game| game.season}
+  end
+
+  def wins_by_season_count
+    @season_wins_count = {}
+    @season_wins.each do |season, season_games|
+      @season_wins_count[season] = (season_games.count)
     end
+    @season_wins_count
+  end
+
+
+  def best_season(team_id)
+
+    games_by_team_id(team_id)
+    games_by_season
+    wins_across_all_seasons(team_id)
+    wins_by_season
+    wins_by_season_count
+    games_by_season_count
+
+    binding.pry
+  end
+
+  def compare
 
     end
-
-
-
-      #I now have all the game ids of one team id.
-
-      #Now I need to get all of those games matched with the corresponding season and count them.
-      #Then out of those total up the games that where wins and divide by total x 100
-      # return the season with the best percentage.
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #get allgames played in a season by team id
-  #get the resiult of each game
-  #get win percentage for each season by dividing wins by total number ofgames.
-  #return highest wi
+  end
