@@ -86,7 +86,7 @@ class TeamStats
 
 
   def best_season(team_id)
-    season_by_win_percentage = {}
+    @season_by_win_percentage = {}
     games_by_team_id(team_id)
     games_by_season
     wins_across_all_seasons(team_id)
@@ -97,16 +97,16 @@ class TeamStats
     wins_by_season_count.each do |win_by_season_count|
       games_by_season_count.each do |game_by_season_count|
         if game_by_season_count[0] == win_by_season_count[0]
-          season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
+          @season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
         end
       end
     end
-    the_best_season = largest_hash_value(season_by_win_percentage)
+    the_best_season = largest_hash_value(@season_by_win_percentage)
     the_best_season[0].to_s
   end
 
   def worst_season(team_id)
-    season_by_win_percentage = {}
+    @season_by_win_percentage = {}
     games_by_team_id(team_id)
     games_by_season
     wins_across_all_seasons(team_id)
@@ -117,11 +117,11 @@ class TeamStats
     wins_by_season_count.each do |win_by_season_count|
       games_by_season_count.each do |game_by_season_count|
         if game_by_season_count[0] == win_by_season_count[0]
-          season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
+          @season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
         end
       end
     end
-    the_worst_season = smallest_hash_value(season_by_win_percentage)
+    the_worst_season = smallest_hash_value(@season_by_win_percentage)
     the_worst_season[0].to_s
   end
 

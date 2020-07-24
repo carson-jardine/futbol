@@ -69,6 +69,7 @@ class TeamStatsTest < Minitest::Test
 
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
+  
     assert_equal "20122012", team_stats.best_season(6)
   end
 
