@@ -149,7 +149,7 @@ class SeasonStatsTest < Minitest::Test
   def test_most_tackles_diff_season
     season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
-    assert_instance_of String, season_stats.most_tackles(20122013)
+    assert_instance_of String, season_stats.most_tackles(20142015)
   end
 
   def test_fewest_tackles
@@ -161,7 +161,7 @@ class SeasonStatsTest < Minitest::Test
   def test_fewest_tackles_diff_season
     season_stats = SeasonStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
-    assert_instance_of String, season_stats.fewest_tackles(20122013)
+    assert_instance_of String, season_stats.fewest_tackles(20142015)
   end
 
 end
