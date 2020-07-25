@@ -69,7 +69,7 @@ class TeamStatsTest < Minitest::Test
 
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
-  
+
     assert_equal "20122012", team_stats.best_season(6)
   end
 
@@ -79,4 +79,29 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal "20122013", team_stats.worst_season(6)
   end
+
+  def test_average_win_percentage
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 87.5, team_stats.average_win_percentage(6)
+  end
+
+  def test_most_goals_scored
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 4, team_stats.most_goals_scored(6)
+  end
+
+  def test_fewest_goals_scored
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 2, team_stats.fewest_goals_scored(6)
+  end
+
+  def test_fave_opponent
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    team_stats.favorite_opponent(6)
+  end
+
 end

@@ -9,7 +9,7 @@ class LeagueStats
               :teams,
               :games
 
-  def initialize(filepath1, filepath2, filepath3)
+  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
     @game_teams = []
     @games      = []
     @teams      = []
