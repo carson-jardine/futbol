@@ -1,6 +1,6 @@
 require 'CSV'
 require './lib/game'
-require 'pry'
+
 
 class GameStats < Game
   attr_reader :games
