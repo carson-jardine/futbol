@@ -11,9 +11,8 @@ class StatTracker
 
 
   def initialize(filepath)
-    @games = filepath[:games]
-    @teams = filepath[:teams]
-    @game_teams = filepath[:game_teams]
+    @game_stats  = Gamestats.new(filepath)
+    @team_s
 
   end
 
