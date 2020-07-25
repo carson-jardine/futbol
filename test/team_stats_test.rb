@@ -7,11 +7,13 @@ class TeamStatsTest < Minitest::Test
 
   def test_it_exists
   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+  assert_instance_of TeamStats, team_stats
   end
 
   def test_team_stats_have_stats
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    assert_equal 8, team_stats.teams.count
+    assert_equal 9, team_stats.teams.count
     assert_instance_of Array, team_stats.teams
 
     assert_equal "Atlanta United", team_stats.teams.first.teamname
@@ -65,11 +67,18 @@ class TeamStatsTest < Minitest::Test
     assert Hash, team_stats.wins_by_season_count
   end
 
+<<<<<<< HEAD
   def test_best_season
     skip
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
     assert_equal [], team_stats.best_season(6)
+=======
+  def test_it_can_find_season_with_highest_win_percentage
+    team_stats = TeamStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "20142015", team_stats.best_season(3)
+>>>>>>> e256d64f52e52a8ad4be5223f52724f4a1ae81f0
   end
 
 
@@ -108,18 +117,95 @@ class TeamStatsTest < Minitest::Test
 
   # def test_it_returns_nil_when_no_match
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_teams.csv")
+  # def test_it_exists
+  # team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  # end
   #
+  # def test_team_stats_have_stats
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   assert_equal 8, team_stats.teams.count
+  #   assert_instance_of Array, team_stats.teams
   #
-  #   result = merchant_collection.find_by_id(23423423)
+  #   assert_equal "Atlanta United", team_stats.teams.first.teamname
   #
-  #   assert_nil result
+  #   assert_equal "DC United", team_stats.teams[3].teamname
+  #
+  # end
+  #
+  # def test_it_can_find_team_info_by_id
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   result = team_stats.team_info(3)
+  #   assert_instance_of Hash, result
+  # end
+  #
+  # def test_it_can_find_games_by_team_id
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #
+  #   assert_instance_of Array, team_stats.games_by_team_id(3)
+  # end
+  #
+  # def test_games_by_season
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   games_by_team_id_array = team_stats.games_by_team_id(3)
+  #   assert Hash, team_stats.games_by_season
+  # end
+  #
+  # def test_wins_across_all_seasons
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   games_by_team_id_array = team_stats.games_by_team_id(6)
+  #   seasons_hash = team_stats.games_by_season
+  #
+  #   assert_equal 7,team_stats.wins_across_all_seasons( 6)
+  # end
+  #
+  # def test_wins_across_all_seasons_and_wins_by_season
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   games_by_team_id_array = team_stats.games_by_team_id(6)
+  #   seasons_hash = team_stats.games_by_season
+  #   team_stats.wins_across_all_seasons(6)
+  #
+  #   assert Hash, team_stats.wins_by_season
+  # end
+  #
+  # def test_wins_by_season_count
+  #   skip
+  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+  #   games_by_team_id_array = team_stats.games_by_team_id(6)
+  #   seasons_hash = team_stats.games_by_season
+  #   wins_by_season =team_stats.wins_across_all_seasons(6)
+  #
+  #   assert Hash, team_stats.wins_by_season_count
   # end
 
+  def test_best_season
 
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
+    assert_equal "20122012", team_stats.best_season(6)
+  end
 
+  def test_worst_season
 
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
+    assert_equal "20122013", team_stats.worst_season(6)
+  end
 
+  def test_average_win_percentage
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
+    assert_equal 87.5, team_stats.average_win_percentage(6)
+  end
+
+  def test_favorite_opponent
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal "Sporting Kansas City", team_stats.favorite_opponent(6)
+  end
+
+  def test_rival
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal "Houston Dynamo", team_stats.rival(6)
+  end
 end
