@@ -30,6 +30,7 @@ class TeamStatsTest < Minitest::Test
 
   def test_it_can_find_games_by_team_id
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+<<<<<<< HEAD
 
     assert_instance_of Array, team_stats.games_by_team_id(3)
   end
@@ -48,6 +49,26 @@ class TeamStatsTest < Minitest::Test
     assert_equal 7,team_stats.wins_across_all_seasons( 6)
   end
 
+=======
+
+    assert_instance_of Array, team_stats.games_by_team_id(3)
+  end
+
+  def test_games_by_season
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+    games_by_team_id_array = team_stats.games_by_team_id(3)
+    assert Hash, team_stats.games_by_season
+  end
+
+  def test_wins_across_all_seasons
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+    games_by_team_id_array = team_stats.games_by_team_id(6)
+    seasons_hash = team_stats.games_by_season
+
+    assert_equal 7,team_stats.wins_across_all_seasons( 6)
+  end
+
+>>>>>>> 93f7d732e57b22b92d0bd3126e6cdd10c8d1e2fb
   def test_wins_across_all_seasons_and_wins_by_season
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
     games_by_team_id_array = team_stats.games_by_team_id(6)
@@ -181,6 +202,7 @@ class TeamStatsTest < Minitest::Test
 
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
+
     assert_equal "20122012", team_stats.best_season(6)
   end
 
@@ -197,6 +219,26 @@ class TeamStatsTest < Minitest::Test
     assert_equal 87.5, team_stats.average_win_percentage(6)
   end
 
+<<<<<<< HEAD
+  def test_most_goals_scored
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 4, team_stats.most_goals_scored(6)
+  end
+
+  def test_fewest_goals_scored
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_equal 2, team_stats.fewest_goals_scored(6)
+  end
+
+  def test_fave_opponent
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    team_stats.favorite_opponent(6)
+  end
+
+=======
   def test_favorite_opponent
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
@@ -208,4 +250,5 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal "Houston Dynamo", team_stats.rival(6)
   end
+>>>>>>> 45bdd6a5b8580de0ed6b341505992a091b7288c5
 end

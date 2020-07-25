@@ -1,14 +1,13 @@
 require 'CSV'
 require_relative './game'
-require_relative './team'
-require_relative './game_teams'
-require_relative './helper_methods'
 require_relative './game_stats'
-require_relative './team_stats'
 require_relative './league_stats'
+require_relative './game_teams'
 require_relative './season_stats'
-
-
+require_relative './team_stats'
+require_relative './helper_methods'
+require_relative './team'
+require 'pry'
 class StatTracker
   attr_reader :game_stats,
               :league_stats,
@@ -18,14 +17,18 @@ class StatTracker
     StatTracker.new(locations)
   end
 
+
+
   def initialize(locations)
-    games = locations[:games]
-    teams = locations[:teams]
-    game_teams = locations[:game_teams]
-    game_stats = GameStats.new[game_path]
-    @team_stats = TeamStats.new[game_teams_path, game_path, team_path]
-    @season_stats = SeasonStats.new[game_teams_path, game_path, team_path]
-    @league_stats = LeagueStats.new[game_teams_path, game_path, team_path]
+    game_path = locations[:games]
+    game_teams_path = locations[:game_teams]
+    team_path = locations[:teams]
+    @game_stats = GameStats.new(game_path)
+    @league_stats = LeagueStats.new(game_teams_path, game_path, team_path)
+    @season_stats = SeasonStats.new(game_teams_path, game_path, team_path)
+    @team_stats = TeamStats.new(game_teams_path, game_path, team_path)
+    # @teams = locations[:teams]
+    # @game_teams = locations[:game_teams]
   end
 
 
@@ -64,6 +67,24 @@ class StatTracker
   end
 
 
+#league_stats
+
+  def best_offense
+    @league_stats.best_offense
+  end
+
+
+#team_stats
+
+  def team_info(id)
+    @team_stats.team_info(id)
+  end
+
+#season_stats
+
+  def worst_coach(season)
+    @season_stats.worst_coach(season)
+  end
 
 
 end

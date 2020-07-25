@@ -3,96 +3,102 @@
 # require_relative './game'
 # require_relative './team'
 
-class HelperMethods
+module HelperMethods
 
-  attr_reader :game_teams,
-              :teams,
-              :games
+  # attr_reader :game_teams,
+  #             :teams,
+  #             :games
+  #
+  # def initialize(filepath1, filepath2, filepath3)
+  #   game_teams = []
+  #   games      = []
+  #   teams      = []
+  #   load_game_teams(filepath1)
+  #   load_games(filepath2)
+  #   load_teams(filepath3)
+  # end
 
-  def initialize(filepath1, filepath2, filepath3)
-    @game_teams = []
-    @games      = []
-    @teams      = []
-    load_game_teams(filepath1)
-    load_games(filepath2)
-    load_teams(filepath3)
-  end
-
-  def load_game_teams(filepath1)
+  def self.load_game_teams(filepath1)
+    game_teams = []
     CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
-      @game_teams << GameTeams.new(data)
+      game_teams << GameTeams.new(data)
     end
+    game_teams
   end
 
-  def load_games(filepath2)
+  def self.load_games(filepath2)
+    games = []
     CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-      @games << Game.new(data)
+      games << Game.new(data)
     end
+    games
   end
 
-  def load_teams(filepath3)
+  def self.load_teams(filepath3)
+    teams = []
     CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-      @teams << Team.new(data)
+      teams << Team.new(data)
     end
+    teams
   end
 
-  def game_teams_find_by_game_id(game_id)
-    @game_teams.find do |season_stat|
+  def self.game_teams_find_by_game_id(game_id)
+    game_teams.find do |season_stat|
       season_stat.game_id == game_id
     end
   end
 
-  def games_find_by_game_id(game_id)
-    @games.find do |season_stat|
+  def self.games_find_by_game_id(game_id)
+    games.find do |season_stat|
       season_stat.game_id == game_id
     end
   end
 
-  def teams_find_by_team_id(team_id)
-    @teams.find do |season_stat|
+  def self.teams_find_by_team_id(team_id)
+    teams.find do |season_stat|
       season_stat.team_id == team_id
     end
   end
 
-  def largest_hash_value(hash)
+  def self.largest_hash_value(hash)
     hash.max_by{|k,v| v}
   end
 
-  def smallest_hash_value(hash)
+  def self.smallest_hash_value(hash)
     hash.min_by{|k,v| v}
   end
 
-  def find_win_games(game_teams)
+  def self.find_win_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.result == "WIN"
     end
   end
 
-  def find_lose_games(game_teams)
+  def self.find_lose_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.result == "LOSS"
     end
   end
 
-  def find_away_games(game_teams)
+  def self.find_away_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.hoa == "away"
     end
   end
 
-  def find_home_games(game_teams)
+  def self.find_home_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.hoa == "home"
     end
   end
 
-  def find_result_games_with_key_as_game_id(result_games)
+  def self.find_result_games_with_key_as_game_id(result_games)
     result_games.group_by do |game_won|
-      game_won.game_id
+      game_won.game_id.to_s
     end
   end
 
-  def find_this_season(the_season)
+  def self.find_this_season(the_season, games)
     this_season = []
     games.find_all do |game_in_season|
       if game_in_season.season == the_season
@@ -102,7 +108,7 @@ class HelperMethods
     this_season
   end
 
-  def find_result_games_this_season(this_season, result_games_with_key_as_game_id)
+  def self.find_result_games_this_season(this_season, result_games_with_key_as_game_id)
     result_games_this_season = []
     this_season.each do |the_game|
       if result_games_with_key_as_game_id.keys.any?(the_game.game_id) == true
@@ -112,7 +118,7 @@ class HelperMethods
     result_games_this_season
   end
 
-  def find_games_by_game_id(games_this_season)
+  def self.find_games_by_game_id(games_this_season)
     result_games_by_game_id = []
     games_this_season.group_by do |game_this_season|
       result_games_by_game_id << game_this_season.game_id
@@ -120,7 +126,7 @@ class HelperMethods
     result_games_by_game_id
   end
 
-  def find_game_list(games_with_key_as_game_id, games_by_game_id)
+  def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
     game_list = []
     games_with_key_as_game_id.find_all do |game_result|
       if games_by_game_id.any?(game_result[0]) == true
@@ -130,7 +136,7 @@ class HelperMethods
     game_list
   end
 
-  def find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
+  def self.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
     game_list = []
     games_with_key_as_game_id.find_all do |game_result|
       if games_by_game_id.any?(game_result[0]) == true
@@ -140,27 +146,28 @@ class HelperMethods
     game_list
   end
 
-  def find_teams_by_team_id(game_teams)
+  def self.find_teams_by_team_id(game_teams)
     game_teams.group_by do |game_team|
       game_team.team_id
     end
   end
 
-  def find_teams_by_game_id(game_teams)
+  def self.find_teams_by_game_id(game_teams)
     game_teams.group_by do |game_team|
       game_team.game_id
     end
   end
 
-  def find_team_and_results(teams_by_id, this_season)
+  def self.find_team_and_results(teams_by_id, this_season)
     find_team_and_results = {}
     teams_by_id.each do |team|
-      find_team_and_results[team[0]] = team[1].count.to_f / this_season.count.to_f
+      find_team_and_results[team[0]] = (team[1].count.to_f * 100) / this_season.count.to_f
     end
+
     find_team_and_results
   end
 
-  def find_team_and_accuracy(teams_by_id)
+  def self.find_team_and_accuracy(teams_by_id)
     team_and_accuracy = {}
     teams_by_id.each do |team|
       goals_by_team = team[1].sum do |the_goals|
@@ -174,7 +181,7 @@ class HelperMethods
     team_and_accuracy
   end
 
-  def find_team_and_tackles(teams_by_id)
+  def self.find_team_and_tackles(teams_by_id)
     team_and_total_tackles = {}
     teams_by_id.each do |team|
       goals_by_team = team[1].sum do |the_tackles|
@@ -185,7 +192,7 @@ class HelperMethods
     team_and_total_tackles
   end
 
-  def all_the_goals(teams_by_id)
+  def self.all_the_goals(teams_by_id)
     team_and_total_score = {}
     teams_by_id.each do |team|
       goals_by_team = team[1].sum do |the_goals|
@@ -196,7 +203,7 @@ class HelperMethods
     team_and_total_score
   end
 
-  def find_coach_name(best_or_worst_coach)
+  def self.find_coach_name(best_or_worst_coach, game_teams)
     coach_name = []
     game_teams.each do |team|
       if team.team_id == best_or_worst_coach
@@ -206,11 +213,11 @@ class HelperMethods
     coach_name
   end
 
-  def find_team_name(best_or_worst_team)
+  def self.find_team_name(best_or_worst_team, teams)
     team_name = []
     teams.each do |team|
-      if team.team_id == best_or_worst_team
-        team_name << team.teamname
+      if team.team_id == best_or_worst_team.to_s
+        team_name << team.team_name
       end
     end
     team_name

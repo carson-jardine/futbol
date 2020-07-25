@@ -5,16 +5,27 @@
 # require_relative './helper_methods'
 # require 'pry'
 
-class TeamStats < HelperMethods
+class TeamStats
+  attr_reader :game_teams,
+              :teams,
+              :games
+
+  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
+
+    @game_teams = HelperMethods.load_game_teams(filepath1)
+    @games      = HelperMethods.load_games(filepath2)
+    @teams      = HelperMethods.load_teams(filepath3)
+  end
 
   def team_info(team_id)
+
     hash = {}
-    information = teams.find { |team| team.team_id == team_id }
-    hash[:team_id]= information.team_id
-    hash[:franchiseid]= information.franchiseid
-    hash[:teamname]= information.teamname
-    hash[:abbreviation]= information.abbreviation
-    hash[:link]= information.link
+    information = @teams.find { |team| team.team_id == team_id }
+    hash["team_id"]= information.team_id
+    hash["franchise_id"]= information.franchise_id
+    hash["team_name"]= information.team_name
+    hash["abbreviation"]= information.abbreviation
+    hash["link"]= information.link
     hash
   end
 
@@ -133,8 +144,45 @@ class TeamStats < HelperMethods
       end
     end
   total_wins = ((@wins.count.to_f / @games.count.to_f) * 100).round(2)
+
   total_wins
   end
+  def most_goals_scored(team_id)
+    games_by_team_id(team_id)
+    games_by_season
+    @away_goals = []
+    @home_goals = []
+    @seasons_hash.each do |season|
+      season[1].each do |game|
+        if (team_id == game.away_team_id)
+          @away_goals << game.away_goals
+        elsif (team_id == game.home_team_id)
+          @home_goals << game.home_goals
+        end
+      end
+    end
+    @away_goals.concat(@home_goals).max
+  end
+
+  def fewest_goals_scored(team_id)
+    games_by_team_id(team_id)
+    games_by_season
+    @away_goals = []
+    @home_goals = []
+    @seasons_hash.each do |season|
+      season[1].each do |game|
+        if (team_id == game.away_team_id)
+          @away_goals << game.away_goals
+        elsif (team_id == game.home_team_id)
+          @home_goals << game.home_goals
+        end
+      end
+    end
+    @away_goals.concat(@home_goals).min
+  end
+
+
+#######Philip Methods
 
 
 #######Philip Methods
