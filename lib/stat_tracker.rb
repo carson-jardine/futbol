@@ -11,22 +11,22 @@ class StatTracker
               :league_stats,
               :season_stats
 
-  def self.from_csv(filepath)
-    StatTracker.new(filepath)
+  def self.from_csv(locations)
+    StatTracker.new(locations)
   end
 
 
 
-  def initialize(filepath)
-    game_path = filepath[:game_stats]
-    game_teams_path = filepath[:game_teams]
-    team_path = filepath[:teams]
+  def initialize(locations)
+    game_path = locations[:games]
+    game_teams_path = locations[:game_teams]
+    team_path = locations[:teams]
     @game_stats = GameStats.new(game_path)
     @league_stats = LeagueStats.new(game_teams_path, game_path, team_path)
     @season_stats = SeasonStats.new(game_teams_path, game_path, team_path)
     @team_stats = TeamStats.new(game_teams_path, game_path, team_path)
-    # @teams = filepath[:teams]
-    # @game_teams = filepath[:game_teams]
+    # @teams = locations[:teams]
+    # @game_teams = locations[:game_teams]
   end
 
 

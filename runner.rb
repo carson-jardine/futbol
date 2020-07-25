@@ -5,7 +5,7 @@ team_path = './data/teams.csv'
 game_teams_path = './data/game_teams.csv'
 
 locations = {
-  game_stats: game_path,
+  games: game_path,
   game_teams: game_teams_path,
   teams: team_path
 }
