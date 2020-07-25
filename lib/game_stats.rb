@@ -1,6 +1,7 @@
-require_relative 'helper_methods'
+# require 'CSV'
+# require_ './lib/game'
 
-class GameStats < HelperMethods
+class GameStats < Game
   attr_reader :games
   def initialize(filepath)
     @games = []
@@ -20,26 +21,31 @@ class GameStats < HelperMethods
   end
 
   def highest_total_score
-    @games.map do |game|
-      (game.home_goals) + (game.away_goals)
-    end.max
+    highest_score = @games.max_by do |game|
+      (game.home_goals.to_i) + (game.away_goals.to_i)
+    end
+    highest_score.home_goals.to_i + highest_score.away_goals.to_i
   end
 
   def lowest_total_score
-    @games.map do |game|
-      (game.home_goals) + (game.away_goals)
-    end.min
+    lowest_score = @games.min_by do |game|
+      (game.home_goals.to_i) + (game.away_goals.to_i)
+    end
+    lowest_score.home_goals.to_i + lowest_score.away_goals.to_i
   end
 
-  def percentage_home_wins(id)
-    # home_games = @games.find_all do |game|
-    #   game.home_team_id
-    # end
-    home_games_wins = @games.find_all do |game|
-      game.home_goals > game.away_goals
+  def percentage_home_wins
+    home_games = @games.group_by do |game|
+      game.home_team_id
     end
-    (home_games_wins.count.to_f / @games.count.to_f).round(2)
-    require 'pry' ; binding.pry
+    home_games_wins = home_games.map do |game_id, games|
+      # games.map(&:home_goals) > games.map(&:away_goals)
+      games.find_all do |game|
+        game.home_goals > game.away_goals
+      end
+    end
+    (home_games_wins.flatten.length / @games.count.to_f).round(2)
+    # ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
   end
 
 
