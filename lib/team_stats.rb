@@ -1,57 +1,31 @@
-require 'CSV'
-require_relative './game'
-require_relative './team'
-require_relative './game_teams'
+# require 'CSV'
+# require_relative './game'
+# require_relative './team'
+# require_relative './game_teams'
+# require_relative './helper_methods'
+# require 'pry'
 
 class TeamStats
-
   attr_reader :game_teams,
               :teams,
               :games
 
-  def initialize(filepath1, filepath2, filepath3)
-    @game_teams = []
-    @games      = []
-    @teams      = []
-    load_game_teams(filepath1)
-    load_games(filepath2)
-    load_teams(filepath3)
-  end
+  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
 
-  def load_game_teams(filepath1)
-    CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
-      @game_teams << GameTeams.new(data)
-    end
-  end
-
-  def load_games(filepath2)
-    CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-      @games << Game.new(data)
-    end
-  end
-
-  def load_teams(filepath3)
-    CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-      @teams << Team.new(data)
-    end
-  end
-
-  def largest_hash_value(hash)
-    hash.max_by{|k,v| v}
-  end
-
-  def smallest_hash_value(hash)
-    hash.min_by{|k,v| v}
+    @game_teams = HelperMethods.load_game_teams(filepath1)
+    @games      = HelperMethods.load_games(filepath2)
+    @teams      = HelperMethods.load_teams(filepath3)
   end
 
   def team_info(team_id)
+
     hash = {}
-    information = teams.find { |team| team.team_id == team_id }
-    hash[:team_id]= information.team_id
-    hash[:franchiseid]= information.franchiseid
-    hash[:teamname]= information.teamname
-    hash[:abbreviation]= information.abbreviation
-    hash[:link]= information.link
+    information = @teams.find { |team| team.team_id == team_id }
+    hash["team_id"]= information.team_id
+    hash["franchise_id"]= information.franchise_id
+    hash["team_name"]= information.team_name
+    hash["abbreviation"]= information.abbreviation
+    hash["link"]= information.link
     hash
   end
 
@@ -104,16 +78,6 @@ class TeamStats
     end
   end
   @wins.count
-  end
-
-  def find_the_teamname(top_or_bottom_scorer)
-    best_or_worst_team = []
-    teams.each do |team|
-      if team.team_id == top_or_bottom_scorer
-        best_or_worst_team << team.teamname
-      end
-    end
-    best_or_worst_team
   end
 
   def best_season(team_id)
@@ -170,7 +134,6 @@ class TeamStats
         end
       end
     end
-    # binding.pry
     @seasons_hash.each do |season1|
       season1[1].each do |game|
         if (team_id == game.away_team_id) == true
@@ -181,7 +144,7 @@ class TeamStats
       end
     end
   total_wins = ((@wins.count.to_f / @games.count.to_f) * 100).round(2)
-  
+
   total_wins
   end
   def most_goals_scored(team_id)
@@ -217,6 +180,9 @@ class TeamStats
     end
     @away_goals.concat(@home_goals).min
   end
+
+
+#######Philip Methods
 
   def favorite_opponent(team_id)
     other_teams_by_game = {}
@@ -268,8 +234,9 @@ class TeamStats
       other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
     end
     favorite_opponent_team_id = largest_hash_value(other_teams_by_win_percentage)
-    favorite_opponent = find_the_teamname(favorite_opponent_team_id[0])
+    favorite_opponent = find_team_name(favorite_opponent_team_id[0])
     favorite_opponent[0]
+    binding.pry
   end
 
   def rival(team_id)
@@ -322,7 +289,7 @@ class TeamStats
       other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
     end
     rival_team_id = smallest_hash_value(other_teams_by_win_percentage)
-    rival = find_the_teamname(rival_team_id[0])
+    rival = find_team_name(rival_team_id[0])
     rival[0]
   end
 end

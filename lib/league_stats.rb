@@ -1,9 +1,4 @@
-require 'CSV'
-require_relative './game_teams'
-require_relative './game'
-require_relative './team'
-
-require 'pry'
+require_relative './helper_methods'
 
 class LeagueStats
 
@@ -12,168 +7,85 @@ class LeagueStats
               :games
 
   def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
-    @game_teams = []
-    @games      = []
-    @teams      = []
-    load_game_teams(filepath1)
-    load_games(filepath2)
-    load_teams(filepath3)
+
+    @game_teams = HelperMethods.load_game_teams(filepath1)
+    @games      = HelperMethods.load_games(filepath2)
+    @teams      = HelperMethods.load_teams(filepath3)
   end
 
-  def load_game_teams(filepath1)
-    CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
-      @game_teams << GameTeams.new(data)
-    end
-  end
-
-  def load_games(filepath2)
-    CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-      @games << Game.new(data)
-    end
-  end
-
-  def load_teams(filepath3)
-    CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-      @teams << Team.new(data)
-    end
-  end
-
-  def game_teams_find_by_game_id(game_id)
-    @game_teams.find do |season_stat|
-      season_stat.game_id == game_id
-    end
-  end
-
-  def games_find_by_game_id(game_id)
-    @games.find do |season_stat|
-      season_stat.game_id == game_id
-    end
-  end
-
-  def teams_find_by_team_id(team_id)
-    @teams.find do |season_stat|
-      season_stat.team_id == team_id
-    end
-  end
-
-  def largest_hash_value(hash)
-    hash.max_by{|k,v| v}
-  end
-
-  def smallest_hash_value(hash)
-    hash.min_by{|k,v| v}
-  end
-
-  def find_teams_by_team_id(game_teams)
-    game_teams.group_by do |game_team|
-      game_team.team_id
-    end
-  end
-
-  def find_away_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "away"
-    end
-  end
-
-  def find_home_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "home"
-    end
-  end
-
-  def all_the_goals(teams_by_id)
-    team_and_total_score = {}
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_goals|
-        the_goals.goals
-      end
-      team_and_total_score[team[0]] = goals_by_team
-    end
-    team_and_total_score
-  end
-
-  def find_the_teamname(top_or_bottom_scorer)
-    best_or_worst_team = []
-    teams.each do |team|
-      if team.team_id == top_or_bottom_scorer
-        best_or_worst_team << team.teamname
-      end
-    end
-    best_or_worst_team
-  end
-
-  # #LEAGUE STATS METHODS
+  # def load_game_teams(filepath1)
+  #   CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
+  #     @game_teams << GameTeams.new(data)
+  #   end
+  # end
   #
-  # # 	Total number of teams in the data.  INTEGER
-    def count_of_teams
-      teams.count
-    end
+  # def load_games(filepath2)
+  #   CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
+  #     @games << Game.new(data)
+  #   end
+  # end
   #
-  # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
+  # def load_teams(filepath3)
+  #   CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
+  #     @teams << Team.new(data)
+  #   end
+  # end
+
     def best_offense
       #first, group/arrange the games according to their team_id in a hash.
       # Key = team_id, value = stats for the games that team was in
-      teams_by_id = find_teams_by_team_id(game_teams)
+      teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
       #next, make a new hash of key = team_id, value = total # of goals across all games.
-      team_and_total_score = all_the_goals(teams_by_id)
+      team_and_total_score = HelperMethods.all_the_goals(teams_by_id)
       #next find the key that has the highest value, and assign that key to @top_scorer
-      top_scorer = largest_hash_value(team_and_total_score)[0]
+      top_scorer = HelperMethods.largest_hash_value(team_and_total_score)[0]
       #next, find the team name that correlates to the @top_scorer
-      best_team = find_the_teamname(top_scorer)
+      best_team = HelperMethods.find_team_name(top_scorer, @teams)
       #finally, print the teamname.
       best_team[0]
     end
 
-  #
-  #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
     def worst_offense
       teams_by_id = find_teams_by_team_id(game_teams)
       team_and_total_score = all_the_goals(teams_by_id)
       bottom_scorer = smallest_hash_value(team_and_total_score)[0]
-      worst_team = find_the_teamname(bottom_scorer)
+      worst_team = find_team_name(bottom_scorer)
       worst_team[0]
     end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
+
     def highest_scoring_visitor
       away_games = find_away_games(game_teams)
       teams_by_id = find_teams_by_team_id(away_games)
       team_and_total_score = all_the_goals(teams_by_id)
       top_scorer = largest_hash_value(team_and_total_score)[0]
-      best_team = find_the_teamname(top_scorer)
+      best_team = find_team_name(top_scorer)
       best_team[0]
     end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are home.  STRING
+
     def highest_scoring_home_team
       home_games = find_home_games(game_teams)
       teams_by_id = find_teams_by_team_id(home_games)
       team_and_total_score = all_the_goals(teams_by_id)
       top_scorer = largest_hash_value(team_and_total_score)[0]
-      best_team = find_the_teamname(top_scorer)
+      best_team = find_team_name(top_scorer)
       best_team[0]
     end
-  #
-  #  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
+
     def lowest_scoring_visitor
       away_games = find_away_games(game_teams)
       teams_by_id = find_teams_by_team_id(away_games)
       team_and_total_score = all_the_goals(teams_by_id)
       bottom_scorer = smallest_hash_value(team_and_total_score)[0]
-      worst_team = find_the_teamname(bottom_scorer)
+      worst_team = find_team_name(bottom_scorer)
       worst_team[0]
     end
-  #
-  #  # 	Name of the team with the lowest average score per game across all seasons when they are at home.  STRING
+
     def lowest_scoring_home_team
       home_games = find_home_games(game_teams)
       teams_by_id = find_teams_by_team_id(home_games)
       team_and_total_score = all_the_goals(teams_by_id)
       bottom_scorer = smallest_hash_value(team_and_total_score)[0]
-      worst_team = find_the_teamname(bottom_scorer)
+      worst_team = find_team_name(bottom_scorer)
       worst_team[0]
     end
-
-
 end

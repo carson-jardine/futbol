@@ -1,10 +1,12 @@
 require 'CSV'
-require_relative 'game'
-require_relative 'game_stats'
-require_relative 'league_stats'
-require_relative 'game_teams'
-require_relative 'season_stats'
-require_relative 'team_stats'
+require_relative './game'
+require_relative './game_stats'
+require_relative './league_stats'
+require_relative './game_teams'
+require_relative './season_stats'
+require_relative './team_stats'
+require_relative './helper_methods'
+require_relative './team'
 require 'pry'
 class StatTracker
   attr_reader :game_stats,
@@ -40,22 +42,49 @@ class StatTracker
     @game_stats.lowest_total_score
   end
 
+  def percentage_home_wins
+    @game_stats.percentage_home_wins
+  end
 
-# league_stats
+  def percentage_visitor_wins
+    @game_stats.percentage_visitor_wins
+  end
 
-  def game_teams_find_by_game_id(game_id)
-    @league_stats.game_teams_find_by_game_id(game_id)
+  def percentage_ties
+    @game_stats.percentage_ties
+  end
+
+  def count_of_games_by_season
+    @game_stats.count_of_games_by_season
+  end
+
+  def average_goals_per_game
+    @game_stats.average_goals_per_game
+  end
+
+  def average_goals_per_season
+    @game_stats.average_goals_per_season
   end
 
 
+#league_stats
+
+  def best_offense
+    @league_stats.best_offense
+  end
+
+
+#team_stats
+
+  def team_info(id)
+    @team_stats.team_info(id)
+  end
 
 #season_stats
 
-def teams_find_by_team_id(team_id)
-  @teams.find do |season_stat|
-    season_stat.team_id == team_id
+  def worst_coach(season)
+    @season_stats.worst_coach(season)
   end
-end
 
 
 end
