@@ -1,9 +1,9 @@
-require 'CSV'
-require_relative './game'
-require_relative './team'
-require_relative './game_teams'
-require_relative './helper_methods'
-require 'pry'
+# require 'CSV'
+# require_relative './game'
+# require_relative './team'
+# require_relative './game_teams'
+# require_relative './helper_methods'
+# require 'pry'
 
 class TeamStats < HelperMethods
 

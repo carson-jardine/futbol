@@ -1,7 +1,7 @@
-require 'CSV'
-require_relative './game_teams'
-require_relative './game'
-require_relative './team'
+# require 'CSV'
+# require_relative './game_teams'
+# require_relative './game'
+# require_relative './team'
 
 class HelperMethods
 

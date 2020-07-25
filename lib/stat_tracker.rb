@@ -1,23 +1,31 @@
 require 'CSV'
-require_relative 'game'
-require_relative 'game_stats'
+require_relative './game'
+require_relative './team'
+require_relative './game_teams'
+require_relative './helper_methods'
+require_relative './game_stats'
+require_relative './team_stats'
+require_relative './league_stats'
+require_relative './season_stats'
+
 
 class StatTracker
   attr_reader :game_stats,
               :league_stats,
               :season_stats
 
-  def self.from_csv(filepath)
-    StatTracker.new(filepath)
+  def self.from_csv(locations)
+    StatTracker.new(locations)
   end
 
-
-
-  def initialize(filepath)
-    @game_stats = GameStats.new(filepath)
-    @team_stats = TeamStats.new(filepath)
-    @league_stats = LeagueStats.new(filepath)
-    @season_stats = SeasonStats.new(filepath)
+  def initialize(locations)
+    games = locations[:games]
+    teams = locations[:teams]
+    game_teams = locations[:game_teams]
+    game_stats = GameStats.new[game_path]
+    @team_stats = TeamStats.new[game_teams_path, game_path, team_path]
+    @season_stats = SeasonStats.new[game_teams_path, game_path, team_path]
+    @league_stats = LeagueStats.new[game_teams_path, game_path, team_path]
   end
 
 
