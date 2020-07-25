@@ -169,4 +169,47 @@ class LeagueStatsTest < Minitest::Test
     assert_equal "Houston Dynamo", league_stats.lowest_scoring_home_team
   end
 
+  #  LEAGUE STATS WITH REAL NUMBERS
+  def test_count_of_teams
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal 32, league_stats.count_of_teams
+  end
+
+  def test_best_offense
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "Reign FC", league_stats.best_offense
+  end
+
+  def test_worst_offense
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "Utah Royals FC", league_stats.worst_offense
+  end
+
+  def test_highest_scoring_visitor
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "FC Dallas", league_stats.highest_scoring_visitor
+  end
+
+  def test_highest_scoring_home_team
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "Reign FC", league_stats.highest_scoring_home_team
+  end
+
+  def test_lowest_scoring_visitor
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "San Jose Earthquakes", league_stats.lowest_scoring_visitor
+  end
+
+  def test_lowest_scoring_home_team
+    league_stats = LeagueStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
+
+    assert_equal "Utah Royals FC", league_stats.lowest_scoring_home_team
+  end
+
 end

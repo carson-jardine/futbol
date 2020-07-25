@@ -1,4 +1,4 @@
-require_relative './helper_methods'
+require_relative 'helper_methods'
 
 class LeagueStats < HelperMethods
 

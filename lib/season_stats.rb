@@ -1,9 +1,10 @@
-require_relative './helper_methods'
+require_relative 'helper_methods'
 
 class SeasonStats < HelperMethods
 
 # Name of the Coach with the best win percentage for the season
-  def winningest_coach(the_season)
+  def winningest_coach(season)
+    the_season = season.to_i
     # first you get all the games in the game_teams that were Wins
     win_games = find_win_games(game_teams)
     #then you group them into a hash with key = game_id and value = all the info about the games that were WINs
@@ -30,7 +31,7 @@ class SeasonStats < HelperMethods
     coach_name[0]
   end
 
-  def worst_coach(the_season)
+  def worst_coach(season)
     lose_games = find_lose_games(game_teams)
     lose_games_with_key_as_game_id = find_result_games_with_key_as_game_id(lose_games)
     this_season = find_this_season(the_season)
@@ -44,7 +45,7 @@ class SeasonStats < HelperMethods
     coach_name[0]
   end
 
-  def most_accurate_team(the_season)
+  def most_accurate_team(season)
     game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season = find_this_season(the_season)
     this_season_game_ids = find_games_by_game_id(this_season)
@@ -57,7 +58,8 @@ class SeasonStats < HelperMethods
     team_name[0]
   end
 
-  def least_accurate_team(the_season)
+  def least_accurate_team(season)
+    the_season = season.to_i
     game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season = find_this_season(the_season)
     this_season_game_ids = find_games_by_game_id(this_season)
@@ -70,7 +72,8 @@ class SeasonStats < HelperMethods
     team_name[0]
   end
 
-  def most_tackles(the_season)
+  def most_tackles(season)
+    the_season = season.to_i
     this_season = find_this_season(the_season)
     game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season_game_ids = find_games_by_game_id(this_season)
@@ -83,7 +86,8 @@ class SeasonStats < HelperMethods
     highest_tacklers[0]
   end
 
-  def fewest_tackles(the_season)
+  def fewest_tackles(season)
+    the_season = season.to_i
     this_season = find_this_season(the_season)
     game_teams_by_id = find_teams_by_game_id(game_teams)
     this_season_game_ids = find_games_by_game_id(this_season)

@@ -1,8 +1,6 @@
-require 'CSV'
-require './lib/game'
+require_relative 'helper_methods'
 
-
-class GameStats < Game
+class GameStats < HelperMethods
   attr_reader :games
   def initialize(filepath)
     @games = []
@@ -34,13 +32,14 @@ class GameStats < Game
   end
 
   def percentage_home_wins(id)
-    home_games = @games.find_all do |game|
-      game.home_team_id == id
-    end
-    home_games_wins = home_games.find_all do |game|
+    # home_games = @games.find_all do |game|
+    #   game.home_team_id
+    # end
+    home_games_wins = @games.find_all do |game|
       game.home_goals > game.away_goals
     end
-    ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
+    (home_games_wins.count.to_f / @games.count.to_f).round(2)
+    require 'pry' ; binding.pry
   end
 
 

@@ -1,9 +1,4 @@
-require 'CSV'
-require_relative './game'
-require_relative './team'
-require_relative './game_teams'
-require_relative './helper_methods'
-require 'pry'
+require_relative 'helper_methods'
 
 class TeamStats < HelperMethods
 
@@ -191,7 +186,6 @@ class TeamStats < HelperMethods
     favorite_opponent_team_id = largest_hash_value(other_teams_by_win_percentage)
     favorite_opponent = find_team_name(favorite_opponent_team_id[0])
     favorite_opponent[0]
-    binding.pry
   end
 
   def rival(team_id)

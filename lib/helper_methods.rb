@@ -1,7 +1,7 @@
 require 'CSV'
-require_relative './game_teams'
-require_relative './game'
-require_relative './team'
+require_relative 'game_teams'
+require_relative 'game'
+require_relative 'team'
 
 class HelperMethods
 
@@ -132,6 +132,7 @@ class HelperMethods
 
   def find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
     game_list = []
+    binding.pry
     games_with_key_as_game_id.find_all do |game_result|
       if games_by_game_id.any?(game_result[0]) == true
         game_list << game_result[1].reduce

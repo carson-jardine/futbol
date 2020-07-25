@@ -1,30 +1,44 @@
-require 'CSV'
-require_relative 'game'
-require_relative 'game_stats'
 
 class StatTracker
   attr_reader :game_stats,
               :league_stats,
               :season_stats
 
-  def self.from_csv(filepath)
-    StatTracker.new(filepath)
+  def self.from_csv(locations)
+    StatTracker.new(locations)
+  end
+
+  def initialize(locations)
+    @games = locations[:games]
+    @teams = locations[:teams]
+    @game_teams = locations[:game_teams]
+    # require 'pry'; binding.pry
   end
 
 
 
-  def initialize(filepath)
-    @game_stats = GameStats.new(filepath)
-    # @teams = filepath[:teams]
-    # @game_teams = filepath[:game_teams]
-  end
 
-
-# game_stats
 
   def highest_total_score
-    @game_stats.highest_total_score
+    @stat_tracker.highest_total_score
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
