@@ -85,6 +85,13 @@ class StatTracker
     @team_stats.team_info(id)
   end
 
+  def rival(team_id)
+    @team_stats.rival(team_id)
+  end
+
+  def favorite_opponent(team_id)
+    @team_stats.favorite_opponent(team_id)
+  end
 #season_stats
 
   def winningest_coach(season_id)
