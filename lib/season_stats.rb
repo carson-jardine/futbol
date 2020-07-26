@@ -42,18 +42,39 @@ class SeasonStats
   end
 
   def worst_coach(the_season)
-    lose_games = HelperMethods.find_lose_games(game_teams)
-    lose_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(lose_games)
-    this_season = HelperMethods.find_this_season(the_season, @games)
-    lose_games_this_season = HelperMethods.find_result_games_this_season(this_season, lose_games_with_key_as_game_id)
-    lose_games_by_game_id = HelperMethods.find_games_by_game_id(lose_games_this_season)
-    lose_game_list = HelperMethods.find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
-    teams_by_id = HelperMethods.find_teams_by_team_id(lose_game_list)
+    worst = HelperMethods.find_head_coach_by_season(@games, @game_teams, the_season)
+    binding.pry
+    # tie_games = 0
 
-    team_and_losses = HelperMethods.find_team_and_results(teams_by_id, lose_games_this_season)
+    lost_games = HelperMethods.find_lose_games(@game_teams)
+    lost_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(lost_games)
+    this_season = HelperMethods.find_this_season(the_season, @games)
+    lost_games_this_season = HelperMethods.find_result_games_this_season(this_season, lost_games_with_key_as_game_id)
+
+    lost_games_game_ids_this_season = HelperMethods.find_games_by_game_id(lost_games_this_season)
+    lost_game_list_this_season = HelperMethods.find_game_list_with_reduce(lost_games_with_key_as_game_id, lost_games_game_ids_this_season)
+
+    win_games = HelperMethods.find_win_games(@game_teams)
+    win_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(win_games)
+    win_games_this_season = HelperMethods.find_result_games_this_season(this_season, win_games_with_key_as_game_id)
+    win_games_by_game_id_this_season = HelperMethods.find_games_by_game_id(win_games_this_season)
+    win_game_list_this_season = HelperMethods.find_game_list_with_reduce(win_games_with_key_as_game_id, win_games_by_game_id_this_season)
+
+    tie_games = HelperMethods.find_tie_games(@game_teams)
+    tie_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(tie_games)
+    tie_games_this_season = HelperMethods.find_result_games_this_season(this_season, tie_games_with_key_as_game_id)
+    tie_games_by_game_id_this_season = HelperMethods.find_games_by_game_id(tie_games_this_season)
+    tie_game_list_this_season = HelperMethods.find_game_list_with_reduce(tie_games_with_key_as_game_id, tie_games_by_game_id_this_season)
+    # binding.pry
+    teams_by_id_tie = HelperMethods.find_teams_by_team_id(tie_game_list_this_season)
+    teams_by_id_losses = HelperMethods.find_teams_by_team_id(lost_game_list_this_season)
+
+    teams_by_id_wins = HelperMethods.find_teams_by_team_id(win_game_list_this_season)
+    team_and_losses = HelperMethods.find_team_and_results(teams_by_id_losses, teams_by_id_wins, teams_by_id_tie)
     worst_coach = HelperMethods.largest_hash_value(team_and_losses)[0]
-    coach_name = HelperMethods.find_coach_name(worst_coach, lose_game_list)
-    coach_name.max
+    coach_name = HelperMethods.find_coach_name(worst_coach, lost_game_list_this_season)
+      binding.pry
+    coach_name
   end
 
   def most_accurate_team(season)
