@@ -27,19 +27,19 @@ module HelperMethods
   end
 
   def self.load_games(filepath2)
-    games = []
+    @games = []
     CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-      games << Game.new(data)
+      @games << Game.new(data)
     end
-    games
+    @games
   end
 
   def self.load_teams(filepath3)
-    teams = []
+    @teams = []
     CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-      teams << Team.new(data)
+      @teams << Team.new(data)
     end
-    teams
+    @teams
   end
 
   def self.game_teams_find_by_game_id(game_id)
@@ -98,9 +98,9 @@ module HelperMethods
     end
   end
 
-  def self.find_this_season(the_season, games)
+  def self.find_this_season(the_season)
     this_season = []
-    games.find_all do |game_in_season|
+    @games.find_all do |game_in_season|
       if game_in_season.season == the_season
         this_season << game_in_season
       end
@@ -133,7 +133,7 @@ module HelperMethods
         game_list << game_result[1]
       end
     end
-    game_list
+    game_list.flatten
   end
 
   def self.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
@@ -213,14 +213,22 @@ module HelperMethods
     coach_name
   end
 
-  def self.find_team_name(best_or_worst_team, teams)
-    team_name = []
-    teams.each do |team|
-      if team.team_id == best_or_worst_team.to_s
-        team_name << team.team_name
-      end
+  # def self.find_team_name(best_or_worst_team)
+  #   team_name = []
+  #   # binding.pry
+  #   @teams.each do |team|
+  #     if team.team_id == best_or_worst_team
+  #       team_name << team.team_name
+  #     end
+  #   end
+  #   team_name
+  # end
+
+  def self.find_team_name(id)
+    team = @teams.find_all do |team|
+      team.team_id
     end
-    team_name
+    team[0].team_name
   end
 
 end

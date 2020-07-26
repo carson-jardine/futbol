@@ -84,11 +84,37 @@ class StatTracker
     @team_stats.team_info(id)
   end
 
+  def best_season(id)
+    @team_stats.best_season(id)
+  end
+
+  def worst_season(id)
+    @team_stats.worst_season(id)
+  end
+
+  def average_win_percentage(id)
+    @team_stats.average_win_percentage(id)
+  end
+
+  def most_goals_scored(id)
+    @team_stats.most_goals_scored(id)
+  end
+
+  def fewest_goals_scored(id)
+    @team_stats.fewest_goals_scored(id)
+  end
+
+  def favorite_opponent(id)
+    @team_stats.favorite_opponent(id)
+  end
 #season_stats
 
   def worst_coach(season)
     @season_stats.worst_coach(season)
   end
 
+  def most_accurate_team(the_team)
+    @season_stats.most_accurate_team(the_team)
+  end
 
 end
