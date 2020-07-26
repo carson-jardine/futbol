@@ -12,14 +12,16 @@ class SeasonStats
     @games      = HelperMethods.load_games(filepath2)
     @teams      = HelperMethods.load_teams(filepath3)
   end
-# Name of the Coach with the best win percentage for the season
-  def winningest_coach(season)
-    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN")
+
+
+  def winningest_coach(the_season)
+    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").max_by {|x| x[1]}[0]
   end
 
   def worst_coach(the_season)
-    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "LOSS")
+    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").min_by {|x| x[1]}[0]
   end
+
 
   def most_accurate_team(season)
     game_teams_by_id = find_teams_by_game_id(game_teams)
@@ -72,5 +74,4 @@ class SeasonStats
     lowest_tacklers = find_team_name(bottom_tacklers)
     lowest_tacklers[0]
   end
-
 end
