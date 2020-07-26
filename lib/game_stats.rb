@@ -49,24 +49,26 @@ class GameStats < Game
   end
 
 
-  def percentage_away_wins(id)
-    away_games = @games.find_all do |game|
-      game.away_team_id == id
+  def percentage_visitor_wins
+    away_games = @games.group_by do |game|
+      game.away_team_id
     end
-    away_games_wins = away_games.find_all do |game|
-      game.away_goals > game.home_goals
+    away_games_wins = away_games.map do |game_id, games|
+      games.find_all do |game|
+        game.away_goals > game.home_goals
+      end
     end
-    ((away_games_wins.count.to_f / away_games.count.to_f) * 100).round(2)
+    (away_games_wins.flatten.length / @games.count.to_f).round(2)
   end
 
   def percentage_ties
     tied_games = @games.find_all do |game|
       game.home_goals == game.away_goals
     end
-    ((tied_games.count.to_f / @games.count.to_f) * 100).round(2)
+    (tied_games.count.to_f / @games.count.to_f).round(2)
   end
 
-    def games_by_season
+    def count_of_games_by_season
      games_by_season = {} #
      season_by_id = games.group_by do |game|
        game.season

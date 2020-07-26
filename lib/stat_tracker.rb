@@ -62,12 +62,16 @@ class StatTracker
     @game_stats.average_goals_per_game
   end
 
-  def average_goals_per_season
-    @game_stats.average_goals_per_season
+  def average_goals_by_season
+    @game_stats.average_goals_by_season
   end
 
 
 #league_stats
+
+  def count_of_teams
+    @league_stats.count_of_teams
+  end
 
   def best_offense
     @league_stats.best_offense

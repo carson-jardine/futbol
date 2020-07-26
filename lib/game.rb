@@ -27,7 +27,7 @@ class Game
   end
 
   def total_goals_for_game
-    away_goals + home_goals
+    away_goals.to_i + home_goals.to_i
   end
 
 end
