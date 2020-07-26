@@ -17,6 +17,12 @@ class StatTracker
     StatTracker.new(locations)
   end
 
+  def initialize(locations)
+    @games = locations[:games]
+    @teams = locations[:teams]
+    @game_teams = locations[:game_teams]
+    # require 'pry'; binding.pry
+  end
 
 
   def initialize(locations)
@@ -32,10 +38,9 @@ class StatTracker
   end
 
 
-# game_stats
 
   def highest_total_score
-    @game_stats.highest_total_score
+    @stat_tracker.highest_total_score
   end
 
   def lowest_total_score
@@ -85,6 +90,23 @@ class StatTracker
   def worst_coach(season)
     @season_stats.worst_coach(season)
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 end

@@ -99,7 +99,14 @@ class TeamStatsTest < Minitest::Test
     team_stats = TeamStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
     assert_equal "20142015", team_stats.best_season(3)
+<<<<<<< HEAD
 >>>>>>> e256d64f52e52a8ad4be5223f52724f4a1ae81f0
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> e256d64f52e52a8ad4be5223f52724f4a1ae81f0
+>>>>>>> 93f7d732e57b22b92d0bd3126e6cdd10c8d1e2fb
+>>>>>>> 9bbd0231c7438207b0685f2ed5ac42b035195d54
   end
 
 
