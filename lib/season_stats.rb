@@ -14,67 +14,11 @@ class SeasonStats
   end
 # Name of the Coach with the best win percentage for the season
   def winningest_coach(season)
-    the_season = season.to_i
-    # first you get all the games in the game_teams that were Wins
-    win_games = find_win_games(game_teams)
-    #then you group them into a hash with key = game_id and value = all the info about the games that were WINs
-    win_games_with_key_as_game_id = find_result_games_with_key_as_game_id(win_games)
-    # We're done with that data for a second, but we'll come back to win_games_with_key_as_game_id later.
-    # For now you need to get all the games in the season that's been prompted by the arguement.  This here makes an array of those games called this_season:
-    this_season = find_this_season(the_season)
-    # However, that game information doesn't have the "WIN" information.
-    # So you have to see if the game_id in this new this_season match the games in which there was a win, and make a new thing, win_games_this_season, to hold that list of game_id's that match.  Basically this is testing to see if the WIN games are in the season we're looking at.  the new array has all the gameinfo of all the games that were winners and in our season.
-    win_games_this_season = find_result_games_this_season(this_season, win_games_with_key_as_game_id)
-
-    # now make a hash of key = game_id value = game info of games where there was a win
-    win_games_by_game_id = find_games_by_game_id(win_games_this_season)
-    # this is where it translates the game_id's of the games that were in our season and winners into an array of game_teams information so that we can then look at the win percentage.
-    win_game_list = find_game_list_with_reduce(win_games_with_key_as_game_id, win_games_by_game_id)
-    # This breaks down the games into a hash with key = team_id and value = games that team played this season.
-    teams_by_id = find_teams_by_team_id(win_game_list)
-    # This one is creating a hash called team_and_wins where the key is the team_id and the value is the percentage of wins per games in that season.
-    team_and_wins = find_team_and_results(teams_by_id, this_season)
-    #this finds the team_id that has the highest percentage
-    best_coach = largest_hash_value(team_and_wins)[0]
-    #and this takes that team_id and finds the corresponding coach_name
-    coach_name = find_coach_name(best_coach)
-    coach_name[0]
+    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN")
   end
 
   def worst_coach(the_season)
-    worst = HelperMethods.find_head_coach_by_season(@games, @game_teams, the_season)
-    binding.pry
-    # tie_games = 0
-
-    lost_games = HelperMethods.find_lose_games(@game_teams)
-    lost_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(lost_games)
-    this_season = HelperMethods.find_this_season(the_season, @games)
-    lost_games_this_season = HelperMethods.find_result_games_this_season(this_season, lost_games_with_key_as_game_id)
-
-    lost_games_game_ids_this_season = HelperMethods.find_games_by_game_id(lost_games_this_season)
-    lost_game_list_this_season = HelperMethods.find_game_list_with_reduce(lost_games_with_key_as_game_id, lost_games_game_ids_this_season)
-
-    win_games = HelperMethods.find_win_games(@game_teams)
-    win_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(win_games)
-    win_games_this_season = HelperMethods.find_result_games_this_season(this_season, win_games_with_key_as_game_id)
-    win_games_by_game_id_this_season = HelperMethods.find_games_by_game_id(win_games_this_season)
-    win_game_list_this_season = HelperMethods.find_game_list_with_reduce(win_games_with_key_as_game_id, win_games_by_game_id_this_season)
-
-    tie_games = HelperMethods.find_tie_games(@game_teams)
-    tie_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(tie_games)
-    tie_games_this_season = HelperMethods.find_result_games_this_season(this_season, tie_games_with_key_as_game_id)
-    tie_games_by_game_id_this_season = HelperMethods.find_games_by_game_id(tie_games_this_season)
-    tie_game_list_this_season = HelperMethods.find_game_list_with_reduce(tie_games_with_key_as_game_id, tie_games_by_game_id_this_season)
-    # binding.pry
-    teams_by_id_tie = HelperMethods.find_teams_by_team_id(tie_game_list_this_season)
-    teams_by_id_losses = HelperMethods.find_teams_by_team_id(lost_game_list_this_season)
-
-    teams_by_id_wins = HelperMethods.find_teams_by_team_id(win_game_list_this_season)
-    team_and_losses = HelperMethods.find_team_and_results(teams_by_id_losses, teams_by_id_wins, teams_by_id_tie)
-    worst_coach = HelperMethods.largest_hash_value(team_and_losses)[0]
-    coach_name = HelperMethods.find_coach_name(worst_coach, lost_game_list_this_season)
-      binding.pry
-    coach_name
+    HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "LOSS")
   end
 
   def most_accurate_team(season)

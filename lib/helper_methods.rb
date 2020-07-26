@@ -89,6 +89,7 @@ module HelperMethods
   def self.find_away_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.hoa == "away"
+
     end
   end
 
@@ -253,11 +254,8 @@ module HelperMethods
     coach_name
   end
 
-  def self.find_head_coach_by_season(games, game_teams, the_season)
-    tie_games = 0
-    lost_games = 0
-    win_games_count = 0
-    the_game_teams = {}
+  def self.find_head_coach_best_worst(games, game_teams, the_season, flag)
+    coach_games_results = {}
     coach_games = {}
     coach_and_wins = []
     games_grouped_by_season = games.group_by do |game|
@@ -270,43 +268,50 @@ module HelperMethods
       end
     end.flatten
 
-    this_season_games_game_ids = season_games.group_by do |season_game|
-      season_game.game_id
+    this_season_games = season_games.group_by do |season_game|
+      season_game.season
     end
 
-    head_coaches_by_game_team = game_teams.each do |season_game|
-      if coach_games[season_game.head_coach]
-        coach_games[season_game.head_coach] += "," + season_game.result
-      else
-        coach_games[season_game.head_coach] = season_game.result
+    season_games2 = this_season_games.map do |season, games|
+       games.map do |x|
+         x.game_id
+       end
+    end.flatten
+
+
+
+
+    head_coaches_by_season_games = game_teams.each do |season_game|
+      season_games2.each do |game_id|
+
+
+        if season_game.game_id == game_id.to_i
+          if coach_games[season_game.head_coach]
+            coach_games[season_game.head_coach] += "," + season_game.result
+          else
+            coach_games[season_game.head_coach] = season_game.result
+          end
+        end
+
       end
     end
 
     coach_games.each do |coach_name, game_results|
-      the_game_teams[coach_name] = game_results
+      coach_games_results[coach_name] = game_results
     end
 
-    win_games = the_game_teams.each do |coach_name, game_results|
+    coach_games_results.each do |coach_name, game_results|
       game_results = game_results.split(",")
-      coach_win = game_results.find_all do |game_result|
-        game_result == "WIN"
+      coach_wins = game_results.find_all do |game_result|
+        game_result == flag
       end
 
-      coach_and_wins << [coach_name , coach_win]
+      coach_and_wins << [coach_name , (coach_wins.count / game_results.count.to_f).round(2)]
     end
+binding.pry
 
-
-    binding.pry
-
-    total_games = tie_games[0] + win_games_count[0] + lost_games[0]
-
-    percentage_wins = win_games_count[0].to_f / total_games.to_f
-
-
-
-
-
-
+  coach_and_wins.max_by {|x| x[1]}
+  ## MIGHT NEED TO ROUND BEFORE YOU MAX MIGHT NOT WHO KNOWS
 
   end
 
