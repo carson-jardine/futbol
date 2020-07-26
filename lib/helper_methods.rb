@@ -254,6 +254,10 @@ module HelperMethods
     coach_name
   end
 
+  def select_season_games(season_id)
+    season_games = @games
+  end
+
   def self.find_head_coach_best_worst(games, game_teams, the_season, flag)
     coach_games_results = {}
     coach_games = {}
@@ -261,30 +265,21 @@ module HelperMethods
     games_grouped_by_season = games.group_by do |game|
       game.season
     end
-
     season_games = games_grouped_by_season.map do |season, game_grouped_by_season|
       game_grouped_by_season.find_all do |season_game|
         season_game.season == the_season
       end
     end.flatten
-
     this_season_games = season_games.group_by do |season_game|
       season_game.season
     end
-
     season_games2 = this_season_games.map do |season, games|
        games.map do |x|
          x.game_id
        end
     end.flatten
-
-
-
-
     head_coaches_by_season_games = game_teams.each do |season_game|
       season_games2.each do |game_id|
-
-
         if season_game.game_id == game_id.to_i
           if coach_games[season_game.head_coach]
             coach_games[season_game.head_coach] += "," + season_game.result
@@ -292,27 +287,19 @@ module HelperMethods
             coach_games[season_game.head_coach] = season_game.result
           end
         end
-
       end
     end
-
     coach_games.each do |coach_name, game_results|
       coach_games_results[coach_name] = game_results
     end
-
     coach_games_results.each do |coach_name, game_results|
       game_results = game_results.split(",")
       coach_wins = game_results.find_all do |game_result|
-        game_result == flag
+        game_result == "WIN"
       end
-
-      coach_and_wins << [coach_name , (coach_wins.count / game_results.count.to_f).round(2)]
+      coach_and_wins << [coach_name , (2 * coach_wins.count) / (2 * game_results.count.to_f) * 100.round(2)]
     end
-binding.pry
-
-  coach_and_wins.max_by {|x| x[1]}
-  ## MIGHT NEED TO ROUND BEFORE YOU MAX MIGHT NOT WHO KNOWS
-
+    coach_and_wins
   end
 
   def self.find_team_name(best_or_worst_team, teams)
