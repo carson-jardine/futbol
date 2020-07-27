@@ -151,8 +151,8 @@ module HelperMethods
     result_games_by_game_id.values
   end
 
-  def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
-    
+  # def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
+
   # def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
   #   game_list = []
   #   games_with_key_as_game_id.find_all do |game_result|

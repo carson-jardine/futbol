@@ -13,7 +13,6 @@ class LeagueStats
     @teams      = HelperMethods.load_teams(filepath3)
   end
 
-
     def best_offense
       teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
       team_and_total_score = HelperMethods.all_the_goals(teams_by_id)
