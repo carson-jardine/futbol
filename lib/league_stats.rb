@@ -88,4 +88,10 @@ class LeagueStats
       worst_team = find_team_name(bottom_scorer)
       worst_team[0]
     end
+
+    def count_of_teams
+      @teams.map do |team|
+        team.team_id
+      end.count
+    end
 end

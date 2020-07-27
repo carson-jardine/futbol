@@ -11,7 +11,7 @@ class TeamStats
               :teams,
               :games
 
-  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
+  def initialize(filepath1, filepath2, filepath3)
 
     @game_teams = HelperMethods.load_game_teams(filepath1)
     @games      = HelperMethods.load_games(filepath2)
@@ -119,7 +119,7 @@ class TeamStats
         end
       end
     end
-    the_best_season = largest_hash_value(season_by_win_percentage)
+    the_best_season = HelperMethods.largest_hash_value(season_by_win_percentage)
     the_best_season[0].to_s
   end
 
@@ -139,7 +139,7 @@ class TeamStats
         end
       end
     end
-    the_worst_season = smallest_hash_value(season_by_win_percentage)
+    the_worst_season = HelperMethods.smallest_hash_value(season_by_win_percentage)
     the_worst_season[0].to_s
   end
 
@@ -147,7 +147,7 @@ class TeamStats
     games_by_team_id(team_id)
     games_by_season
     @wins = []
-    @our_games = []
+    @team_games = []
     @seasons_hash.each do |season|
       season[1].each do |game|
         if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
@@ -160,55 +160,43 @@ class TeamStats
     @seasons_hash.each do |season1|
       season1[1].each do |game|
         if (team_id == game.away_team_id) == true
-          @our_games << game
+          @team_games << game
         elsif (team_id == game.home_team_id) == true
-          @our_games << game
+          @team_games << game
         end
       end
     end
-    total_wins = ((@wins.count.to_f / @our_games.count.to_f) * 100).round(2)
+  total_wins = (@wins.count.to_f / @team_games.count.to_f).round(2)
 
     total_wins
   end
+
   def most_goals_scored(team_id)
-    games_by_team_id(team_id)
-    games_by_season
     @away_goals = []
     @home_goals = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
+      @games.each do |game|
         if (team_id == game.away_team_id)
           @away_goals << game.away_goals
         elsif (team_id == game.home_team_id)
           @home_goals << game.home_goals
         end
       end
-    end
-    @away_goals.concat(@home_goals).max
+    @away_goals.concat(@home_goals).max.to_i
   end
 
   def fewest_goals_scored(team_id)
-    games_by_team_id(team_id)
-    games_by_season
     @away_goals = []
     @home_goals = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
+      @games.each do |game|
         if (team_id == game.away_team_id)
           @away_goals << game.away_goals
         elsif (team_id == game.home_team_id)
           @home_goals << game.home_goals
         end
       end
-    end
-    @away_goals.concat(@home_goals).min
+    @away_goals.concat(@home_goals).min.to_i
   end
 
-
-#######Philip Methods
-
-
-#######Philip Methods
 
   def favorite_opponent(team_id)
     other_teams_by_game = {}
@@ -273,6 +261,7 @@ class TeamStats
     end
     other_teams_by_game = home_teams_by_game.merge(away_teams_by_game)
     other_teams_by_game.each do |other_team_by_game|
+      our_games = []
       wins = []
       ties = []
       other_team_by_game[1].each do |game|
@@ -288,7 +277,14 @@ class TeamStats
           next
         end
       end
-      total_wins = (((2 * wins.count.to_f) + ties.count.to_f) / (2 * other_team_by_game[1].count.to_f)).round(2)
+      other_team_by_game[1].each do |game1|
+        if team_id == game1.away_team_id
+          our_games << game1
+        elsif team_id == game1.home_team_id
+          our_games << game1
+        end
+      end
+      total_wins = ((wins.count.to_f / our_games.count.to_f) * 100).round(2)
       other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
     end
     rival_team_id = largest_hash_value(other_teams_by_win_percentage)

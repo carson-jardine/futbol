@@ -67,12 +67,16 @@ class StatTracker
     @game_stats.average_goals_per_game
   end
 
-  def average_goals_per_season
-    @game_stats.average_goals_per_season
+  def average_goals_by_season
+    @game_stats.average_goals_by_season
   end
 
 
 #league_stats
+
+  def count_of_teams
+    @league_stats.count_of_teams
+  end
 
   def best_offense
     @league_stats.best_offense
@@ -85,12 +89,28 @@ class StatTracker
     @team_stats.team_info(id)
   end
 
-  def rival(team_id)
-    @team_stats.rival(team_id)
+  def best_season(id)
+    @team_stats.best_season(id)
   end
 
-  def favorite_opponent(team_id)
-    @team_stats.favorite_opponent(team_id)
+  def worst_season(id)
+    @team_stats.worst_season(id)
+  end
+
+  def average_win_percentage(id)
+    @team_stats.average_win_percentage(id)
+  end
+
+  def most_goals_scored(id)
+    @team_stats.most_goals_scored(id)
+  end
+
+  def fewest_goals_scored(id)
+    @team_stats.fewest_goals_scored(id)
+  end
+
+  def favorite_opponent(id)
+    @team_stats.favorite_opponent(id)
   end
 #season_stats
 
@@ -102,6 +122,9 @@ class StatTracker
     @season_stats.worst_coach(season_id)
   end
 
+  def most_accurate_team(the_team)
+    @season_stats.most_accurate_team(the_team)
+  end
 
 
 

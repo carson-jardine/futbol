@@ -22,17 +22,16 @@ class SeasonStats
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").min_by {|x| x[1]}[0]
   end
 
-
-  def most_accurate_team(season)
-    game_teams_by_id = find_teams_by_game_id(game_teams)
-    this_season = find_this_season(the_season)
-    this_season_game_ids = find_games_by_game_id(this_season)
-    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = find_teams_by_team_id(flattened_game_list)
-    team_and_accuracy = find_team_and_accuracy(teams_by_id)
-    best_team = largest_hash_value(team_and_accuracy)[0]
-    team_name = find_team_name(best_team)
+  def most_accurate_team(the_season)
+    game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
+    this_season = HelperMethods.find_this_season(the_season)
+    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
+    flattened_game_list = HelperMethods.game_list.flatten
+    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
+    best_team = HelperMethods.largest_hash_value(team_and_accuracy)[0]
+    team_name = HelperMethods.find_team_name(best_team)
     team_name[0]
   end
 
