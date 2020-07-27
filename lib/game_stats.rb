@@ -1,6 +1,5 @@
-require 'CSV'
-require './lib/game'
-
+# require 'CSV'
+# require_ './lib/game'
 
 class GameStats < Game
   attr_reader :games
@@ -22,46 +21,54 @@ class GameStats < Game
   end
 
   def highest_total_score
-    @games.map do |game|
-      (game.home_goals) + (game.away_goals)
-    end.max
+    highest_score = @games.max_by do |game|
+      (game.home_goals.to_i) + (game.away_goals.to_i)
+    end
+    highest_score.home_goals.to_i + highest_score.away_goals.to_i
   end
 
   def lowest_total_score
-    @games.map do |game|
-      (game.home_goals) + (game.away_goals)
-    end.min
+    lowest_score = @games.min_by do |game|
+      (game.home_goals.to_i) + (game.away_goals.to_i)
+    end
+    lowest_score.home_goals.to_i + lowest_score.away_goals.to_i
   end
 
-  def percentage_home_wins(id)
-    home_games = @games.find_all do |game|
-      game.home_team_id == id
+  def percentage_home_wins
+    home_games = @games.group_by do |game|
+      game.home_team_id
     end
-    home_games_wins = home_games.find_all do |game|
-      game.home_goals > game.away_goals
+    home_games_wins = home_games.map do |game_id, games|
+      # games.map(&:home_goals) > games.map(&:away_goals)
+      games.find_all do |game|
+        game.home_goals > game.away_goals
+      end
     end
-    ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
+    (home_games_wins.flatten.length / @games.count.to_f).round(2)
+    # ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
   end
 
 
-  def percentage_away_wins(id)
-    away_games = @games.find_all do |game|
-      game.away_team_id == id
+  def percentage_visitor_wins
+    away_games = @games.group_by do |game|
+      game.away_team_id
     end
-    away_games_wins = away_games.find_all do |game|
-      game.away_goals > game.home_goals
+    away_games_wins = away_games.map do |game_id, games|
+      games.find_all do |game|
+        game.away_goals > game.home_goals
+      end
     end
-    ((away_games_wins.count.to_f / away_games.count.to_f) * 100).round(2)
+    (away_games_wins.flatten.length / @games.count.to_f).round(2)
   end
 
   def percentage_ties
     tied_games = @games.find_all do |game|
       game.home_goals == game.away_goals
     end
-    ((tied_games.count.to_f / @games.count.to_f) * 100).round(2)
+    (tied_games.count.to_f / @games.count.to_f).round(2)
   end
 
-    def games_by_season
+    def count_of_games_by_season
      games_by_season = {} #
      season_by_id = games.group_by do |game|
        game.season

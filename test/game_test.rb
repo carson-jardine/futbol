@@ -1,5 +1,7 @@
-require './test/test_helper'
+# require './test/test_helper'
+require 'minitest/autorun'
 require './lib/game.rb'
+require 'minitest/pride'
 
 
 class GameTest < Minitest::Test

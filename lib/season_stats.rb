@@ -1,7 +1,17 @@
-require_relative './helper_methods'
+require './helper_methods'
 
-class SeasonStats < HelperMethods
+class SeasonStats
 
+  attr_reader :game_teams,
+              :teams,
+              :games
+
+  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
+
+    @game_teams = HelperMethods.load_game_teams(filepath1)
+    @games      = HelperMethods.load_games(filepath2)
+    @teams      = HelperMethods.load_teams(filepath3)
+  end
 # Name of the Coach with the best win percentage for the season
   def winningest_coach(the_season)
     # first you get all the games in the game_teams that were Wins
@@ -31,29 +41,30 @@ class SeasonStats < HelperMethods
   end
 
   def worst_coach(the_season)
-    lose_games = find_lose_games(game_teams)
-    lose_games_with_key_as_game_id = find_result_games_with_key_as_game_id(lose_games)
-    this_season = find_this_season(the_season)
-    lose_games_this_season = find_result_games_this_season(this_season, lose_games_with_key_as_game_id)
-    lose_games_by_game_id = find_games_by_game_id(lose_games_this_season)
-    lose_game_list = find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
-    teams_by_id = find_teams_by_team_id(lose_game_list)
-    team_and_losses = find_team_and_results(teams_by_id, this_season)
-    worst_coach = largest_hash_value(team_and_losses)[0]
-    coach_name = find_coach_name(worst_coach)
-    coach_name[0]
+    lose_games = HelperMethods.find_lose_games(game_teams)
+    lose_games_with_key_as_game_id = HelperMethods.find_result_games_with_key_as_game_id(lose_games)
+    this_season = HelperMethods.find_this_season(the_season, @games)
+    lose_games_this_season = HelperMethods.find_result_games_this_season(this_season, lose_games_with_key_as_game_id)
+    lose_games_by_game_id = HelperMethods.find_games_by_game_id(lose_games_this_season)
+    lose_game_list = HelperMethods.find_game_list_with_reduce(lose_games_with_key_as_game_id, lose_games_by_game_id)
+    teams_by_id = HelperMethods.find_teams_by_team_id(lose_game_list)
+
+    team_and_losses = HelperMethods.find_team_and_results(teams_by_id, lose_games_this_season)
+    worst_coach = HelperMethods.largest_hash_value(team_and_losses)[0]
+    coach_name = HelperMethods.find_coach_name(worst_coach, lose_game_list)
+    coach_name.max
   end
 
   def most_accurate_team(the_season)
-    game_teams_by_id = find_teams_by_game_id(game_teams)
-    this_season = find_this_season(the_season)
-    this_season_game_ids = find_games_by_game_id(this_season)
-    game_list = find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = find_teams_by_team_id(flattened_game_list)
-    team_and_accuracy = find_team_and_accuracy(teams_by_id)
-    best_team = largest_hash_value(team_and_accuracy)[0]
-    team_name = find_team_name(best_team)
+    game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
+    this_season = HelperMethods.find_this_season(the_season)
+    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
+    flattened_game_list = HelperMethods.game_list.flatten
+    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
+    best_team = HelperMethods.largest_hash_value(team_and_accuracy)[0]
+    team_name = HelperMethods.find_team_name(best_team)
     team_name[0]
   end
 

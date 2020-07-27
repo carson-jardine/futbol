@@ -19,6 +19,7 @@ class GameTeams
               :takeaways
 
   def initialize(game_teams_info)
+    
     @game_id                = game_teams_info[:game_id].to_i
     @team_id                = game_teams_info[:team_id].to_i
     @hoa                    = game_teams_info[:hoa]
@@ -36,5 +37,11 @@ class GameTeams
     @takeaways              = game_teams_info[:takeaways].to_i
   end
 
+
+  def game_teams_find_by_game_id(game_id)
+    @game_teams.find do |season_stat|
+      season_stat.game_id == game_id
+    end
+  end
 
 end
