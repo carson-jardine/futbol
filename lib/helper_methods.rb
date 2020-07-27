@@ -2,6 +2,7 @@
 # require_relative './game_teams'
 # require_relative './game'
 # require_relative './team'
+require 'pry'
 
 module HelperMethods
 
@@ -141,23 +142,26 @@ module HelperMethods
   def self.find_games_by_game_id(games_this_season)
     result_games_by_game_id = {}
     games_this_season.each do |game_this_season|
-      if result_games_by_game_id[game_this_season[0].game_id]
-        result_games_by_game_id[game_this_season[0].game_id] += game_this_season[0].game_id
+      if result_games_by_game_id[game_this_season.game_id]
+        result_games_by_game_id[game_this_season.game_id] += game_this_season.game_id
       else
-        result_games_by_game_id[game_this_season[0].game_id] = game_this_season[0].game_id
+        result_games_by_game_id[game_this_season.game_id] = game_this_season.game_id
       end
     end
-    # binding.pry
+
     result_games_by_game_id.values
   end
 
-  def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
+
+
+  def self.find_game_list(games_with_key_as_game_id, game_ids_this_season)
     game_list = []
-    games_with_key_as_game_id.find_all do |game_result|
-      if games_by_game_id.any?(game_result[0]) == true
-        game_list << game_result[1]
+    games_with_key_as_game_id.each do |game_id, games|
+      if game_ids_this_season.include?(game_id.to_s)
+        game_list << games
       end
     end
+    # binding.pry
     game_list.flatten
   end
 
@@ -236,10 +240,13 @@ module HelperMethods
   def self.all_the_goals(teams_by_id)
     team_and_total_score = {}
     teams_by_id.each do |team|
-      goals_by_team = team[1].sum do |the_goals|
-        the_goals.goals
+      goals_by_team = []
+      team[1].each do |the_game|
+        goals_by_team << the_game.goals
       end
-      team_and_total_score[team[0]] = goals_by_team
+      total_by_team = goals_by_team.sum
+      average_gpg = total_by_team.to_f / team[1].count
+      team_and_total_score[team[0]] = average_gpg
     end
     team_and_total_score
   end
@@ -302,14 +309,23 @@ module HelperMethods
     coach_and_wins
   end
 
-  def self.find_team_name(best_or_worst_team, teams)
+  # def self.find_team_name(team_id)
+  #   team_name = @teams.find_all do |team|
+  #     team.team_id
+  #   end
+  #   team_name[0].team_name
+  #   binding.pry
+  # end
+
+  def self.find_team_name(team_id)
     team_name = []
-    teams.each do |team|
-      if team.team_id == best_or_worst_team.to_s
+    @teams.each do |team|
+      if team.team_id == team_id[0].to_s
         team_name << team.team_name
       end
     end
-    team[0].team_name
+    team_name[0]
   end
+
 
 end
