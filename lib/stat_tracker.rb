@@ -112,6 +112,12 @@ class StatTracker
   def favorite_opponent(id)
     @team_stats.favorite_opponent(id)
   end
+
+  def rival(team_id)
+    @team_stats.rival(team_id)
+  end
+
+  
 #season_stats
 
   def winningest_coach(season_id)
@@ -125,6 +131,8 @@ class StatTracker
   def most_accurate_team(the_team)
     @season_stats.most_accurate_team(the_team)
   end
+
+
 
 
 
