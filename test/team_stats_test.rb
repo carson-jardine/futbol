@@ -67,29 +67,10 @@ class TeamStatsTest < Minitest::Test
     assert Hash, team_stats.wins_by_season_count
   end
 
-<<<<<<< HEAD
-  def test_best_season
-    skip
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-
-    assert_equal [], team_stats.best_season(6)
-=======
   def test_it_can_find_season_with_highest_win_percentage
     team_stats = TeamStats.new("./data/game_teams.csv", "./data/games.csv", "./data/teams.csv")
 
     assert_equal "20142015", team_stats.best_season(3)
-<<<<<<< HEAD
-=======
->>>>>>> e256d64f52e52a8ad4be5223f52724f4a1ae81f0
->>>>>>> f0c70bc654d4159505e7de7aec495cd167cbac37
-  end
-
-
-
-
-
-
-
 
   #
   # def test_get_games_id
@@ -201,26 +182,6 @@ class TeamStatsTest < Minitest::Test
     assert_equal 87.5, team_stats.average_win_percentage(6)
   end
 
-<<<<<<< HEAD
-  def test_most_goals_scored
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-
-    assert_equal 4, team_stats.most_goals_scored(6)
-  end
-
-  def test_fewest_goals_scored
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-
-    assert_equal 2, team_stats.fewest_goals_scored(6)
-  end
-
-  def test_fave_opponent
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-
-    team_stats.favorite_opponent(6)
-  end
-
-=======
   def test_favorite_opponent
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
@@ -232,5 +193,4 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal "Houston Dynamo", team_stats.rival(6)
   end
->>>>>>> 45bdd6a5b8580de0ed6b341505992a091b7288c5
 end
