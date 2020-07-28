@@ -148,6 +148,25 @@ class TeamStats
     other_teams_by_win_percentage
   end
 
+  def find_other_teams_by_game(team_id)
+    home_games = []
+    away_games = []
+    @games.find_all do |game|
+      if game.away_team_id == team_id
+        away_games << game
+      elsif game.home_team_id == team_id
+        home_games << game
+      end
+    end
+    home_teams_by_game = away_games.group_by do |away_game|
+      away_game.home_team_id
+    end
+    away_teams_by_game = home_games.group_by do |home_game|
+      home_game.away_team_id
+    end
+    home_teams_by_game.merge(away_teams_by_game)
+  end
+
   def best_season(team_id)
     season_by_win_percentage = {}
     games_by_team_id(team_id)
@@ -221,24 +240,8 @@ class TeamStats
   end
 
   def favorite_opponent(team_id)
-    other_teams_by_game = {}
     other_teams_by_win_percentage = {}
-    home_games = []
-    away_games = []
-    @games.find_all do |game|
-      if game.away_team_id == team_id
-        away_games << game
-      elsif game.home_team_id == team_id
-        home_games << game
-      end
-    end
-    home_teams_by_game = away_games.group_by do |away_game|
-      away_game.home_team_id
-    end
-    away_teams_by_game = home_games.group_by do |home_game|
-      home_game.away_team_id
-    end
-    other_teams_by_game = home_teams_by_game.merge(away_teams_by_game)
+    other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     favorite_opponent_team_id = HelperMethods.smallest_hash_value(other_teams_by_win_percentage)
     favorite_opponent = find_team_name(favorite_opponent_team_id[0])
@@ -246,23 +249,7 @@ class TeamStats
   end
 
   def rival(team_id)
-    other_teams_by_game = {}
-    home_games = []
-    away_games = []
-    @games.find_all do |game|
-      if game.away_team_id == team_id
-        away_games << game
-      elsif game.home_team_id == team_id
-        home_games << game
-      end
-    end
-    home_teams_by_game = away_games.group_by do |away_game|
-      away_game.home_team_id
-    end
-    away_teams_by_game = home_games.group_by do |home_game|
-      home_game.away_team_id
-    end
-    other_teams_by_game = home_teams_by_game.merge(away_teams_by_game)
+    other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     rival_team_id = HelperMethods.largest_hash_value(other_teams_by_win_percentage)
     rival = find_team_name(rival_team_id[0])
