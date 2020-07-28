@@ -124,9 +124,7 @@ class TeamStats
   end
 
   def average_win_percentage(team_id)
-    wins = wins_by_team_id(team_id)
-    team_games = team_games_by_season(team_id)
-    (wins.count.to_f / team_games.count.to_f).round(2)
+    (wins_by_team_id(team_id).count.to_f / team_games_by_season(team_id).count.to_f).round(2)
   end
 
   def most_goals_scored(team_id)
