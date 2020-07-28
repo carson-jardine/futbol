@@ -25,20 +25,32 @@ class TeamStatsTest < Minitest::Test
     assert_equal result, team_stats.team_info("3")
   end
 
-  def test_team_info
+  def test_get_games_by_team_id_array
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
     assert_instance_of Array, team_stats.get_games_by_team_id_array("3")
   end
   #
-  # def test_it_can_find_games_by_team_id
+  def  v
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    result = {"20122013"=>5, "20122012"=>1, "20152016"=>5}
+
+    assert_equal result, team_stats.games_by_team_id("3")
+  end
+
+  # def test_wins_by_team_id
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #   assert_instance_of Array, team_stats.games_by_team_id(3)
-  # end
   #
+  #   result = {"20122013"=>5, "20122012"=>1, "20152016"=>5}
+  #
+  #   assert_equal result, team_stats.wins_by_team_id("3")
+  # end
+
   # def test_games_by_season
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #   games_by_team_id_array = team_stats.games_by_team_id(3)
+  #   games_by_team_id_array = team_stats.games_by_team_id("3")
+  #
   #   assert Hash, team_stats.games_by_season
   # end
   #
