@@ -1,27 +1,18 @@
-# require './helper_methods'
-
 class SeasonStats
-
   attr_reader :game_teams,
               :teams,
               :games
-
   def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
-
     @game_teams = HelperMethods.load_game_teams(filepath1)
     @games      = HelperMethods.load_games(filepath2)
     @teams      = HelperMethods.load_teams(filepath3)
   end
-
-
   def winningest_coach(the_season)
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").max_by {|x| x[1]}[0]
   end
-
   def worst_coach(the_season)
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").min_by {|x| x[1]}[0]
   end
-
   def most_accurate_team(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
     this_season = HelperMethods.find_this_season(the_season)
@@ -31,10 +22,8 @@ class SeasonStats
     team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
     best_team = HelperMethods.largest_hash_value(team_and_accuracy)
     team_name = HelperMethods.find_team_name(best_team)
-
     team_name
   end
-
   def least_accurate_team(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
     this_season = HelperMethods.find_this_season(the_season)
@@ -46,7 +35,6 @@ class SeasonStats
     team_name = HelperMethods.find_team_name(worst_team)
     team_name
   end
-
   def most_tackles(the_season)
     this_season = HelperMethods.find_this_season(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
@@ -58,7 +46,6 @@ class SeasonStats
     highest_tacklers = HelperMethods.find_team_name(top_tacklers)
     highest_tacklers
   end
-
   def fewest_tackles(the_season)
     this_season = HelperMethods.find_this_season(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
