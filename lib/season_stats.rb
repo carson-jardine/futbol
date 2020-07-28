@@ -83,8 +83,7 @@ class SeasonStats
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
     best_team = HelperMethods.largest_hash_value(team_and_accuracy)
-    team_name = HelperMethods.find_team_name(best_team)
-    team_name[0]
+    HelperMethods.find_team_name(best_team)[0]
   end
 
   def least_accurate_team(the_season)
@@ -95,8 +94,7 @@ class SeasonStats
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = find_team_and_accuracy(teams_by_id)
     worst_team = HelperMethods.smallest_hash_value(team_and_accuracy)
-    team_name = HelperMethods.find_team_name(worst_team)
-    team_name[0]
+    HelperMethods.find_team_name(worst_team)[0]
   end
 
   def most_tackles(the_season)
@@ -107,8 +105,7 @@ class SeasonStats
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = find_team_and_tackles(teams_by_id)
     top_tacklers = HelperMethods.largest_hash_value(team_and_total_tackles)
-    highest_tacklers = HelperMethods.find_team_name(top_tacklers)
-    highest_tacklers[0]
+    HelperMethods.find_team_name(top_tacklers)[0]
   end
 
   def fewest_tackles(the_season)
@@ -119,7 +116,6 @@ class SeasonStats
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = find_team_and_tackles(teams_by_id)
     bottom_tacklers = HelperMethods.smallest_hash_value(team_and_total_tackles)
-    lowest_tacklers = HelperMethods.find_team_name(bottom_tacklers)
-    lowest_tacklers[0]
+    HelperMethods.find_team_name(bottom_tacklers)[0]
   end
 end
