@@ -51,6 +51,6 @@ module HelperMethods
         team_name << team.team_name
       end
     end
-    team_name[0]
+    team_name
   end
 end

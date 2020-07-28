@@ -21,16 +21,6 @@ class TeamStats
     hash
   end
 
-  def find_team_name(best_or_worst_team)
-    team_name = []
-    teams.each do |team|
-      if team.team_id == best_or_worst_team.to_s
-        team_name << team.team_name
-      end
-    end
-    team_name
-  end
-
   def games_by_team_id(team_id)
     @games_by_team_id_array = []
     @games.each do |game|
@@ -207,7 +197,7 @@ class TeamStats
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     favorite_opponent_team_id = HelperMethods.smallest_hash_value(other_teams_by_win_percentage)
-    favorite_opponent = find_team_name(favorite_opponent_team_id[0])
+    favorite_opponent = HelperMethods.find_team_name(favorite_opponent_team_id)
     favorite_opponent[0]
   end
 
@@ -215,7 +205,7 @@ class TeamStats
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     rival_team_id = HelperMethods.largest_hash_value(other_teams_by_win_percentage)
-    rival = find_team_name(rival_team_id[0])
+    rival = HelperMethods.find_team_name(rival_team_id)
     rival[0]
   end
 end
