@@ -1,7 +1,7 @@
 # require 'CSV'
-# require_ './lib/game'
+require_relative 'game'
 
-class GameStats < Game
+class GameStats
   attr_reader :games
   def initialize(filepath)
     @games = []

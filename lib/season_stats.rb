@@ -1,3 +1,4 @@
+require_relative './helper_methods'
 class SeasonStats
   attr_reader :game_teams,
               :teams,
