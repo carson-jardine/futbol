@@ -43,10 +43,7 @@ class SeasonStats
 
   def find_team_and_tackles(teams_by_id)
     team_and_total_tackles = {}
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum {|the_tackles| the_tackles.tackles}
-      team_and_total_tackles[team[0]] = goals_by_team
-    end
+    teams_by_id.each { |team| goals_by_team = team[1].sum {|the_tackles| the_tackles.tackles} ; team_and_total_tackles[team[0]] = goals_by_team }
     team_and_total_tackles
   end
 
@@ -58,11 +55,7 @@ class SeasonStats
 
   def find_coach_and_wins(coach_games_results)
     coach_and_wins = []
-    coach_games_results.each do |coach_name, game_results|
-      game_results = game_results.split(",")
-      coach_wins = game_results.find_all {|game_result| game_result == "WIN" }
-      coach_and_wins << [coach_name , (2 * coach_wins.count) / (2 * game_results.count.to_f) * 100.round(2)]
-    end
+    coach_games_results.each { |coach_name, game_results| game_results = game_results.split(",") ; coach_wins = game_results.find_all {|game_result| game_result == "WIN" } ; coach_and_wins << [coach_name , (2 * coach_wins.count) / (2 * game_results.count.to_f) * 100.round(2)] }
     coach_and_wins
   end
 
