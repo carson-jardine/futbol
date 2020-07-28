@@ -1,4 +1,4 @@
-# require 'CSV'
+require 'CSV'
 require_relative 'game'
 
 class GameStats
