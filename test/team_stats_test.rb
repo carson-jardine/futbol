@@ -17,11 +17,13 @@ class TeamStatsTest < Minitest::Test
     assert_equal "DC United", team_stats.teams[3].team_name
   end
 
-  # def test_it_can_find_team_info_by_id
-  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #   result = team_stats.team_info(3)
-  #   assert_instance_of Hash, result
-  # end
+  def test_team_info
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    result = {"team_id"=>"3", "franchise_id"=>"10", "team_name"=>"Houston Dynamo", "abbreviation"=>"HOU", "link"=>"/api/v1/teams/3"}
+
+    assert_equal result, team_stats.team_info("3")
+  end
   #
   # def test_it_can_find_games_by_team_id
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
