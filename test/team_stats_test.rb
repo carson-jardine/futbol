@@ -28,37 +28,13 @@ class TeamStatsTest < Minitest::Test
     games_by_team_id_array = team_stats.games_by_team_id(3)
     assert Hash, team_stats.games_by_season
   end
-  def test_wins_across_all_seasons
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    assert_equal 7,team_stats.wins_across_all_seasons(6)
-  end
+
   def test_games_by_season
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
     games_by_team_id_array = team_stats.games_by_team_id(3)
     assert Hash, team_stats.games_by_season
   end
-  def test_wins_across_all_seasons
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    assert_equal 7,team_stats.wins_across_all_seasons( 6)
-  end
-  def test_wins_across_all_seasons_and_wins_by_season
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    team_stats.wins_across_all_seasons(6)
-    assert Hash, team_stats.wins_by_season
-  end
-  def test_wins_by_season_count
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    wins_by_season =team_stats.wins_across_all_seasons(6)
-    assert Hash, team_stats.wins_by_season_count
-  end
+
   def test_best_season
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
     assert_equal [], team_stats.best_season(6)
@@ -106,26 +82,7 @@ class TeamStatsTest < Minitest::Test
     games_by_team_id_array = team_stats.games_by_team_id(3)
     assert Hash, team_stats.games_by_season
   end
-  def test_wins_across_all_seasons
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    assert_equal 7,team_stats.wins_across_all_seasons( 6)
-  end
-  def test_wins_across_all_seasons_and_wins_by_season
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    team_stats.wins_across_all_seasons(6)
-    assert Hash, team_stats.wins_by_season
-  end
-  def test_wins_by_season_count
-    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-    games_by_team_id_array = team_stats.games_by_team_id(6)
-    seasons_hash = team_stats.games_by_season
-    wins_by_season =team_stats.wins_across_all_seasons(6)
-    assert Hash, team_stats.wins_by_season_count
-  end
+  
   def test_best_season
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
     assert_equal "20122012", team_stats.best_season(6)
