@@ -30,14 +30,6 @@ class TeamStats
     hash
   end
 
-  def largest_hash_value(hash)
-    hash.max_by{|k,v| v}
-  end
-
-  def smallest_hash_value(hash)
-    hash.min_by{|k,v| v}
-  end
-
   def find_team_name(best_or_worst_team)
     team_name = []
     teams.each do |team|
@@ -143,32 +135,38 @@ class TeamStats
     the_worst_season[0].to_s
   end
 
-  def average_win_percentage(team_id)
-    games_by_team_id(team_id)
-    games_by_season
-    @wins = []
-    @team_games = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
-        if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-          @wins << game
-        elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-          @wins << game
-        end
+  def wins_by_team_id(team_id)
+  wins = []
+  @seasons_hash.each do |season|
+    season[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
+        wins << game
+      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+        wins << game
       end
     end
+  end
+  wins
+  end
+
+  def team_games_by_season(team_id)
+    team_games = []
     @seasons_hash.each do |season1|
       season1[1].each do |game|
         if (team_id == game.away_team_id) == true
-          @team_games << game
+          team_games << game
         elsif (team_id == game.home_team_id) == true
-          @team_games << game
+          team_games << game
         end
       end
     end
-  total_wins = (@wins.count.to_f / @team_games.count.to_f).round(2)
+    team_games
+  end
 
-    total_wins
+  def average_win_percentage(team_id)
+    wins = wins_by_team_id(team_id)
+    team_games = team_games_by_season(team_id)
+    (wins.count.to_f / team_games.count.to_f).round(2)
   end
 
   def most_goals_scored(team_id)
