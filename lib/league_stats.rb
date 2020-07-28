@@ -23,15 +23,7 @@ class LeagueStats
 
   def all_the_goals(teams_by_id)
     team_and_total_score = {}
-    teams_by_id.each do |team|
-      goals_by_team = []
-      team[1].each do |the_game|
-        goals_by_team << the_game.goals
-      end
-      total_by_team = goals_by_team.sum
-      average_gpg = total_by_team.to_f / team[1].count
-      team_and_total_score[team[0]] = average_gpg
-    end
+    teams_by_id.each { |team|  goals_by_team = [] ; team[1].each {|the_game| goals_by_team << the_game.goals } ; total_by_team = goals_by_team.sum ; average_gpg = total_by_team.to_f / team[1].count ; team_and_total_score[team[0]] = average_gpg }
     team_and_total_score
   end
 
