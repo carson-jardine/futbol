@@ -148,6 +148,19 @@ class TeamStats
     other_teams_by_win_percentage
   end
 
+  def find_home_and_away_goals(team_id)
+    @away_goals = []
+    @home_goals = []
+    @games.each do |game|
+      if (team_id == game.away_team_id)
+        @away_goals << game.away_goals
+      elsif (team_id == game.home_team_id)
+        @home_goals << game.home_goals
+      end
+    end
+    @away_goals.concat(@home_goals)
+  end
+
   def find_other_teams_by_game(team_id)
     home_games = []
     away_games = []
@@ -195,7 +208,6 @@ class TeamStats
     wins_by_season
     wins_by_season_count
     games_by_season_count
-
     wins_by_season_count.each do |win_by_season_count|
       games_by_season_count.each do |game_by_season_count|
         if game_by_season_count[0] == win_by_season_count[0]
@@ -214,29 +226,11 @@ class TeamStats
   end
 
   def most_goals_scored(team_id)
-    @away_goals = []
-    @home_goals = []
-      @games.each do |game|
-        if (team_id == game.away_team_id)
-          @away_goals << game.away_goals
-        elsif (team_id == game.home_team_id)
-          @home_goals << game.home_goals
-        end
-      end
-    @away_goals.concat(@home_goals).max.to_i
+    find_home_and_away_goals(team_id).max.to_i
   end
 
   def fewest_goals_scored(team_id)
-    @away_goals = []
-    @home_goals = []
-      @games.each do |game|
-        if (team_id == game.away_team_id)
-          @away_goals << game.away_goals
-        elsif (team_id == game.home_team_id)
-          @home_goals << game.home_goals
-        end
-      end
-    @away_goals.concat(@home_goals).min.to_i
+    find_home_and_away_goals(team_id).min.to_i
   end
 
   def favorite_opponent(team_id)
