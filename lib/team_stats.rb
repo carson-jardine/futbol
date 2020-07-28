@@ -69,17 +69,17 @@ class TeamStats
   end
 
   def wins_by_team_id(team_id)
-    wins = []
+    @wins = []
     @seasons_hash.each do |season|
       season[1].each do |game|
         if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-          wins << game
+          @wins << game
         elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-          wins << game
+          @wins << game
         end
       end
     end
-    wins
+    @wins
   end
 
   def team_games_by_season(team_id)
