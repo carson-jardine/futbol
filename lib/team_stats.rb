@@ -108,16 +108,16 @@ class TeamStats
   end
 
   def find_home_and_away_goals(team_id)
-    @away_goals = []
-    @home_goals = []
+    away_goals = []
+    home_goals = []
     @games.each do |game|
       if (team_id == game.away_team_id)
-        @away_goals << game.away_goals
+        away_goals << game.away_goals
       elsif (team_id == game.home_team_id)
-        @home_goals << game.home_goals
+        home_goals << game.home_goals
       end
     end
-    @away_goals.concat(@home_goals)
+    away_goals.concat(home_goals)
   end
 
   def find_home_games_in_games(team_id)
