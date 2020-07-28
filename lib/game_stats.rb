@@ -78,9 +78,7 @@ class GameStats
   end
 
   def average_goals_per_game
-    result = games.map do |game|
-      game.total_goals_for_game
-    end
+    result = games.map { |game|  game.total_goals_for_game }
     (result.sum.to_f / result.count.to_f).round(2)
   end
 
