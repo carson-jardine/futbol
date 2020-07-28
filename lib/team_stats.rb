@@ -58,9 +58,7 @@ class TeamStats
   def wins_by_season_count
     season_wins = @wins.group_by {|game| game.season}
     season_wins_count = {}
-    season_wins.each do |season, season_games|
-      season_wins_count[season] = (season_games.count)
-    end
+    season_wins.each {|season, season_games| season_wins_count[season] = (season_games.count) }
     season_wins_count
   end
 
