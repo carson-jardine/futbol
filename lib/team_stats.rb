@@ -122,11 +122,7 @@ class TeamStats
 
   def find_home_games_in_games(team_id)
     home_games = []
-    @games.find_all do |game|
-      if game.home_team_id == team_id
-        home_games << game
-      end
-    end
+    @games.find_all { |game| game.home_team_id == team_id ? home_games << game : next }
     home_games
   end
 
