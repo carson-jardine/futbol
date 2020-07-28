@@ -136,17 +136,16 @@ class TeamStats
   end
 
   def favorite_opponent(team_id)
-    other_teams_by_win_percentage = find_other_teams_by_win_percentage(find_other_teams_by_game(team_id), team_id)
+    other_teams_by_game = find_other_teams_by_game(team_id)
+    other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     favorite_opponent_team_id = HelperMethods.smallest_hash_value(other_teams_by_win_percentage)
-    favorite_opponent = HelperMethods.find_team_name(favorite_opponent_team_id)
-    favorite_opponent[0]
+    HelperMethods.find_team_name(favorite_opponent_team_id)[0]
   end
 
   def rival(team_id)
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     rival_team_id = HelperMethods.largest_hash_value(other_teams_by_win_percentage)
-    rival = HelperMethods.find_team_name(rival_team_id)
-    rival[0]
+    HelperMethods.find_team_name(rival_team_id)[0]
   end
 end
