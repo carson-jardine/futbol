@@ -21,16 +21,12 @@ class GameStats
   end
 
   def highest_total_score
-    highest_score = @games.max_by do |game|
-      (game.home_goals.to_i) + (game.away_goals.to_i)
-    end
+    highest_score = @games.max_by { |game| (game.home_goals.to_i) + (game.away_goals.to_i) }
     highest_score.home_goals.to_i + highest_score.away_goals.to_i
   end
 
   def lowest_total_score
-    lowest_score = @games.min_by do |game|
-      (game.home_goals.to_i) + (game.away_goals.to_i)
-    end
+    lowest_score = @games.min_by { |game| (game.home_goals.to_i) + (game.away_goals.to_i) }
     lowest_score.home_goals.to_i + lowest_score.away_goals.to_i
   end
 
