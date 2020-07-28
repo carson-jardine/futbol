@@ -3,7 +3,6 @@ class TeamStats
   attr_reader :game_teams,
               :teams,
               :games
-
   def initialize(filepath1, filepath2, filepath3)
     @game_teams = HelperMethods.load_game_teams(filepath1)
     @games      = HelperMethods.load_games(filepath2)
@@ -27,20 +26,6 @@ class TeamStats
     games_by_team_id_array
   end
 
-  def games_by_team_id(team_id)
-    games_by_season_count = {}
-    games_by_team_id_array = get_games_by_team_id_array(team_id)
-    @seasons_hash = games_by_team_id_array.group_by { |game| game.season }
-    @seasons_hash.each { |season, season_games| games_by_season_count[season] = (season_games.count) }
-    games_by_season_count
-  end
-
-  def wins_by_team_id(team_id)
-    @wins = []
-    @seasons_hash.each { |season| season[1].each { |game| (team_id == game.away_team_id) && (game.away_goals > game.home_goals) || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) ? @wins << game : next } }
-    @wins
-  end
-
   def wins_by_season_count
     season_wins = @wins.group_by {|game| game.season}
     season_wins_count = {}
@@ -48,9 +33,28 @@ class TeamStats
     season_wins_count
   end
 
+  def find_season_hash(team_id)
+    get_games_by_team_id_array(team_id).group_by { |game| game.season }
+  end
+
+  def games_by_team_id(team_id)
+    games_by_season_count = {}
+    seasons_hash = find_season_hash(team_id)
+    seasons_hash.each { |season, season_games| games_by_season_count[season] = (season_games.count) }
+    games_by_season_count
+  end
+
+  def wins_by_team_id(team_id)
+    @wins = []
+    seasons_hash = find_season_hash(team_id)
+    seasons_hash.each { |season| season[1].each { |game| (team_id == game.away_team_id) && (game.away_goals > game.home_goals) || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) ? @wins << game : next } }
+    @wins
+  end
+
   def team_games_by_season(team_id)
     team_games = []
-    @seasons_hash.each { |season1| season1[1].each { |game| team_id == game.away_team_id || team_id == game.home_team_id ? team_games << game : next } }
+    seasons_hash = find_season_hash(team_id)
+    seasons_hash.each { |season1| season1[1].each { |game| team_id == game.away_team_id || team_id == game.home_team_id ? team_games << game : next } }
     team_games
   end
 

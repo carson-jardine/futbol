@@ -30,22 +30,26 @@ class TeamStatsTest < Minitest::Test
 
     assert_instance_of Array, team_stats.get_games_by_team_id_array("3")
   end
-  #
-  def  v
+
+  def test_wins_by_season_count
+    skip # this one would be a good candidate for a Mock or Stub
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
 
-    result = {"20122013"=>5, "20122012"=>1, "20152016"=>5}
-
-    assert_equal result, team_stats.games_by_team_id("3")
+    assert_instance_of Hash, team_stats.wins_by_season_count
   end
 
-  # def test_wins_by_team_id
-  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #
-  #   result = {"20122013"=>5, "20122012"=>1, "20152016"=>5}
-  #
-  #   assert_equal result, team_stats.wins_by_team_id("3")
-  # end
+
+  def test_games_by_team_id
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_instance_of Hash, team_stats.games_by_team_id("3")
+  end
+
+  def test_wins_by_team_id
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_instance_of Array, team_stats.wins_by_team_id("3")
+  end
 
   # def test_games_by_season
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
