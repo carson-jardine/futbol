@@ -11,14 +11,14 @@ class TeamStats
   end
 
   def team_info(team_id)
-    hash = {}
+    team_info = {}
     information = @teams.find { |team| team.team_id == team_id }
-    hash["team_id"]= information.team_id
-    hash["franchise_id"]= information.franchise_id
-    hash["team_name"]= information.team_name
-    hash["abbreviation"]= information.abbreviation
-    hash["link"]= information.link
-    hash
+    team_info["team_id"]= information.team_id
+    team_info["franchise_id"]= information.franchise_id
+    team_info["team_name"]= information.team_name
+    team_info["abbreviation"]= information.abbreviation
+    team_info["link"]= information.link
+    team_info
   end
 
   def games_by_team_id(team_id)
