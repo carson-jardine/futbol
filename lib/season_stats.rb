@@ -68,7 +68,6 @@ class SeasonStats
 
   def find_head_coach_best_worst(games, game_teams, the_season, flag)
     coach_games_results = {}
-    coach_and_wins =
     games_grouped_by_season = games.group_by { |game| game.season }
     season_games = games_grouped_by_season.map {|season, game_grouped_by_season| game_grouped_by_season.find_all { |season_game| season_game.season == the_season } }.flatten
     this_season_games = season_games.group_by { |season_game| season_game.season }

@@ -154,13 +154,7 @@ class TeamStats
 
   def find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     season_by_win_percentage = {}
-    wins_by_season_count.each do |win_by_season_count|
-      games_by_season_count.each do |game_by_season_count|
-        if game_by_season_count[0] == win_by_season_count[0]
-          season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
-        end
-      end
-    end
+    wins_by_season_count.each { |win_by_season_count| games_by_season_count.each { |game_by_season_count| game_by_season_count[0] == win_by_season_count[0] ? season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f : next } }
     season_by_win_percentage
   end
 
