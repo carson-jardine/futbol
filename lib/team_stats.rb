@@ -75,7 +75,7 @@ class TeamStats
     end
     team_games
   end
- 
+
   def find_wins(other_team_by_game, team_id)
     wins = []
     other_team_by_game[1].each do |game|
