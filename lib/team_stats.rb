@@ -42,9 +42,7 @@ class TeamStats
     @wins = []
     @seasons_hash.each do |season|
       season[1].each do |game|
-        if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-          @wins << game
-        elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
+        if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
           @wins << game
         end
       end
@@ -65,9 +63,7 @@ class TeamStats
     team_games = []
     @seasons_hash.each do |season1|
       season1[1].each do |game|
-        if (team_id == game.away_team_id) == true
-          team_games << game
-        elsif (team_id == game.home_team_id) == true
+        if (team_id == game.away_team_id) || (team_id == game.home_team_id)
           team_games << game
         end
       end
@@ -78,9 +74,7 @@ class TeamStats
   def find_wins(other_team_by_game, team_id)
     wins = []
     other_team_by_game[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals < game.home_goals)
-        wins << game
-      elsif (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
+      if (team_id == game.away_team_id) && (game.away_goals < game.home_goals) || (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
         wins << game
       end
     end
@@ -90,9 +84,7 @@ class TeamStats
   def find_ties(other_team_by_game, team_id)
     ties = []
     other_team_by_game[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals == game.home_goals)
-        ties << game
-      elsif (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
+      if (team_id == game.away_team_id) && (game.away_goals == game.home_goals) || (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
         ties << game
       end
     end
