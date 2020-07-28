@@ -66,13 +66,7 @@ class TeamStats
 
   def team_games_by_season(team_id)
     team_games = []
-    @seasons_hash.each do |season1|
-      season1[1].each do |game|
-        if team_id == game.away_team_id || team_id == game.home_team_id
-          team_games << game
-        end
-      end
-    end
+    @seasons_hash.each { |season1| season1[1].each { |game| team_id == game.away_team_id || team_id == game.home_team_id ? team_games << game : next } }
     team_games
   end
 
