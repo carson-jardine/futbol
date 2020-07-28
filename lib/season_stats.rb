@@ -33,11 +33,7 @@ class SeasonStats
 
   def find_team_and_accuracy(teams_by_id)
     team_and_accuracy = {}
-    teams_by_id.each do |team|
-      goals_by_team = team[1].sum { |the_goals| the_goals.goals.to_f }
-      shots_by_team = team[1].sum { |the_shots| the_shots.shots.to_f}
-      team_and_accuracy[team[0]] = goals_by_team / shots_by_team
-    end
+    teams_by_id.each { |team| goals_by_team = team[1].sum { |the_goals| the_goals.goals.to_f } ; shots_by_team = team[1].sum { |the_shots| the_shots.shots.to_f } ; team_and_accuracy[team[0]] = goals_by_team / shots_by_team }
     team_and_accuracy
   end
 
