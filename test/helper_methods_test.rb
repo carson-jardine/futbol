@@ -101,17 +101,6 @@ class HelperMethodsTest < Minitest::Test
   #   assert_equal nil, season_stats.find_team_and_accuracy(teams_by_id)
   # end
 
-  # def test_find_coach_name
-  #   season_stats = HelperMethods.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
-  #
-  #   teams_by_id = get_teams_by_team_id(season_stats.game_teams)
-  #   team_and_losses = find_team_and_results(teams_by_id, this_season)
-  #   worst_coach = largest_hash_value(team_and_losses)[0]
-  #   coach_name = find_coach_name(worst_coach)
-  #
-  #   assert_equal nil, season_stats.find_coach_name(coach_name)
-  # end
-
   # def test_find_team_name
   #   season_stats = HelperMethods.new("./test/luke_fixtures/fixtures_game_teams.csv", "./test/luke_fixtures/fixtures_games.csv", "./test/luke_fixtures/fixtures_teams.csv")
   #
