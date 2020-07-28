@@ -48,14 +48,8 @@ class GameStats
 
 
   def percentage_visitor_wins
-    away_games = @games.group_by do |game|
-      game.away_team_id
-    end
-    away_games_wins = away_games.map do |game_id, games|
-      games.find_all do |game|
-        game.away_goals > game.home_goals
-      end
-    end
+    away_games = @games.group_by {|game| game.away_team_id }
+    away_games_wins = away_games.map { |game_id, games| games.find_all { |game| game.away_goals > game.home_goals } }
     (away_games_wins.flatten.length / @games.count.to_f).round(2)
   end
 
