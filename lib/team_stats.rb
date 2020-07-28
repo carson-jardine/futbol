@@ -21,17 +21,22 @@ class TeamStats
     team_info
   end
 
-  def games_by_team_id(team_id)
-    @games_by_team_id_array = []
+  def get_games_by_team_id_array(team_id)
+    games_by_team_id_array = []
     @games.each do |game|
       if game.away_team_id == team_id || game.home_team_id == team_id
-        @games_by_team_id_array << game
+        games_by_team_id_array << game
       end
     end
-    @seasons_hash = @games_by_team_id_array.group_by do |game|
+    games_by_team_id_array
+  end
+
+  def games_by_team_id(team_id)
+    @games_by_season_count = {}
+    games_by_team_id_array = get_games_by_team_id_array(team_id)
+    @seasons_hash = games_by_team_id_array.group_by do |game|
       game.season
     end
-    @games_by_season_count = {}
     @seasons_hash.each do |season, season_games|
       @games_by_season_count[season] = (season_games.count)
     end
