@@ -67,13 +67,9 @@ class GameStats
   end
 
   def count_of_games_by_season
-   games_by_season = {} #
-   season_by_id = games.group_by do |game|
-     game.season
-   end
-   season_by_id.each do |season|
-    games_by_season[season[0]] = season[1].count
-   end
+   games_by_season = {} 
+   season_by_id = games.group_by { |game| game.season }
+   season_by_id.each {|season| games_by_season[season[0]] = season[1].count }
    games_by_season
   end
 
