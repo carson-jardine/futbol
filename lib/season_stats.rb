@@ -33,11 +33,7 @@ class SeasonStats
 
   def find_game_list(games_with_key_as_game_id, game_ids_this_season)
     game_list = []
-    games_with_key_as_game_id.each do |game_id, games|
-      if game_ids_this_season.include?(game_id.to_s)
-        game_list << games
-      end
-    end
+    games_with_key_as_game_id.each { |game_id, games| game_ids_this_season.include?(game_id.to_s) ? game_list << games : next }
     game_list.flatten
   end
 
