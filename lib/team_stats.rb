@@ -32,15 +32,15 @@ class TeamStats
   end
 
   def games_by_team_id(team_id)
-    @games_by_season_count = {}
+    games_by_season_count = {}
     games_by_team_id_array = get_games_by_team_id_array(team_id)
     @seasons_hash = games_by_team_id_array.group_by do |game|
       game.season
     end
     @seasons_hash.each do |season, season_games|
-      @games_by_season_count[season] = (season_games.count)
+      games_by_season_count[season] = (season_games.count)
     end
-    @games_by_season_count
+    games_by_season_count
   end
 
   def wins_by_team_id(team_id)
@@ -56,12 +56,12 @@ class TeamStats
   end
 
   def wins_by_season_count
-    @season_wins = @wins.group_by {|game| game.season}
-    @season_wins_count = {}
-    @season_wins.each do |season, season_games|
-      @season_wins_count[season] = (season_games.count)
+    season_wins = @wins.group_by {|game| game.season}
+    season_wins_count = {}
+    season_wins.each do |season, season_games|
+      season_wins_count[season] = (season_games.count)
     end
-    @season_wins_count
+    season_wins_count
   end
 
   def team_games_by_season(team_id)
