@@ -24,7 +24,7 @@ class TeamStats
   def games_by_team_id(team_id)
     @games_by_team_id_array = []
     @games.each do |game|
-      if game.away_team_id == (team_id) || game.home_team_id == (team_id)
+      if game.away_team_id == team_id || game.home_team_id == team_id
         @games_by_team_id_array << game
       end
     end
@@ -63,7 +63,7 @@ class TeamStats
     team_games = []
     @seasons_hash.each do |season1|
       season1[1].each do |game|
-        if (team_id == game.away_team_id) || (team_id == game.home_team_id)
+        if team_id == game.away_team_id || team_id == game.home_team_id
           team_games << game
         end
       end
@@ -115,16 +115,29 @@ class TeamStats
     @away_goals.concat(@home_goals)
   end
 
-  def find_other_teams_by_game(team_id)
+  def find_home_games_in_games(team_id)
     home_games = []
+    @games.find_all do |game|
+      if game.home_team_id == team_id
+        home_games << game
+      end
+    end
+    home_games
+  end
+
+  def find_away_games_in_games(team_id)
     away_games = []
     @games.find_all do |game|
       if game.away_team_id == team_id
         away_games << game
-      elsif game.home_team_id == team_id
-        home_games << game
       end
     end
+    away_games
+  end
+
+  def find_other_teams_by_game(team_id)
+    home_games = find_home_games_in_games(team_id)
+    away_games = find_away_games_in_games(team_id)
     home_teams_by_game = away_games.group_by do |away_game|
       away_game.home_team_id
     end

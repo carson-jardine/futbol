@@ -12,7 +12,6 @@ class LeagueStats
   def find_away_games(game_teams)
     game_teams.find_all do |game_team|
       game_team.hoa == "away"
-
     end
   end
 
