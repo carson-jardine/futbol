@@ -28,34 +28,14 @@ class TeamStats
         @games_by_team_id_array << game
       end
     end
-    @games_by_team_id_array
-  end
-
-  def games_by_season
     @seasons_hash = @games_by_team_id_array.group_by do |game|
       game.season
     end
-    @seasons_hash
-  end
-
-  def games_by_season_count
     @games_by_season_count = {}
     @seasons_hash.each do |season, season_games|
       @games_by_season_count[season] = (season_games.count)
     end
     @games_by_season_count
-  end
-
-  def wins_by_season
-    @season_wins = @wins.group_by {|game| game.season}
-  end
-
-  def wins_by_season_count
-    @season_wins_count = {}
-    @season_wins.each do |season, season_games|
-      @season_wins_count[season] = (season_games.count)
-    end
-    @season_wins_count
   end
 
   def wins_by_team_id(team_id)
@@ -72,6 +52,15 @@ class TeamStats
     @wins
   end
 
+  def wins_by_season_count
+    @season_wins = @wins.group_by {|game| game.season}
+    @season_wins_count = {}
+    @season_wins.each do |season, season_games|
+      @season_wins_count[season] = (season_games.count)
+    end
+    @season_wins_count
+  end
+
   def team_games_by_season(team_id)
     team_games = []
     @seasons_hash.each do |season1|
@@ -86,24 +75,35 @@ class TeamStats
     team_games
   end
 
+  def find_wins(other_team_by_game, team_id)
+    wins = []
+    other_team_by_game[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals < game.home_goals)
+        wins << game
+      elsif (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
+        wins << game
+      end
+    end
+    wins
+  end
+
+  def find_ties(other_team_by_game, team_id)
+    ties = []
+    other_team_by_game[1].each do |game|
+      if (team_id == game.away_team_id) && (game.away_goals == game.home_goals)
+        ties << game
+      elsif (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
+        ties << game
+      end
+    end
+    ties
+  end
+
   def find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     other_teams_by_win_percentage = {}
     other_teams_by_game.each do |other_team_by_game|
-      wins = []
-      ties = []
-      other_team_by_game[1].each do |game|
-        if (team_id == game.away_team_id) && (game.away_goals < game.home_goals)
-          wins << game
-        elsif (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
-          wins << game
-        elsif (team_id == game.away_team_id) && (game.away_goals == game.home_goals)
-          ties << game
-        elsif (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
-          ties << game
-        else
-          next
-        end
-      end
+      wins = find_wins(other_team_by_game, team_id)
+      ties = find_ties(other_team_by_game, team_id)
       total_wins = (((2 * wins.count.to_f) + ties.count.to_f) / (2 * other_team_by_game[1].count.to_f)).round(2)
       other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
     end
@@ -155,24 +155,18 @@ class TeamStats
   end
 
   def best_season(team_id)
-    games_by_team_id(team_id)
-    games_by_season
+    games_by_season_count = games_by_team_id(team_id)
     wins_by_team_id(team_id).count
-    wins_by_season
     wins_by_season_count
-    games_by_season_count
     season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     the_best_season = HelperMethods.largest_hash_value(season_by_win_percentage)
     the_best_season[0].to_s
   end
 
   def worst_season(team_id)
-    games_by_team_id(team_id)
-    games_by_season
+    games_by_season_count = games_by_team_id(team_id)
     wins_by_team_id(team_id).count
-    wins_by_season
     wins_by_season_count
-    games_by_season_count
     season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     the_worst_season = HelperMethods.smallest_hash_value(season_by_win_percentage)
     the_worst_season[0].to_s
@@ -193,7 +187,6 @@ class TeamStats
   end
 
   def favorite_opponent(team_id)
-    other_teams_by_win_percentage = {}
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     favorite_opponent_team_id = HelperMethods.smallest_hash_value(other_teams_by_win_percentage)
