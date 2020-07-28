@@ -39,13 +39,11 @@ class GameStats
       game.home_team_id
     end
     home_games_wins = home_games.map do |game_id, games|
-      # games.map(&:home_goals) > games.map(&:away_goals)
       games.find_all do |game|
         game.home_goals > game.away_goals
       end
     end
     (home_games_wins.flatten.length / @games.count.to_f).round(2)
-    # ((home_games_wins.count.to_f / home_games.count.to_f) * 100).round(2)
   end
 
 
