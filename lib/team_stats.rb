@@ -78,11 +78,7 @@ class TeamStats
 
   def find_wins(other_team_by_game, team_id)
     wins = []
-    other_team_by_game[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals < game.home_goals) || (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
-        wins << game
-      end
-    end
+    other_team_by_game[1].each { |game| (team_id == game.away_team_id) && (game.away_goals < game.home_goals) || (team_id == game.home_team_id) && (game.away_goals > game.home_goals) ? wins << game : next }
     wins
   end
 
