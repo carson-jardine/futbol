@@ -68,12 +68,7 @@ class TeamStats
 
   def find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     other_teams_by_win_percentage = {}
-    other_teams_by_game.each do |other_team_by_game|
-      wins = find_wins(other_team_by_game, team_id)
-      ties = find_ties(other_team_by_game, team_id)
-      total_wins = (((2 * wins.count.to_f) + ties.count.to_f) / (2 * other_team_by_game[1].count.to_f)).round(2)
-      other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
-    end
+    other_teams_by_game.each {|other_team_by_game| wins = find_wins(other_team_by_game, team_id) ; ties = find_ties(other_team_by_game, team_id) ; total_wins = (((2 * wins.count.to_f) + ties.count.to_f) / (2 * other_team_by_game[1].count.to_f)).round(2) ; other_teams_by_win_percentage[other_team_by_game[0]] = total_wins }
     other_teams_by_win_percentage
   end
 
