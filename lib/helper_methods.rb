@@ -1,7 +1,8 @@
 # require 'CSV'
-# require_relative './game_teams'
-# require_relative './game'
-# require_relative './team'
+require_relative './game_teams'
+require_relative './game'
+require_relative './team'
+require 'pry'
 
 module HelperMethods
 
@@ -151,17 +152,18 @@ module HelperMethods
     result_games_by_game_id.values
   end
 
-  def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
 
-  # def self.find_game_list(games_with_key_as_game_id, games_by_game_id)
-  #   game_list = []
-  #   games_with_key_as_game_id.find_all do |game_result|
-  #     if games_by_game_id.any?(game_result[0]) == true
-  #       game_list << game_result[1]
-  #     end
-  #   end
-  #   game_list.flatten
-  # end
+
+  def self.find_game_list(games_with_key_as_game_id, game_ids_this_season)
+    game_list = []
+    games_with_key_as_game_id.each do |game_id, games|
+      if game_ids_this_season.include?(game_id.to_s)
+        game_list << games
+      end
+    end
+    # binding.pry
+    game_list.flatten
+  end
 
   def self.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
     game_list = []
@@ -325,14 +327,5 @@ module HelperMethods
     team_name[0]
   end
 
-  def self.find_team_name_for_accuracy(team_id)
-    team_name = []
-    @teams.each do |team|
-      if team.team_id == team_id.to_s
-        team_name << team.team_name
-      end
-    end
-    team_name
-  end
 
 end

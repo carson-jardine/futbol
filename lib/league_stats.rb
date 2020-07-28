@@ -1,5 +1,6 @@
 require_relative './helper_methods'
 require 'pry'
+require 'CSV'
 class LeagueStats
 
   attr_reader :game_teams,
@@ -8,28 +9,34 @@ class LeagueStats
 
   def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
 
-    @game_teams = HelperMethods.load_game_teams(filepath1)
-    @games      = HelperMethods.load_games(filepath2)
-    @teams      = HelperMethods.load_teams(filepath3)
+    @game_teams = []
+    @games      = []
+    @teams      = []
+    load_game_teams(filepath1)
+    load_games(filepath2)
+    load_teams(filepath3)
+    # @game_teams = HelperMethods.load_game_teams(filepath1)
+    # @games      = HelperMethods.load_games(filepath2)
+    # @teams      = HelperMethods.load_teams(filepath3)
   end
 
-  # def load_game_teams(filepath1)
-  #   CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
-  #     @game_teams << GameTeams.new(data)
-  #   end
-  # end
-  #
-  # def load_games(filepath2)
-  #   CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
-  #     @games << Game.new(data)
-  #   end
-  # end
-  #
-  # def load_teams(filepath3)
-  #   CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
-  #     @teams << Team.new(data)
-  #   end
-  # end
+  def load_game_teams(filepath1)
+    CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
+      @game_teams << GameTeams.new(data)
+    end
+  end
+
+  def load_games(filepath2)
+    CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
+      @games << Game.new(data)
+    end
+  end
+
+  def load_teams(filepath3)
+    CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
+      @teams << Team.new(data)
+    end
+  end
 
     def best_offense
       teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)

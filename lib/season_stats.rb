@@ -1,8 +1,7 @@
-<<<<<<< HEAD
-require './helper_methods'
-=======
+require_relative './helper_methods'
+
 # require './helper_methods'
->>>>>>> 41a8dac3daee847781f139d57e6f499f26a1463d
+
 
 class SeasonStats
 
@@ -28,7 +27,7 @@ class SeasonStats
     # However, that game information doesn't have the "WIN" information.
     # So you have to see if the game_id in this new this_season match the games in which there was a win, and make a new thing, win_games_this_season, to hold that list of game_id's that match.  Basically this is testing to see if the WIN games are in the season we're looking at.  the new array has all the gameinfo of all the games that were winners and in our season.
     win_games_this_season = find_result_games_this_season(this_season, win_games_with_key_as_game_id)
-
+  end
 
   def winningest_coach(the_season)
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").max_by {|x| x[1]}[0]
@@ -43,14 +42,12 @@ class SeasonStats
     this_season = HelperMethods.find_this_season(the_season)
     this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
     best_team = HelperMethods.largest_hash_value(team_and_accuracy)
-    team_name = HelperMethods.find_team_name_for_accuracy(best_team)
+    team_name = HelperMethods.find_team_name(best_team)
 
     team_name
-    binding.pry
   end
 
   def least_accurate_team(the_season)
@@ -58,11 +55,10 @@ class SeasonStats
     this_season = HelperMethods.find_this_season(the_season)
     this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
     worst_team = HelperMethods.smallest_hash_value(team_and_accuracy)
-    team_name = HelperMethods.find_team_name_for_accuracy(worst_team)
+    team_name = HelperMethods.find_team_name(worst_team)
     team_name
   end
 
@@ -71,8 +67,7 @@ class SeasonStats
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
     this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = HelperMethods.find_team_and_tackles(teams_by_id)
     top_tacklers = HelperMethods.largest_hash_value(team_and_total_tackles)
     highest_tacklers = HelperMethods.find_team_name(top_tacklers)
@@ -84,8 +79,7 @@ class SeasonStats
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
     this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
-    flattened_game_list = game_list.flatten
-    teams_by_id = HelperMethods.find_teams_by_team_id(flattened_game_list)
+    teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = HelperMethods.find_team_and_tackles(teams_by_id)
     bottom_tacklers = HelperMethods.smallest_hash_value(team_and_total_tackles)
     lowest_tacklers = HelperMethods.find_team_name(bottom_tacklers)
