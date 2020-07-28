@@ -44,10 +44,10 @@ class GameStats
   end
 
   def count_of_games_by_season
-   games_by_season = {}
-   season_by_id = games.group_by { |game| game.season }
-   season_by_id.each {|season| games_by_season[season[0]] = season[1].count }
-   games_by_season
+    games_by_season = {}
+    season_by_id = games.group_by { |game| game.season }
+    season_by_id.each {|season| games_by_season[season[0]] = season[1].count }
+    games_by_season
   end
 
   def average_goals_per_game
@@ -62,10 +62,10 @@ class GameStats
   end
 
   def average_goals_by_season
-   avg_goals_per_season = {}
-   season_by_id = games.group_by { |game| game.season }
-   season_by_id.each {|season, season_games| avg_goals_per_season[season] = average_goals_for_season(season_games) }
-   avg_goals_per_season
+    avg_goals_per_season = {}
+    season_by_id = games.group_by { |game| game.season }
+    season_by_id.each {|season, season_games| avg_goals_per_season[season] = average_goals_for_season(season_games) }
+    avg_goals_per_season
   end
 
 end
