@@ -60,14 +60,12 @@ class GameStats
   end
 
   def percentage_ties
-    tied_games = @games.find_all do |game|
-      game.home_goals == game.away_goals
-    end
+    tied_games = @games.find_all { |game| game.home_goals == game.away_goals }
     (tied_games.count.to_f / @games.count.to_f).round(2)
   end
 
   def count_of_games_by_season
-   games_by_season = {} 
+   games_by_season = {}
    season_by_id = games.group_by { |game| game.season }
    season_by_id.each {|season| games_by_season[season[0]] = season[1].count }
    games_by_season
