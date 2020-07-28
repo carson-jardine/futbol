@@ -1,25 +1,16 @@
 require_relative './helper_methods'
-# require 'CSV'
-# require_relative './game'
-# require_relative './team'
-# require_relative './game_teams'
-# require_relative './helper_methods'
-require 'pry'
-
 class TeamStats
   attr_reader :game_teams,
               :teams,
               :games
 
   def initialize(filepath1, filepath2, filepath3)
-
     @game_teams = HelperMethods.load_game_teams(filepath1)
     @games      = HelperMethods.load_games(filepath2)
     @teams      = HelperMethods.load_teams(filepath3)
   end
 
   def team_info(team_id)
-
     hash = {}
     information = @teams.find { |team| team.team_id == team_id }
     hash["team_id"]= information.team_id
@@ -38,10 +29,6 @@ class TeamStats
       end
     end
     team_name
-  end
-
-  def games_by_team_id
-
   end
 
   def games_by_team_id(team_id)
@@ -81,20 +68,6 @@ class TeamStats
     @season_wins_count
   end
 
-  def wins_across_all_seasons(team_id)
-    @wins = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true
-        @wins << game
-      elsif (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-        @wins << game
-      end
-    end
-  end
-  @wins.count
-  end
-
   def wins_by_team_id(team_id)
     wins = []
     @seasons_hash.each do |season|
@@ -129,7 +102,6 @@ class TeamStats
       wins = []
       ties = []
       other_team_by_game[1].each do |game|
-        # binding.pry
         if (team_id == game.away_team_id) && (game.away_goals < game.home_goals)
           wins << game
         elsif (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
@@ -180,15 +152,8 @@ class TeamStats
     home_teams_by_game.merge(away_teams_by_game)
   end
 
-  def best_season(team_id)
+  def find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     season_by_win_percentage = {}
-    games_by_team_id(team_id)
-    games_by_season
-    wins_across_all_seasons(team_id)
-    wins_by_season
-    wins_by_season_count
-    games_by_season_count
-
     wins_by_season_count.each do |win_by_season_count|
       games_by_season_count.each do |game_by_season_count|
         if game_by_season_count[0] == win_by_season_count[0]
@@ -196,25 +161,29 @@ class TeamStats
         end
       end
     end
+    season_by_win_percentage
+  end
+
+  def best_season(team_id)
+    games_by_team_id(team_id)
+    games_by_season
+    wins_by_team_id(team_id).count
+    wins_by_season
+    wins_by_season_count
+    games_by_season_count
+    season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     the_best_season = HelperMethods.largest_hash_value(season_by_win_percentage)
     the_best_season[0].to_s
   end
 
   def worst_season(team_id)
-    season_by_win_percentage = {}
     games_by_team_id(team_id)
     games_by_season
-    wins_across_all_seasons(team_id)
+    wins_by_team_id(team_id).count
     wins_by_season
     wins_by_season_count
     games_by_season_count
-    wins_by_season_count.each do |win_by_season_count|
-      games_by_season_count.each do |game_by_season_count|
-        if game_by_season_count[0] == win_by_season_count[0]
-          season_by_win_percentage[win_by_season_count[0]]= win_by_season_count[1].to_f / game_by_season_count[1].to_f
-        end
-      end
-    end
+    season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
     the_worst_season = HelperMethods.smallest_hash_value(season_by_win_percentage)
     the_worst_season[0].to_s
   end
