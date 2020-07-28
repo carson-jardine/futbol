@@ -247,7 +247,6 @@ class TeamStats
 
   def rival(team_id)
     other_teams_by_game = {}
-    other_teams_by_win_percentage = {}
     home_games = []
     away_games = []
     @games.find_all do |game|
@@ -264,26 +263,7 @@ class TeamStats
       home_game.away_team_id
     end
     other_teams_by_game = home_teams_by_game.merge(away_teams_by_game)
-    other_teams_by_game.each do |other_team_by_game|
-      wins = []
-      ties = []
-      # binding.pry
-      other_team_by_game[1].each do |game|
-        if (team_id == game.away_team_id) && (game.away_goals < game.home_goals)
-          wins << game
-        elsif (team_id == game.home_team_id) && (game.away_goals > game.home_goals)
-          wins << game
-        elsif (team_id == game.away_team_id) && (game.away_goals == game.home_goals)
-          ties << game
-        elsif (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
-          ties << game
-        else
-          next
-        end
-      end
-      total_wins = (((2 * wins.count.to_f) + ties.count.to_f) / (2 * other_team_by_game[1].count.to_f)).round(2)
-      other_teams_by_win_percentage[other_team_by_game[0]] = total_wins
-    end
+    other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     rival_team_id = HelperMethods.largest_hash_value(other_teams_by_win_percentage)
     rival = find_team_name(rival_team_id[0])
     rival[0]
