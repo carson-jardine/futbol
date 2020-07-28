@@ -12,22 +12,14 @@ class SeasonStats
   def find_this_season(the_season)
     this_season = []
     @games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
+      game_in_season.season == the_season ? this_season << game_in_season : next
     end
     this_season
   end
 
   def find_games_by_game_id(games_this_season)
     result_games_by_game_id = {}
-    games_this_season.each do |game_this_season|
-      if result_games_by_game_id[game_this_season.game_id]
-        result_games_by_game_id[game_this_season.game_id] += game_this_season.game_id
-      else
-        result_games_by_game_id[game_this_season.game_id] = game_this_season.game_id
-      end
-    end
+    games_this_season.each { |game_this_season| result_games_by_game_id[game_this_season.game_id] ? result_games_by_game_id[game_this_season.game_id] += game_this_season.game_id : result_games_by_game_id[game_this_season.game_id] = game_this_season.game_id }
     result_games_by_game_id.values
   end
 
