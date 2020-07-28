@@ -63,8 +63,7 @@ class SeasonStats
     season_games2 = this_season_games.map {|season, game| game.map { |x|  x.game_id } }.flatten
     coach_games = find_coach_games(season_games2)
     coach_games.each { |coach_name, game_results| coach_games_results[coach_name] = game_results }
-    coach_and_wins = find_coach_and_wins(coach_games_results)
-    coach_and_wins
+    find_coach_and_wins(coach_games_results)
   end
 
   def winningest_coach(the_season)
