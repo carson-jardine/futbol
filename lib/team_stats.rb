@@ -110,8 +110,7 @@ class TeamStats
     wins_by_team_id(team_id).count
     wins_by_season_count
     season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
-    the_best_season = HelperMethods.largest_hash_value(season_by_win_percentage)
-    the_best_season[0].to_s
+    HelperMethods.largest_hash_value(season_by_win_percentage)[0].to_s
   end
 
   def worst_season(team_id)
@@ -119,8 +118,7 @@ class TeamStats
     wins_by_team_id(team_id).count
     wins_by_season_count
     season_by_win_percentage = find_season_by_win_percentage(wins_by_season_count, games_by_season_count)
-    the_worst_season = HelperMethods.smallest_hash_value(season_by_win_percentage)
-    the_worst_season[0].to_s
+    HelperMethods.smallest_hash_value(season_by_win_percentage)[0].to_s
   end
 
   def average_win_percentage(team_id)
