@@ -45,13 +45,7 @@ class TeamStats
 
   def wins_by_team_id(team_id)
     @wins = []
-    @seasons_hash.each do |season|
-      season[1].each do |game|
-        if (team_id == game.away_team_id) && (game.away_goals > game.home_goals) == true || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) == true
-          @wins << game
-        end
-      end
-    end
+    @seasons_hash.each { |season| season[1].each { |game| (team_id == game.away_team_id) && (game.away_goals > game.home_goals) || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) ? @wins << game : next } }
     @wins
   end
 
