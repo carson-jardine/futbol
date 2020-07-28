@@ -66,41 +66,37 @@ class GameStats
     (tied_games.count.to_f / @games.count.to_f).round(2)
   end
 
-    def count_of_games_by_season
-     games_by_season = {} #
-     season_by_id = games.group_by do |game|
-       game.season
-     end
-     season_by_id.each do |season|
-      games_by_season[season[0]] = season[1].count
-     end
-     games_by_season
-    end
+  def count_of_games_by_season
+   games_by_season = {} #
+   season_by_id = games.group_by do |game|
+     game.season
+   end
+   season_by_id.each do |season|
+    games_by_season[season[0]] = season[1].count
+   end
+   games_by_season
+  end
 
-    def average_goals_per_game
-      result = games.map do |game|
-        game.total_goals_for_game
-      end
-      (result.sum.to_f / result.count.to_f).round(2)
+  def average_goals_per_game
+    result = games.map do |game|
+      game.total_goals_for_game
     end
+    (result.sum.to_f / result.count.to_f).round(2)
+  end
 
-    def average_goals_for_season(season_games)
-      goal_totals = []
-      season_games.each do |game|
-        goal_totals << game.total_goals_for_game
-      end
-      (goal_totals.sum.to_f / goal_totals.count.to_f).round(2)
+  def average_goals_for_season(season_games)
+    goal_totals = []
+    season_games.each do |game|
+      goal_totals << game.total_goals_for_game
     end
+    (goal_totals.sum.to_f / goal_totals.count.to_f).round(2)
+  end
 
-    def average_goals_by_season
-     avg_goals_per_season = {}
-     season_by_id = games.group_by do |game|
-       game.season
-     end
-     season_by_id.each do |season, season_games|
-       avg_goals_per_season[season] = average_goals_for_season(season_games)
-     end
-     avg_goals_per_season
-    end
+  def average_goals_by_season
+   avg_goals_per_season = {}
+   season_by_id = games.group_by { |game| game.season }
+   season_by_id.each {|season, season_games| avg_goals_per_season[season] = average_goals_for_season(season_games) }
+   avg_goals_per_season
+  end
 
 end
