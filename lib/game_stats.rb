@@ -86,9 +86,7 @@ class GameStats
 
   def average_goals_for_season(season_games)
     goal_totals = []
-    season_games.each do |game|
-      goal_totals << game.total_goals_for_game
-    end
+    season_games.each { |game| goal_totals << game.total_goals_for_game }
     (goal_totals.sum.to_f / goal_totals.count.to_f).round(2)
   end
 
