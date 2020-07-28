@@ -36,25 +36,21 @@ class LeagueStats
   end
 
   def count_of_teams
-    @teams.map do |team|
-      team.team_id
-    end.count
+    @teams.map {|team| team.team_id }.count
   end
 
   def best_offense
     teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
     team_and_total_score = all_the_goals(teams_by_id)
     top_scorer = HelperMethods.largest_hash_value(team_and_total_score)
-    best_team = HelperMethods.find_team_name(top_scorer)
-    best_team[0]
+    HelperMethods.find_team_name(top_scorer)[0]
   end
 
   def worst_offense
     teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
     team_and_total_score = all_the_goals(teams_by_id)
     bottom_scorer = HelperMethods.smallest_hash_value(team_and_total_score)
-    worst_team = HelperMethods.find_team_name(bottom_scorer)
-    worst_team[0]
+    HelperMethods.find_team_name(bottom_scorer)[0]
   end
 
   def highest_scoring_visitor
@@ -62,8 +58,7 @@ class LeagueStats
     teams_by_id = HelperMethods.find_teams_by_team_id(away_games)
     team_and_total_score = all_the_goals(teams_by_id)
     top_scorer = HelperMethods.largest_hash_value(team_and_total_score)
-    best_team = HelperMethods.find_team_name(top_scorer)
-    best_team[0]
+    HelperMethods.find_team_name(top_scorer)[0]
   end
 
   def highest_scoring_home_team
@@ -71,8 +66,7 @@ class LeagueStats
     teams_by_id = HelperMethods.find_teams_by_team_id(home_games)
     team_and_total_score = all_the_goals(teams_by_id)
     top_scorer = HelperMethods.largest_hash_value(team_and_total_score)
-    best_team = HelperMethods.find_team_name(top_scorer)
-    best_team[0]
+    HelperMethods.find_team_name(top_scorer)[0]
   end
 
   def lowest_scoring_visitor
@@ -80,8 +74,7 @@ class LeagueStats
     teams_by_id = HelperMethods.find_teams_by_team_id(away_games)
     team_and_total_score = all_the_goals(teams_by_id)
     bottom_scorer = HelperMethods.smallest_hash_value(team_and_total_score)
-    worst_team = HelperMethods.find_team_name(bottom_scorer)
-    worst_team[0]
+    HelperMethods.find_team_name(bottom_scorer)[0]
   end
 
   def lowest_scoring_home_team
@@ -89,8 +82,7 @@ class LeagueStats
     teams_by_id = HelperMethods.find_teams_by_team_id(home_games)
     team_and_total_score = all_the_goals(teams_by_id)
     bottom_scorer = HelperMethods.smallest_hash_value(team_and_total_score)
-    worst_team = HelperMethods.find_team_name(bottom_scorer)
-    worst_team[0]
+    HelperMethods.find_team_name(bottom_scorer)[0]
   end
 
 end
