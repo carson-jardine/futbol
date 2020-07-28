@@ -38,6 +38,11 @@ class TeamStatsTest < Minitest::Test
     assert_instance_of Hash, team_stats.wins_by_season_count
   end
 
+  def test_find_season_hash
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_instance_of Hash, team_stats.find_season_hash("3")
+  end
 
   def test_games_by_team_id
     team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
@@ -51,20 +56,14 @@ class TeamStatsTest < Minitest::Test
     assert_instance_of Array, team_stats.wins_by_team_id("3")
   end
 
-  # def test_games_by_season
-  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #   games_by_team_id_array = team_stats.games_by_team_id("3")
+  def test_games_by_season
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_instance_of Array, team_stats.team_games_by_season("3")
+  end
   #
-  #   assert Hash, team_stats.games_by_season
-  # end
   #
-  #
-  # def test_games_by_season
-  #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
-  #   games_by_team_id_array = team_stats.games_by_team_id(3)
-  #   assert Hash, team_stats.games_by_season
-  # end
-  #
+
   #
   # def test_best_season
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
