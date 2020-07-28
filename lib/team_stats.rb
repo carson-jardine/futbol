@@ -143,12 +143,8 @@ class TeamStats
   def find_other_teams_by_game(team_id)
     home_games = find_home_games_in_games(team_id)
     away_games = find_away_games_in_games(team_id)
-    home_teams_by_game = away_games.group_by do |away_game|
-      away_game.home_team_id
-    end
-    away_teams_by_game = home_games.group_by do |home_game|
-      home_game.away_team_id
-    end
+    home_teams_by_game = away_games.group_by { |away_game| away_game.home_team_id }
+    away_teams_by_game = home_games.group_by {|home_game| home_game.away_team_id }
     home_teams_by_game.merge(away_teams_by_game)
   end
 
