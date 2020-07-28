@@ -88,11 +88,7 @@ class TeamStats
 
   def find_ties(other_team_by_game, team_id)
     ties = []
-    other_team_by_game[1].each do |game|
-      if (team_id == game.away_team_id) && (game.away_goals == game.home_goals) || (team_id == game.home_team_id) && (game.away_goals == game.home_goals)
-        ties << game
-      end
-    end
+    other_team_by_game[1].each { |game| (team_id == game.away_team_id) && (game.away_goals == game.home_goals) || (team_id == game.home_team_id) && (game.away_goals == game.home_goals) ? ties << game : next }
     ties
   end
 
