@@ -10,15 +10,11 @@ class LeagueStats
   end
 
   def find_away_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "away"
-    end
+    game_teams.find_all { |game_team| game_team.hoa == "away" }
   end
 
   def find_home_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "home"
-    end
+    game_teams.find_all { |game_team| game_team.hoa == "home" }
   end
 
   def all_the_goals(teams_by_id)
