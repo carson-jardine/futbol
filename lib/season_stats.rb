@@ -8,16 +8,41 @@ class SeasonStats
     @games      = HelperMethods.load_games(filepath2)
     @teams      = HelperMethods.load_teams(filepath3)
   end
+
+  def find_this_season(the_season)
+    this_season = []
+    @games.find_all do |game_in_season|
+      if game_in_season.season == the_season
+        this_season << game_in_season
+      end
+    end
+    this_season
+  end
+
+  def find_games_by_game_id(games_this_season)
+    result_games_by_game_id = {}
+    games_this_season.each do |game_this_season|
+      if result_games_by_game_id[game_this_season.game_id]
+        result_games_by_game_id[game_this_season.game_id] += game_this_season.game_id
+      else
+        result_games_by_game_id[game_this_season.game_id] = game_this_season.game_id
+      end
+    end
+    result_games_by_game_id.values
+  end
+
   def winningest_coach(the_season)
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").max_by {|x| x[1]}[0]
   end
+
   def worst_coach(the_season)
     HelperMethods.find_head_coach_best_worst(@games, @game_teams, the_season, "WIN").min_by {|x| x[1]}[0]
   end
+
   def most_accurate_team(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
-    this_season = HelperMethods.find_this_season(the_season)
-    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    this_season = find_this_season(the_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
@@ -25,10 +50,11 @@ class SeasonStats
     team_name = HelperMethods.find_team_name(best_team)
     team_name
   end
+
   def least_accurate_team(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
-    this_season = HelperMethods.find_this_season(the_season)
-    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    this_season = find_this_season(the_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_accuracy = HelperMethods.find_team_and_accuracy(teams_by_id)
@@ -36,10 +62,11 @@ class SeasonStats
     team_name = HelperMethods.find_team_name(worst_team)
     team_name
   end
+
   def most_tackles(the_season)
-    this_season = HelperMethods.find_this_season(the_season)
+    this_season = find_this_season(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
-    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = HelperMethods.find_team_and_tackles(teams_by_id)
@@ -47,10 +74,11 @@ class SeasonStats
     highest_tacklers = HelperMethods.find_team_name(top_tacklers)
     highest_tacklers
   end
+
   def fewest_tackles(the_season)
-    this_season = HelperMethods.find_this_season(the_season)
+    this_season = find_this_season(the_season)
     game_teams_by_id = HelperMethods.find_teams_by_game_id(game_teams)
-    this_season_game_ids = HelperMethods.find_games_by_game_id(this_season)
+    this_season_game_ids = find_games_by_game_id(this_season)
     game_list = HelperMethods.find_game_list(game_teams_by_id, this_season_game_ids)
     teams_by_id = HelperMethods.find_teams_by_team_id(game_list)
     team_and_total_tackles = HelperMethods.find_team_and_tackles(teams_by_id)

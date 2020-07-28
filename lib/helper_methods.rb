@@ -30,24 +30,6 @@ module HelperMethods
     @teams
   end
 
-  def self.game_teams_find_by_game_id(game_id)
-    game_teams.find do |season_stat|
-      season_stat.game_id == game_id
-    end
-  end
-
-  def self.games_find_by_game_id(game_id)
-    games.find do |season_stat|
-      season_stat.game_id == game_id
-    end
-  end
-
-  def self.teams_find_by_team_id(team_id)
-    teams.find do |season_stat|
-      season_stat.team_id == team_id
-    end
-  end
-
   def self.largest_hash_value(hash)
     hash.max_by{|k,v| v}
   end
@@ -56,91 +38,6 @@ module HelperMethods
     hash.min_by{|k,v| v}
   end
 
-  def self.find_win_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.result == "WIN"
-    end
-  end
-
-  def self.find_tie_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.result == "TIE"
-    end
-  end
-
-  def self.find_lose_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.result == "LOSS"
-    end
-  end
-
-  def self.find_away_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "away"
-
-    end
-  end
-
-  def self.find_home_games(game_teams)
-    game_teams.find_all do |game_team|
-      game_team.hoa == "home"
-    end
-  end
-
-  def self.find_result_games_with_key_as_game_id(result_games)
-    result_games.group_by do |game_result|
-      game_result.game_id.to_s
-    end
-  end
-
-  def self.find_this_season(the_season)
-    this_season = []
-    @games.find_all do |game_in_season|
-      if game_in_season.season == the_season
-        this_season << game_in_season
-      end
-    end
-    this_season
-  end
-
-  def self.find_result_games_this_season(this_season, result_games_with_key_as_game_id)
-    result_games_this_season = []
-    this_season.each do |the_game|
-      if result_games_with_key_as_game_id.keys.any?(the_game.game_id) == true
-        result_games_this_season << the_game
-      end
-    end
-
-    # binding.pry
-    result_games_this_season.values
-  end
-
-  # def self.find_result_games_this_season(this_season, result_games_with_key_as_game_id)
-  # result_games_this_season = []
-  # this_season.each do |the_game|
-  #   if result_games_with_key_as_game_id.keys.any?(the_game.game_id) == true
-  #     result_games_this_season << the_game
-  #   end
-  # end
-  # result_games_this_season
-  # binding.pry
-  # end
-
-  def self.find_games_by_game_id(games_this_season)
-    result_games_by_game_id = {}
-    games_this_season.each do |game_this_season|
-      if result_games_by_game_id[game_this_season.game_id]
-        result_games_by_game_id[game_this_season.game_id] += game_this_season.game_id
-      else
-        result_games_by_game_id[game_this_season.game_id] = game_this_season.game_id
-      end
-    end
-
-    result_games_by_game_id.values
-  end
-
-
-
   def self.find_game_list(games_with_key_as_game_id, game_ids_this_season)
     game_list = []
     games_with_key_as_game_id.each do |game_id, games|
@@ -148,18 +45,7 @@ module HelperMethods
         game_list << games
       end
     end
-    # binding.pry
     game_list.flatten
-  end
-
-  def self.find_game_list_with_reduce(games_with_key_as_game_id, games_by_game_id)
-    game_list = []
-    games_with_key_as_game_id.find_all do |game_result|
-      if games_by_game_id.any?(game_result[0]) == true
-        game_list << game_result[1].first
-      end
-    end
-    game_list
   end
 
   def self.find_teams_by_team_id(game_teams)
@@ -172,31 +58,6 @@ module HelperMethods
     game_teams.group_by do |game_team|
       game_team.game_id
     end
-  end
-
-  # def self.find_team_and_results(teams_by_id, this_season)
-  #   find_team_and_results = {}
-  #   teams_by_id.each do |team|
-  #     find_team_and_results[team[0]] = (team[1].count.to_f * 100) / this_season.count.to_f
-  #   end
-  #
-  #   find_team_and_results
-  # end
-
-  def self.find_team_and_results(teams_by_id_losses, teams_by_id_wins, teams_by_id_tie)
-    find_team_and_results = {}
-    teams_by_id_tie.each do |team_tie|
-      teams_by_id_wins.each do |team_win|
-        teams_by_id_losses.each do |team_loss|
-          unless find_team_and_results[team_loss[0]]
-            find_team_and_results[team_loss[0]] = ((team_loss[1].count.to_f) / (team_loss[1].count.to_f + team_win[1].count.to_f + team_tie[1].count.to_f) * 100).round(2)
-          end
-        end
-      end
-    end
-    # binding.pry
-
-    find_team_and_results
   end
 
   def self.find_team_and_accuracy(teams_by_id)
@@ -248,10 +109,6 @@ module HelperMethods
     coach_name
   end
 
-  def select_season_games(season_id)
-    season_games = @games
-  end
-
   def self.find_head_coach_best_worst(games, game_teams, the_season, flag)
     coach_games_results = {}
     coach_games = {}
@@ -296,14 +153,6 @@ module HelperMethods
     coach_and_wins
   end
 
-  # def self.find_team_name(team_id)
-  #   team_name = @teams.find_all do |team|
-  #     team.team_id
-  #   end
-  #   team_name[0].team_name
-  #   binding.pry
-  # end
-
   def self.find_team_name(team_id)
     team_name = []
     @teams.each do |team|
@@ -313,6 +162,4 @@ module HelperMethods
     end
     team_name[0]
   end
-
-
 end
