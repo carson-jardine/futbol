@@ -24,6 +24,12 @@ class TeamStatsTest < Minitest::Test
 
     assert_equal result, team_stats.team_info("3")
   end
+
+  def test_team_info
+    team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
+
+    assert_instance_of Array, team_stats.get_games_by_team_id_array("3")
+  end
   #
   # def test_it_can_find_games_by_team_id
   #   team_stats = TeamStats.new("./test/brett_fixtures/fixtures_game_teams.csv", "./test/brett_fixtures/fixtures_games.csv", "./test/brett_fixtures/fixtures_teams.csv")
