@@ -3,6 +3,7 @@ class SeasonStats
   attr_reader :game_teams,
               :teams,
               :games
+
   def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
     @game_teams = HelperMethods.load_game_teams(filepath1)
     @games      = HelperMethods.load_games(filepath2)

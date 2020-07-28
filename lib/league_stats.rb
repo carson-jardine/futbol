@@ -72,5 +72,4 @@ class LeagueStats
     bottom_scorer = HelperMethods.smallest_hash_value(team_and_total_score)
     HelperMethods.find_team_name(bottom_scorer)[0]
   end
-
 end
