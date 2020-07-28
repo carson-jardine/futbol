@@ -132,11 +132,7 @@ class TeamStats
 
   def find_away_games_in_games(team_id)
     away_games = []
-    @games.find_all do |game|
-      if game.away_team_id == team_id
-        away_games << game
-      end
-    end
+    @games.find_all { |game| game.away_team_id == team_id ? away_games << game : next }
     away_games
   end
 
