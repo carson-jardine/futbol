@@ -23,11 +23,7 @@ class TeamStats
 
   def get_games_by_team_id_array(team_id)
     games_by_team_id_array = []
-    @games.each do |game|
-      if game.away_team_id == team_id || game.home_team_id == team_id
-        games_by_team_id_array << game
-      end
-    end
+    @games.each {|game| game.away_team_id == team_id || game.home_team_id == team_id ? games_by_team_id_array << game : next }
     games_by_team_id_array
   end
 
