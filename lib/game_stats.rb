@@ -35,17 +35,10 @@ class GameStats
   end
 
   def percentage_home_wins
-    home_games = @games.group_by do |game|
-      game.home_team_id
-    end
-    home_games_wins = home_games.map do |game_id, games|
-      games.find_all do |game|
-        game.home_goals > game.away_goals
-      end
-    end
+    home_games = @games.group_by { |game| game.home_team_id }
+    home_games_wins = home_games.map { |game_id, games| games.find_all { |game| game.home_goals > game.away_goals } }
     (home_games_wins.flatten.length / @games.count.to_f).round(2)
   end
-
 
   def percentage_visitor_wins
     away_games = @games.group_by {|game| game.away_team_id }
