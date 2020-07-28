@@ -15,9 +15,7 @@ class GameStats
   end
 
   def find_by_id(game_id)
-    @games.find do |game|
-      game.game_id == game_id
-    end
+    @games.find { |game| game.game_id == game_id }
   end
 
   def highest_total_score
