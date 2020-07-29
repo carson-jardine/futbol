@@ -27,8 +27,14 @@ class LeagueStats
     @teams.map {|team| team.team_id }.count
   end
 
+  def find_teams_by_team_id(game_teams)
+    game_teams.group_by do |game_team|
+      game_team.team_id
+    end
+  end
+
   def best_offense
-    teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
+    teams_by_id = find_teams_by_team_id(game_teams)
     team_and_total_score = all_the_goals(teams_by_id)
     top_scorer = HelperMethods.largest_hash_value(team_and_total_score)
     HelperMethods.find_team_name(top_scorer)[0]
