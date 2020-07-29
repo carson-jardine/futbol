@@ -132,18 +132,15 @@ class TeamStats
   def most_goals_scored(team_id)
     find_home_and_away_goals(team_id).max.to_i
   end
-
   def fewest_goals_scored(team_id)
     find_home_and_away_goals(team_id).min.to_i
   end
-
   def favorite_opponent(team_id)
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
     favorite_opponent_team_id = HelperMethods.smallest_hash_value(other_teams_by_win_percentage)
     HelperMethods.find_team_name(favorite_opponent_team_id)[0]
   end
-
   def rival(team_id)
     other_teams_by_game = find_other_teams_by_game(team_id)
     other_teams_by_win_percentage = find_other_teams_by_win_percentage(other_teams_by_game, team_id)
