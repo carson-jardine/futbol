@@ -39,22 +39,19 @@ class TeamStats
 
   def games_by_team_id(team_id)
     games_by_season_count = {}
-    seasons_hash = find_season_hash(team_id)
-    seasons_hash.each { |season, season_games| games_by_season_count[season] = (season_games.count) }
+    find_season_hash(team_id).each { |season, season_games| games_by_season_count[season] = (season_games.count) }
     games_by_season_count
   end
 
   def wins_by_team_id(team_id)
     @wins = []
-    seasons_hash = find_season_hash(team_id)
-    seasons_hash.each { |season| season[1].each { |game| (team_id == game.away_team_id) && (game.away_goals > game.home_goals) || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) ? @wins << game : next } }
+    find_season_hash(team_id).each { |season| season[1].each { |game| (team_id == game.away_team_id) && (game.away_goals > game.home_goals) || (team_id == game.home_team_id) && (game.away_goals < game.home_goals) ? @wins << game : next } }
     @wins
   end
 
   def team_games_by_season(team_id)
     team_games = []
-    seasons_hash = find_season_hash(team_id)
-    seasons_hash.each { |season1| season1[1].each { |game| team_id == game.away_team_id || team_id == game.home_team_id ? team_games << game : next } }
+    find_season_hash(team_id).each { |season1| season1[1].each { |game| team_id == game.away_team_id || team_id == game.home_team_id ? team_games << game : next } }
     team_games
   end
 
@@ -132,7 +129,7 @@ class TeamStats
   def most_goals_scored(team_id)
     find_home_and_away_goals(team_id).max.to_i
   end
-
+  
   def fewest_goals_scored(team_id)
     find_home_and_away_goals(team_id).min.to_i
   end
