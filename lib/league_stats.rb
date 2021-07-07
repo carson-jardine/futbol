@@ -1,51 +1,97 @@
-require './lib/league'
+require_relative './helper_methods'
 
 class LeagueStats
 
+  attr_reader :game_teams,
+              :teams,
+              :games
 
-  def initialize(filepath)
-    @games = filepath[:games]
-    @teams = filepath[:teams]
-    @game_teams = filepath[:game_teams]
+  def initialize(filepath1 = nil, filepath2 = nil, filepath3 = nil)
 
+    @game_teams = HelperMethods.load_game_teams(filepath1)
+    @games      = HelperMethods.load_games(filepath2)
+    @teams      = HelperMethods.load_teams(filepath3)
   end
-  # #LEAGUE STATS
-  #
-  # # 	Total number of teams in the data.  STRING INTEGER
-  #   def count_of_teams
-  #
-  #   end
-  #
-  # #  Name of the team with the highest average number of goals scored per game across all seasons.  STRING
-  #   def best_offense
-  #
-  #   end
-  #
-  #  # Name of the team with the lowest average number of goals scored per game across all seasons.  STRING
-  #   def worst_offense
-  #
-  #   end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are away.  STRING
-  #   def highest_scoring_visitor
-  #
-  #   end
-  #
-  # # Name of the team with the highest average score per game across all seasons when they are home.  STRING
-  #   def highest_scoring_home_team
-  #
-  #   end
-  #
-  #  # Name of the team with the lowest average score per game across all seasons when they are a visitor.  STRING
-  #   def lowest_scoring_visitor
-  #
-  #   end
-  #
-  #  # 	Name of the team with the lowest average score per game across all seasons when they are at home.  STRING
-  #   def lowest_scoring_home_team
-  #
-  #   end
 
+  # def load_game_teams(filepath1)
+  #   CSV.foreach(filepath1, headers: true, header_converters: :symbol) do |data|
+  #     @game_teams << GameTeams.new(data)
+  #   end
+  # end
+  #
+  # def load_games(filepath2)
+  #   CSV.foreach(filepath2, headers: true, header_converters: :symbol) do |data|
+  #     @games << Game.new(data)
+  #   end
+  # end
+  #
+  # def load_teams(filepath3)
+  #   CSV.foreach(filepath3, headers: true, header_converters: :symbol) do |data|
+  #     @teams << Team.new(data)
+  #   end
+  # end
 
+    def best_offense
+      #first, group/arrange the games according to their team_id in a hash.
+      # Key = team_id, value = stats for the games that team was in
+      teams_by_id = HelperMethods.find_teams_by_team_id(game_teams)
+      #next, make a new hash of key = team_id, value = total # of goals across all games.
+      team_and_total_score = HelperMethods.all_the_goals(teams_by_id)
+      #next find the key that has the highest value, and assign that key to @top_scorer
+      top_scorer = HelperMethods.largest_hash_value(team_and_total_score)[0]
+      #next, find the team name that correlates to the @top_scorer
+      best_team = HelperMethods.find_team_name(top_scorer, @teams)
+      #finally, print the teamname.
+      best_team[0]
+    end
 
+    def worst_offense
+      teams_by_id = find_teams_by_team_id(game_teams)
+      team_and_total_score = all_the_goals(teams_by_id)
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
+      worst_team = find_team_name(bottom_scorer)
+      worst_team[0]
+    end
+
+    def highest_scoring_visitor
+      away_games = find_away_games(game_teams)
+      teams_by_id = find_teams_by_team_id(away_games)
+      team_and_total_score = all_the_goals(teams_by_id)
+      top_scorer = largest_hash_value(team_and_total_score)[0]
+      best_team = find_team_name(top_scorer)
+      best_team[0]
+    end
+
+    def highest_scoring_home_team
+      home_games = find_home_games(game_teams)
+      teams_by_id = find_teams_by_team_id(home_games)
+      team_and_total_score = all_the_goals(teams_by_id)
+      top_scorer = largest_hash_value(team_and_total_score)[0]
+      best_team = find_team_name(top_scorer)
+      best_team[0]
+    end
+
+    def lowest_scoring_visitor
+      away_games = find_away_games(game_teams)
+      teams_by_id = find_teams_by_team_id(away_games)
+      team_and_total_score = all_the_goals(teams_by_id)
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
+      worst_team = find_team_name(bottom_scorer)
+      worst_team[0]
+    end
+
+    def lowest_scoring_home_team
+      home_games = find_home_games(game_teams)
+      teams_by_id = find_teams_by_team_id(home_games)
+      team_and_total_score = all_the_goals(teams_by_id)
+      bottom_scorer = smallest_hash_value(team_and_total_score)[0]
+      worst_team = find_team_name(bottom_scorer)
+      worst_team[0]
+    end
+
+    def count_of_teams
+      @teams.map do |team|
+        team.team_id
+      end.count
+    end
 end

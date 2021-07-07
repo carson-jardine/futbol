@@ -1,0 +1,21 @@
+game_id,team_id,HoA,result,settled_in,head_coach,goals,shots,tackles,pim,powerPlayOpportunities,powerPlayGoals,faceOffWinPercentage,giveaways,takeaways
+2012030221,3,away,LOSS,OT,John Tortorella,2,8,44,8,3,0,44.8,17,7
+2012030221,6,home,WIN,OT,Claude Julien,3,12,51,6,4,1,55.2,4,5
+2012030222,3,away,LOSS,REG,John Tortorella,2,9,33,11,5,0,51.7,1,4
+2012030222,6,home,WIN,REG,Claude Julien,3,8,36,19,1,0,48.3,16,6
+2012030223,6,away,WIN,REG,Claude Julien,2,8,28,6,0,0,61.8,10,7
+2012030223,3,home,LOSS,REG,John Tortorella,1,6,37,2,2,0,38.2,7,9
+2012030151,30,away,LOSS,OT,Mike Yeo,1,6,36,6,4,0,50,9,10
+2012030151,16,home,WIN,OT,Joel Quenneville,2,9,40,8,3,1,50,17,14
+2014030134,3,away,WIN,OT,Alain Vigneault,2,6,42,6,3,0,42.9,1,4
+2014030134,5,home,LOSS,OT,Mike Johnston,1,5,28,6,3,0,57.1,6,2
+2014030135,5,away,LOSS,OT,Mike Johnston,1,9,28,6,3,0,52.9,10,4
+2014030135,3,home,WIN,OT,Alain Vigneault,2,9,36,6,3,1,47.1,19,13
+2014030311,14,away,LOSS,REG,Jon Cooper,1,6,18,4,4,1,56.6,6,4
+2014030311,3,home,WIN,REG,Alain Vigneault,2,7,30,8,2,0,43.4,8,10
+2014030312,14,away,WIN,REG,Jon Cooper,4,6,26,12,6,3,45.6,10,5
+2014030312,3,home,LOSS,REG,Alain Vigneault,2,9,28,22,5,2,54.4,14,8
+2014030313,3,away,LOSS,OT,Alain Vigneault,3,7,33,6,4,2,45.8,10,6
+2014030313,14,home,WIN,OT,Jon Cooper,4,10,41,10,2,1,54.2,11,8
+2014030314,3,away,WIN,REG,Alain Vigneault,3,6,30,26,4,2,43.6,12,6
+2014030314,14,home,LOSS,REG,Jon Cooper,1,9,32,36,4,0,56.4,11,10
